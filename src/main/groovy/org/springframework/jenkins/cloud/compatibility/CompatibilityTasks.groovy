@@ -40,7 +40,7 @@ abstract class CompatibilityTasks {
 	protected String compileProductionForBoot() {
 		return """
 					echo -e "Checking if prod code compiles against latest boot"
-					./mvnw clean compile -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR}"""
+					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"""
 	}
 
 	protected String runTestsForBoot() {
