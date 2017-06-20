@@ -132,7 +132,6 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").deploy("spring-cl
 // CI BUILDS FOR SPRING CLOUD CONTRACTS
 new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
-	deploy("1.0.x")
 	deploy("1.1.x")
 	branch()
 }
@@ -163,9 +162,7 @@ new DalstonBreweryEndToEndBuildMaker(dsl).build()
 new DalstonBreweryEndToEndBuildMaker(dsl).buildForLatestBoot()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours())
-}
-new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.0.x")
+	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.1.x")
 }
 
 // E2E on CF
