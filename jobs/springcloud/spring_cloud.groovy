@@ -133,6 +133,7 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").deploy("spring-cl
 new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.1.x")
+	deploy("2.0.x")
 	branch()
 }
 // issue #159
