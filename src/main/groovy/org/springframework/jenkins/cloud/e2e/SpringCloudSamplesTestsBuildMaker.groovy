@@ -27,7 +27,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForDalston() {
-		build("Dalston.BUILD-SNAPSHOT", "tests-dalston", everySixHours(), "Dalston")
+		build("Dalston.BUILD-SNAPSHOT", "tests", everySixHours(), "Dalston")
 	}
 
 	void buildForEdgware() {
