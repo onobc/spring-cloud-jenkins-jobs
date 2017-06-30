@@ -123,7 +123,10 @@ branchMaker.deploy('spring-cloud-release', 'Finchley', false)
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 // CI BUILDS FOR INCUBATOR
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
-new SpringCloudGatewayDeployBuildMaker(dsl).deploy()
+new SpringCloudGatewayDeployBuildMaker(dsl).with {
+    deploy(masterBranch())
+    deploy('2.0.x')
+}
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy('1.0.x')

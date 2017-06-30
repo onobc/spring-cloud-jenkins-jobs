@@ -8,7 +8,7 @@ import javaposse.jobdsl.dsl.DslFactory
 class SpringCloudGatewayDeployBuildMaker extends SpringCloudDeployBuildMaker {
 
 	SpringCloudGatewayDeployBuildMaker(DslFactory dsl) {
-		super(dsl, 'spring-cloud-incubator')
+		super(dsl, 'spring-cloud')
 	}
 
 	void deploy() {
