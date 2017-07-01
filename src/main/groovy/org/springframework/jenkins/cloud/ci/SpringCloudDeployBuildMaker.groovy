@@ -27,7 +27,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	}
 
 	void deploy(String project, boolean checkTests = true) {
-		deploy(project, 'master', checkTests)
+		deploy(project, masterBranch(), checkTests)
 	}
 
 	void deploy(String project, String branchToBuild, boolean checkTests = true) {

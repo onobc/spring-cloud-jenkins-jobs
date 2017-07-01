@@ -125,8 +125,8 @@ new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 // TODO move to normal spring cloud project with branch
 new SpringCloudGatewayDeployBuildMaker(dsl).with {
-    deploy('spring-cloud-gateway', masterBranch())
-    deploy('spring-cloud-gateway', '2.0.x')
+    deploy(masterBranch())
+    deploy('2.0.x')
 }
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
