@@ -51,6 +51,8 @@ println "Projects with branches to build for automatic compatibility check $JOBS
 
 // AUTOMATIC COMPATIBILITY BUILDS
 // BOOT
+// Disabling boot compatibility builds since we have 2.0.x branches for latest boot
+/*
 (DEFAULT_BOOT_COMPATIBILITY_BUILD_JOBS).each { String projectName->
 	new BootCompatibilityBuildMaker(dsl).buildWithoutTests(projectName, everyThreeHours())
 }
@@ -66,6 +68,7 @@ new BootCompatibilityBuildMaker(dsl, COMPATIBILITY_BUILD_DEFAULT_SUFFIX, 'spring
 		.buildWithoutTests('tests', everyThreeHours())
 new ConsulCompatibilityBuildMaker(dsl).buildWithoutTestsForBoot(everyThreeHours())
 new BootCompatibilityBuildMaker(dsl).buildWithoutTests("spring-cloud-contract", everyThreeHours())
+*/
 
 // SPRING
 (DEFAULT_SPRING_COMPATIBILITY_BUILD_JOBS).each { String projectName->
