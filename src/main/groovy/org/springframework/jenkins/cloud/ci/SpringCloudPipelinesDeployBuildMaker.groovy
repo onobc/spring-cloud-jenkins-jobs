@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
+import org.springframework.jenkins.cloud.common.TapPublisher
 import org.springframework.jenkins.common.job.JdkConfig
 import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -67,6 +68,7 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
+				TapPublisher.cloudTap(it as Node)
 			}
 			publishers {
 				archiveJunit gradleJUnitResults()
@@ -79,7 +81,9 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 					${setupGitCredentials()}
 					${setOrigin()}
 					${checkoutMaster()}
-					(${build()} && ${syncDocs()} && ${cleanGitCredentials()}) || exit 1 && ${cleanGitCredentials()}
+					${build()} || exit 1 && ${cleanGitCredentials()}
+					${syncDocs()} || echo "Failed to sync the docs"
+					${cleanGitCredentials()}
 					${dockerBuildAndPush()}
 					"""
 	}
