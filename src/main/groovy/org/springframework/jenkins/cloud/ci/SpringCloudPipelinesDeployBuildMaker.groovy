@@ -97,7 +97,7 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 	}
 
 	private String build() {
-		return "./gradlew clean build generateReadme"
+		return "./gradlew clean build generateDocs"
 	}
 
 	private String syncDocs() {
