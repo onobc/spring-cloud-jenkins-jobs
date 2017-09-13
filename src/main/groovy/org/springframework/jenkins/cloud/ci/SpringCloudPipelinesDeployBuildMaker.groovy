@@ -38,6 +38,9 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 					}
 					extensions {
 						wipeOutWorkspace()
+						submoduleOptions {
+							recursive()
+						}
 					}
 				}
 			}
