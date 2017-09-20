@@ -82,9 +82,9 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 					${setOrigin()}
 					${checkoutMaster()}
 					${build()} && passed="true" || passed="false" 
-					if [[ "${passed}"=="false" ]]; then ${cleanGitCredentials()} && echo "Failed to build the app" exit 1; fi
+					if [[ "\${passed}"=="false" ]]; then ${cleanGitCredentials()} && echo "Failed to build the app" exit 1; fi
 					${syncDocs()} && passed="true" || passed="false"
-					if [[ "${passed}"=="false" ]]; then ${cleanGitCredentials()} && echo "Failed to sync the docs" && exit 1 ; fi
+					if [[ "\${passed}"=="false" ]]; then ${cleanGitCredentials()} && echo "Failed to sync the docs" && exit 1 ; fi
 					${cleanGitCredentials()} || echo "Failed to clean the credentials"
 					${dockerBuildAndPush()}
 					"""
