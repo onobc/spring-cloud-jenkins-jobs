@@ -81,7 +81,9 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 					${setupGitCredentials()}
 					${setOrigin()}
 					${checkoutMaster()}
-					${build()} && ${syncDocs()} && ${cleanGitCredentials()} || exit 1 
+					${build()} || exit 1 
+					${syncDocs()} || echo "Failed to sync docs"
+					${cleanGitCredentials()}
 					${dockerBuildAndPush()}
 					"""
 	}
