@@ -68,7 +68,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				// build the releaser
 				shell("""#!/bin/bash
 				echo "Cloning and building the releaser"
-				rm -rf .git/releaser && git clone -b master --single-branch master .git/releaser
+				rm -rf .git/releaser && git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git .git/releaser
 				pushd .git/releaser
 				./mvnw clean install
 				popd
