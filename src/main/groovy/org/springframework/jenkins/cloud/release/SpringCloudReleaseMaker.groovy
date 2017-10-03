@@ -76,7 +76,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				// run the releaser against the project
 				shell("""#!/bin/bash
 				set +x
-				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}"
+				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				java -jar .git/releaser/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false
 				set -x
 				""")
