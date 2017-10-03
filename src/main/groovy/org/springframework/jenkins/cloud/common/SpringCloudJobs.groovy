@@ -19,6 +19,7 @@ trait SpringCloudJobs extends BuildAndDeploy {
 					git config user.email "${githubEmail()}"
 					git config credential.helper "store --file=/tmp/gitcredentials"
 					echo "https://\$${githubRepoUserNameEnvVar()}:\$${githubRepoPasswordEnvVar()}@github.com" > /tmp/gitcredentials
+					trap "{ rm -f /tmp/gitcredentials; }" EXIT
 					set -x
 				"""
 	} 
