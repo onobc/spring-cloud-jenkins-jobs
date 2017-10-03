@@ -52,11 +52,15 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(githubRepoUserNameEnvVar(),
+							githubRepoPasswordEnvVar(),
+							githubUserCredentialId())
 					file(gpgSecRing(), "spring-signing-secring.gpg")
 					file(gpgPubRing(), "spring-signing-pubring.gpg")
 					string(gpgPassphrase(), "spring-gpg-passphrase")
 					string(githubToken(), githubTokenCredId())
-					usernamePassword(sonatypeUser(), sonatypePassword(), "oss-token")
+					usernamePassword(sonatypeUser(), sonatypePassword(),
+							"oss-token")
 				}
 				timeout {
 					noActivity(300)
@@ -75,14 +79,22 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				""")
 				// run the releaser against the project
 				shell("""#!/bin/bash
+				echo "Releasing the project"
 				${setupGitCredentials()}
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				java -jar .git/releaser/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || (${cleanGitCredentials()} && exit 1)
+				${cleanGitCredentials()}
 				""")
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node)
+				SpringCloudNotification.cloudSlack(it as Node) {
+					notifyFailure()
+					notifySuccess()
+					notifyUnstable()
+					includeFailedTests(false)
+					includeTestSummary(false)
+				}
 			}
 			publishers {
 				archiveJunit mavenJUnitResults()
