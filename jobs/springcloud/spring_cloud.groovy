@@ -28,12 +28,14 @@ import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMake
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesGradleBuildMaker
 import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesMavenBuildMaker
+import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 import javaposse.jobdsl.dsl.DslFactory
 
 import static BootCompatibilityBuildMaker.COMPATIBILITY_BUILD_DEFAULT_SUFFIX
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.DEFAULT_BOOT_COMPATIBILITY_BUILD_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.DEFAULT_SPRING_COMPATIBILITY_BUILD_JOBS
@@ -71,6 +73,8 @@ new BootCompatibilityBuildMaker(dsl).buildWithoutTests("spring-cloud-contract", 
 */
 
 // SPRING
+// Disabling cause 2.0.x contains Spring 5
+/*
 (DEFAULT_SPRING_COMPATIBILITY_BUILD_JOBS).each { String projectName->
 	new SpringCompatibilityBuildMaker(dsl).buildWithoutTests(projectName, everyDay())
 }
@@ -81,6 +85,7 @@ new SpringCompatibilityBuildMaker(dsl, COMPATIBILITY_BUILD_SPRING_SUFFIX, 'sprin
 		.buildWithoutTests('tests', everyDay())
 new ConsulCompatibilityBuildMaker(dsl).buildWithoutTestsForSpring(everyDay())
 new SpringCompatibilityBuildMaker(dsl).buildWithoutTests("spring-cloud-contract", everyDay())
+*/
 
 // MANUAL COMPATIBILITY BUILD
 new ManualBootCompatibilityBuildMaker(dsl).build()
@@ -222,6 +227,10 @@ new ConsulSonarBuildMaker(dsl).buildSonar()
 new SpringCloudPipelinesMavenBuildMaker(dsl).build('github-webhook')
 new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
 
+// RELEASER
+ALL_JOBS.each {
+	new SpringCloudReleaseMaker(dsl).release(it)
+}
 // ========== FUNCTIONS ==========
 
 String everyThreeHours() {
