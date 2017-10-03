@@ -83,7 +83,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				${setupGitCredentials()}
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java -Dreleaser.git.username="\$${githubRepoPasswordEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar .git/releaser/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || exit 1
+				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar .git/releaser/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
