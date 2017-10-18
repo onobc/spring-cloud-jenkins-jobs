@@ -48,17 +48,17 @@ class AllCloudJobs {
 	 * we will have custom implementations. Check out {@link org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker}
 	 * for more info.
 	 */
-	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-consul', 'spring-cloud-build', 'spring-cloud-contract', 'spring-cloud-vault']
+	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-consul', 'spring-cloud-build',
+														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.1.x', '1.2.x', '2.0.x'],
-																		'spring-cloud-netflix' : ['1.0.x', '1.1.x', '1.2.x', '1.3.x', '2.0.x'],
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.2.x', '2.0.x'],
 																		'spring-cloud-cli' : ['1.0.x', '1.1.x'],
-																		'spring-cloud-commons' : ['1.0.x', '1.1.x', '1.2.x', '2.0.x'],
-																		'spring-cloud-config' : ['1.1.x', '1.2.x', '1.3.x', '2.0.x'],
+																		'spring-cloud-commons' : ['1.1.x', '1.2.x', '2.0.x'],
+																		'spring-cloud-config' : ['1.2.x', '1.3.x', '2.0.x'],
 																		'spring-cloud-zookeeper' : ['1.0.x', '2.0.x'],
 																		'spring-cloud-bus': ['1.2.x', '2.0.x'],
 																		'spring-cloud-build': ['1.2.x', '2.0.x'],

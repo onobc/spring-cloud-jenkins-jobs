@@ -9,14 +9,10 @@ import org.springframework.jenkins.cloud.ci.SpringCloudContractDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudGatewayDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
+import org.springframework.jenkins.cloud.ci.SpringCloudNetflixDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
-import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.ConsulCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.ManualSpringCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.SpringCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.DalstonBreweryEndToEndBuildMaker
@@ -33,63 +29,16 @@ import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 import javaposse.jobdsl.dsl.DslFactory
 
-import static BootCompatibilityBuildMaker.COMPATIBILITY_BUILD_DEFAULT_SUFFIX
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
-import static org.springframework.jenkins.cloud.common.AllCloudJobs.DEFAULT_BOOT_COMPATIBILITY_BUILD_JOBS
-import static org.springframework.jenkins.cloud.common.AllCloudJobs.DEFAULT_SPRING_COMPATIBILITY_BUILD_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITHOUT_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITH_BRANCHES
-import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITH_BRANCHES_FOR_COMPATIBILITY_BUILD
-import static SpringCompatibilityBuildMaker.COMPATIBILITY_BUILD_SPRING_SUFFIX
 
 DslFactory dsl = this
 
 println "Projects with tests $ALL_JOBS_WITH_TESTS"
 println "Projects without tests $JOBS_WITHOUT_TESTS"
-println "Projects to build for automatic compatibility check $DEFAULT_BOOT_COMPATIBILITY_BUILD_JOBS"
-println "Projects with branches to build for automatic compatibility check $JOBS_WITH_BRANCHES_FOR_COMPATIBILITY_BUILD"
-
-// AUTOMATIC COMPATIBILITY BUILDS
-// BOOT
-// Disabling boot compatibility builds since we have 2.0.x branches for latest boot
-/*
-(DEFAULT_BOOT_COMPATIBILITY_BUILD_JOBS).each { String projectName->
-	new BootCompatibilityBuildMaker(dsl).buildWithoutTests(projectName, everyThreeHours())
-}
-(JOBS_WITH_BRANCHES_FOR_COMPATIBILITY_BUILD).each { String projectName, List<String> branches ->
-	branches.each { String branch ->
-		new BootCompatibilityBuildMaker(dsl).buildWithoutTests("${projectName}-${branch}", projectName, branch, every12Hours())
-	}
-}
-JOBS_WITHOUT_TESTS.each {
-	new BootCompatibilityBuildMaker(dsl).buildWithoutTests(it, everyThreeHours())
-}
-new BootCompatibilityBuildMaker(dsl, COMPATIBILITY_BUILD_DEFAULT_SUFFIX, 'spring-cloud-samples')
-		.buildWithoutTests('tests', everyThreeHours())
-new ConsulCompatibilityBuildMaker(dsl).buildWithoutTestsForBoot(everyThreeHours())
-new BootCompatibilityBuildMaker(dsl).buildWithoutTests("spring-cloud-contract", everyThreeHours())
-*/
-
-// SPRING
-// Disabling cause 2.0.x contains Spring 5
-/*
-(DEFAULT_SPRING_COMPATIBILITY_BUILD_JOBS).each { String projectName->
-	new SpringCompatibilityBuildMaker(dsl).buildWithoutTests(projectName, everyDay())
-}
-JOBS_WITHOUT_TESTS.each {
-	new SpringCompatibilityBuildMaker(dsl).buildWithoutTests(it, everyDay())
-}
-new SpringCompatibilityBuildMaker(dsl, COMPATIBILITY_BUILD_SPRING_SUFFIX, 'spring-cloud-samples')
-		.buildWithoutTests('tests', everyDay())
-new ConsulCompatibilityBuildMaker(dsl).buildWithoutTestsForSpring(everyDay())
-new SpringCompatibilityBuildMaker(dsl).buildWithoutTests("spring-cloud-contract", everyDay())
-*/
-
-// MANUAL COMPATIBILITY BUILD
-new ManualBootCompatibilityBuildMaker(dsl).build()
-new ManualSpringCompatibilityBuildMaker(dsl).build()
 
 // BENCHMARK BUILDS
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
@@ -149,6 +98,13 @@ new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy("2.0.x")
 	branch()
 }
+new SpringCloudNetflixDeployBuildMaker(dsl).with {
+	deploy(masterBranch())
+	deploy("1.2.x")
+	deploy("1.3.x")
+	deploy("2.0.x")
+	branch()
+}
 // issue #159
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").build("spring-cloud-contract-159", everyThreeHours())
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
@@ -204,15 +160,6 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForDalston()
 	buildForEdgware()
 }
-/*
-new EndToEndBuildMaker(dsl, 'hecklerm').with {
-	buildWithoutTests('mark-hecklers-services',
-			'DemoCIProjectSuite',
-			'exerciseEndpoints.sh',
-			everySaturday(),
-			'scripts/kill_all.sh')
-}
-*/
 
 // SONAR
 
