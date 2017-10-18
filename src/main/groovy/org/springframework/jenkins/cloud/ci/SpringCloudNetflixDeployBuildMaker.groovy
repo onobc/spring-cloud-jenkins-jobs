@@ -77,11 +77,8 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell("""
-						if [ -d "spring-cloud-netflix-hystrix-contract" ]; then cd spring-cloud-netflix-hystrix-contract && ../mvnw clean install && cd ..; fi
-						./mvnw clean deploy -nsu -P docs,integration -U \$MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random
-				""")
-				shell(buildDocsWithGhPagesWithoutCleaning())
+				shell(buildDocsWithGhPages(firstBuildContractModule()))
+				shell(cleanAndDeploy())
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
@@ -92,4 +89,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 		}
 	}
 
+	protected String firstBuildContractModule() {
+		return """if [ -d "spring-cloud-netflix-hystrix-contract" ]; then cd spring-cloud-netflix-hystrix-contract && ../mvnw clean install && cd ..; fi"""
+	}
 }

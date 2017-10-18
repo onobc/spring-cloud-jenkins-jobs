@@ -24,11 +24,11 @@ trait SpringCloudJobs extends BuildAndDeploy {
 				"""
 	} 
 
-	String buildDocsWithGhPages(boolean clean = true) {
+	String buildDocsWithGhPages(String additionalCommand = "") {
 		return """#!/bin/bash -x
 					export MAVEN_PATH=${mavenBin()}
 					${setupGitCredentials()}
-					${clean ? buildDocs() : buildDocsWithoutCleaning()}
+					${(additionalCommand ? "${additionalCommand}\n" : "") + buildDocs()}
 					echo "Downloading ghpages script from Spring Cloud Build"
 					mkdir -p target
 					rm -rf target/ghpages.sh
@@ -36,10 +36,6 @@ trait SpringCloudJobs extends BuildAndDeploy {
 					chmod +x target/ghpages.sh
 					. ./target/ghpages.sh && ${cleanGitCredentials()} || ${cleanGitCredentials()}
 					"""
-	}
-
-	String buildDocsWithGhPagesWithoutCleaning() {
-		return buildDocsWithGhPages(false)
 	}
 
 	/**
