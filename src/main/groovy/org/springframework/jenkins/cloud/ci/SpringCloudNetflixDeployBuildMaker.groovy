@@ -78,7 +78,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 					goals('--version')
 				}
 				shell("""
-						if [ -d "spring-cloud-netflix-hystrix-contract" ]; then pushd spring-cloud-netflix-hystrix-contract && ../mvnw clean install && popd; fi
+						if [ -d "spring-cloud-netflix-hystrix-contract" ]; then cd spring-cloud-netflix-hystrix-contract && ../mvnw clean install && cd ..; fi
 						./mvnw clean deploy -nsu -P docs,integration -U \$MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random
 				""")
 				shell(buildDocsWithGhPages())
