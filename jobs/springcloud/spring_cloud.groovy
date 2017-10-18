@@ -129,7 +129,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 //new CamdenBreweryEndToEndBuildMaker(dsl).build()
 //new CamdenBreweryEndToEndBuildMaker(dsl).buildForLatestBoot()
 new DalstonBreweryEndToEndBuildMaker(dsl).build()
-new DalstonBreweryEndToEndBuildMaker(dsl).buildForLatestBoot()
+//new DalstonBreweryEndToEndBuildMaker(dsl).buildForLatestBoot()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.1.x")
