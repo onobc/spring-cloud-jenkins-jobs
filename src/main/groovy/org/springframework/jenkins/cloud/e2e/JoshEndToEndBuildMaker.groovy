@@ -18,10 +18,10 @@ class JoshEndToEndBuildMaker implements TestPublisher,
 	private final String organization
 	private final String repoName
 
-	JoshEndToEndBuildMaker(DslFactory dsl) {
+	JoshEndToEndBuildMaker(DslFactory dsl, String repoName) {
 		this.dsl = dsl
 		this.organization = "joshlong"
-		this.repoName = 'bootiful-microservices'
+		this.repoName = repoName
 	}
 
 	void build(String projectName, String scriptName, String cronExpr, String postBuildScripts) {

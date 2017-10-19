@@ -145,7 +145,7 @@ new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 
 // CUSTOM E2E
 // Josh's CI APP
-new JoshEndToEndBuildMaker(dsl).with {
+new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
 	// TODO: Remove once Edgware is done
 	build('bootiful-microservices-dalston',
 			'scripts/scenario_dalston_tester.sh',
@@ -153,6 +153,12 @@ new JoshEndToEndBuildMaker(dsl).with {
 			'scripts/kill_all.sh')
 	build('bootiful-microservices-edgware',
 			'scripts/scenario_edgware_tester.sh',
+			everyThreeHours(),
+			'scripts/kill_all.sh')
+}
+new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
+	build('bootiful-reactive-microservices-finchley',
+			'scripts/scenario_finchley_tester.sh',
 			everyThreeHours(),
 			'scripts/kill_all.sh')
 }
