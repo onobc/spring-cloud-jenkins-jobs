@@ -23,7 +23,7 @@ class AllCloudJobs {
 	public static final List<String> ALL_JOBS = ['spring-cloud-sleuth', 'spring-cloud-netflix', 'spring-cloud-zookeeper', 'spring-cloud-consul',
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-security', 'spring-cloud-config',
 												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build', 'spring-cloud-release',
-												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault']
+												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway']
 	/**
 	 * Some projects need to have the test report generation skipped (since they have no tests).
 	 */
@@ -62,6 +62,7 @@ class AllCloudJobs {
 																		'spring-cloud-zookeeper' : ['1.0.x', '2.0.x'],
 																		'spring-cloud-bus': ['1.2.x', '2.0.x'],
 																		'spring-cloud-build': ['1.2.x', '2.0.x'],
+																		'spring-cloud-gateway': ['2.0.x'],
 																		'spring-cloud-security': ['1.1.x']]
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} for some jobs we don't want to check whether their branches

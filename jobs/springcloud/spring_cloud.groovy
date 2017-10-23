@@ -7,7 +7,6 @@ import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudBranchBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudContractDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudGatewayDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudNetflixDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
@@ -80,11 +79,7 @@ branchMaker.deploy('spring-cloud-release', 'Finchley', false)
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 // CI BUILDS FOR INCUBATOR
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
-// TODO move to normal spring cloud project with branch
-new SpringCloudGatewayDeployBuildMaker(dsl).with {
-    deploy(masterBranch())
-    deploy('2.0.x')
-}
+
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy('1.0.x')
