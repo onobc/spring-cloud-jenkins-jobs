@@ -1,14 +1,10 @@
 package org.springframework.jenkins.cloud.release
 
 import javaposse.jobdsl.dsl.DslFactory
-
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
-import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
-import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
-
 /**
  * @author Marcin Grzejszczak
  */
@@ -74,7 +70,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Cloning and building the releaser"
 				rm -rf .git/releaser && git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git .git/releaser
 				pushd .git/releaser
-				./mvnw clean install
+				./mvnw clean install > log.log
 				popd
 				""")
 				// run the releaser against the project
