@@ -67,21 +67,22 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 			steps {
 				// build the releaser
 				shell("""#!/bin/bash
-				echo "Cloning and building the releaser"
-				rm -rf .git/releaser && git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git .git/releaser
-				pushd .git/releaser
-				./mvnw clean install > log.log
+				currentDir="\$(pwd)"
+				tmpDir="\$(mktemp -d)"
+				trap "{ rm -f \${tmpDir}; }" EXIT
+				echo "Cloning to [\${tmpDir}] and building the releaser"
+				git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "\${tmpDir}"
+				pushd "\${tmpDir}"
+				./mvnw clean install > "\${currentDir}/.git/releaser.log"
 				popd
-				""")
-				// run the releaser against the project
-				shell("""#!/bin/bash
+				echo "Run the releaser against the project"
 				echo "Checking out branch"
 				git checkout \$${branchVarName()}
 				echo "Releasing the project"
 				${setupGitCredentials()}
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar .git/releaser/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || exit 1
+				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
