@@ -75,6 +75,8 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				""")
 				// run the releaser against the project
 				shell("""#!/bin/bash
+				echo "Checking out branch"
+				git checkout \$${branchVarName()}
 				echo "Releasing the project"
 				${setupGitCredentials()}
 				set +x
