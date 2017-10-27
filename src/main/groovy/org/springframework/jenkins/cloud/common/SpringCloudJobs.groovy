@@ -27,6 +27,7 @@ trait SpringCloudJobs extends BuildAndDeploy {
 
 	String buildDocsWithGhPages(String additionalCommand = "") {
 		return """#!/bin/bash -x
+					git checkout \$${branchVarName()} && git pull
 					export MAVEN_PATH=${mavenBin()}
 					${setupGitCredentials()}
 					${(additionalCommand ? "${additionalCommand}\n" : "") + buildDocs()}
