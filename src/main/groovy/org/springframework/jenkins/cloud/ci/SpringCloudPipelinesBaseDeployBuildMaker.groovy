@@ -72,8 +72,8 @@ class SpringCloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublish
 				echo "Building image"
 				docker build . -t springcloud/pipeline-base
 				docker tag springcloud/pipeline-base springcloud/pipeline-base:\${tagName}
-				docker push springcloud/pipeline-base:latest
 				docker push springcloud/pipeline-base:\${tagName}
+				docker push springcloud/pipeline-base:latest
 				echo "Removing all local images"
 				docker rmi -f springcloud/pipeline-base
 				""")
