@@ -26,7 +26,7 @@ class SpringCloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublish
 	}
 
 	void deploy() {
-		dsl.job("${project}-${masterBranch()}-ci") {
+		dsl.job("spring-cloud-${project}-${masterBranch()}-ci") {
 			triggers {
 				cron everyThreeHours()
 				githubPush()
