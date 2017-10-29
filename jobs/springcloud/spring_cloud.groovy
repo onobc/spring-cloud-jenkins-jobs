@@ -9,6 +9,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudContractDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudNetflixDeployBuildMaker
+import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
@@ -59,6 +60,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	}
 }
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
+new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 
 // BRANCHES BUILD - spring-cloud organization
