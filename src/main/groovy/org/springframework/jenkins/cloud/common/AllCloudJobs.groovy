@@ -52,6 +52,11 @@ class AllCloudJobs {
 														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
+	 * List of branches to be built when doing Consul builds
+	 */
+	public static final List<String> CONSUL_BRANCHES = ['master', '2.0.x', '1.2.x', '1.1.x']
+
+	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */

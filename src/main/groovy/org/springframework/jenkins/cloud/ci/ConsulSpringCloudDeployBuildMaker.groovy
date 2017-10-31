@@ -2,12 +2,12 @@ package org.springframework.jenkins.cloud.ci
 
 import javaposse.jobdsl.dsl.DslFactory
 
+import org.springframework.jenkins.cloud.common.AllCloudJobs
+
 /**
  * @author Marcin Grzejszczak
  */
 class ConsulSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMaker {
-
-	private static final List<String> BRANCHES = ['master', '2.0.x', '1.2.x', '1.1.x']
 
 	ConsulSpringCloudDeployBuildMaker(DslFactory dsl) {
 		super(dsl, 'spring-cloud', 'spring-cloud-consul')
@@ -25,7 +25,7 @@ class ConsulSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMake
 
 	@Override
 	void deploy() {
-		BRANCHES.each {
+		AllCloudJobs.CONSUL_BRANCHES.each {
 			super.deploy(it)
 		}
 	}
