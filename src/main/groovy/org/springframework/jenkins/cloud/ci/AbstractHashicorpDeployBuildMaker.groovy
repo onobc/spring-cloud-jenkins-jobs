@@ -32,7 +32,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				cron everyThreeHours()
 				githubPush()
 			}
-			jdk(branchName == '2.0.x' ? jdk8() : jdk7())
+			jdk(jdkVersion(branchName))
 			scm {
 				git {
 					remote {
@@ -81,6 +81,10 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				archiveJunit mavenJUnitResults()
 			}
 		}
+	}
+
+	protected String jdkVersion(String branchName) {
+		return branchName == '2.0.x' ? jdk8() : jdk7()
 	}
 
 	protected abstract String preStep()

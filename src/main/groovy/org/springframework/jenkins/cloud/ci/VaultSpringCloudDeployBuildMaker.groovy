@@ -13,6 +13,11 @@ class VaultSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMaker
 	}
 
 	@Override
+	protected String jdkVersion(String branchName) {
+		return jdk8()
+	}
+
+	@Override
 	protected String preStep() {
 		return preVaultShell()
 	}
