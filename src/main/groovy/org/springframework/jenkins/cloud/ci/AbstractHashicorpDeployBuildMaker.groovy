@@ -32,7 +32,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				cron everyThreeHours()
 				githubPush()
 			}
-			jdk(branchName == '2.0.x' ? jdk8() : jdk7())
+			jdk(jdk8())
 			scm {
 				git {
 					remote {
