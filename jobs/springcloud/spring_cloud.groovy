@@ -128,6 +128,7 @@ new FinchleyBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.1.x")
+	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "2.0.x")
 }
 
 // E2E on CF
