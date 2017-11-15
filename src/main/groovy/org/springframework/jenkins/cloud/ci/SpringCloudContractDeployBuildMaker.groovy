@@ -37,10 +37,6 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 		doDeploy("${prefixJob(projectName)}-${branchName}-ci", this.projectName, branchName)
 	}
 
-	void branch() {
-		doDeploy("${prefixJob(projectName)}-branch-ci", this.projectName, masterBranch(), false)
-	}
-
 	private void doDeploy(String projectName, String repoName, String branchName, boolean trigger = true) {
 		dsl.job(projectName) {
 			if (trigger) {

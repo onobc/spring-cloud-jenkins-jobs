@@ -90,14 +90,13 @@ new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.1.x")
 	deploy("2.0.x")
-	branch()
 }
+
 new SpringCloudNetflixDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.2.x")
 	deploy("1.3.x")
 	deploy("2.0.x")
-	branch()
 }
 // issue #159
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").build("spring-cloud-contract-159", everyThreeHours())

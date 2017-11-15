@@ -32,10 +32,6 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 		doDeploy("${prefixJob(repoName)}-${branchName}-ci", branchName)
 	}
 
-	void branch() {
-		doDeploy("${prefixJob(repoName)}-branch-ci", masterBranch(), false)
-	}
-
 	private void doDeploy(String projectName, String branchName, boolean trigger = true) {
 		dsl.job(projectName) {
 			if (trigger) {
