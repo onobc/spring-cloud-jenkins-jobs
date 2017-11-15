@@ -37,7 +37,7 @@ test {
 }
 
 wrapper {
-    gradleVersion '3.5'
+    gradleVersion '4.3.1'
 }
 
 // Jenkins

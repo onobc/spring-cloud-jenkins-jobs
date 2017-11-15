@@ -4,7 +4,6 @@ import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.DocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudBranchBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudContractDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
@@ -47,18 +46,6 @@ new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
 
 // CI BUILDS
 new DocsAppBuildMaker(dsl).buildDocs(everyThreeHours())
-// Branch build maker that allows you to build and deploy a branch - this will be done on demand
-SpringCloudBranchBuildMaker branchBuildMaker = new SpringCloudBranchBuildMaker(dsl)
-new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
-	(ALL_DEFAULT_JOBS).each {
-		maker.deploy(it)
-		branchBuildMaker.deploy(it)
-	}
-	JOBS_WITHOUT_TESTS.each {
-		maker.deployWithoutTests(it)
-		branchBuildMaker.deployWithoutTests(it)
-	}
-}
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
 new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
