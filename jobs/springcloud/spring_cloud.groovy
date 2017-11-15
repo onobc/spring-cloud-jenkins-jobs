@@ -46,6 +46,15 @@ new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
 
 // CI BUILDS
 new DocsAppBuildMaker(dsl).buildDocs(everyThreeHours())
+// Branch build maker that allows you to build and deploy a branch - this will be done on demand
+new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
+	(ALL_DEFAULT_JOBS).each {
+		maker.deploy(it)
+	}
+	JOBS_WITHOUT_TESTS.each {
+		maker.deployWithoutTests(it)
+	}
+}
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
 new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
