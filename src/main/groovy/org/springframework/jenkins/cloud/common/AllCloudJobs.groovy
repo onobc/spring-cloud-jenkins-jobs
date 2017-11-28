@@ -54,22 +54,22 @@ class AllCloudJobs {
 	/**
 	 * List of branches to be built when doing Consul builds
 	 */
-	public static final List<String> CONSUL_BRANCHES = ['master', '2.0.x', '1.2.x', '1.1.x']
+	public static final List<String> CONSUL_BRANCHES = ['master', '1.3.x', '1.2.x']
 
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.2.x', '2.0.x'],
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.2.x', '1.3.x'],
 																		'spring-cloud-cli' : ['1.0.x', '1.1.x'],
-																		'spring-cloud-commons' : ['1.1.x', '1.2.x', '2.0.x'],
-																		'spring-cloud-config' : ['1.2.x', '1.3.x', '2.0.x'],
-																		'spring-cloud-zookeeper' : ['1.0.x', '1.1.x', '2.0.x'],
-																		'spring-cloud-bus': ['1.2.x', '2.0.x'],
-																		'spring-cloud-build': ['1.2.x', '2.0.x'],
-																		'spring-cloud-aws': ['2.0.x'],
-																		'spring-cloud-gateway': ['2.0.x'],
-																		'spring-cloud-security': ['1.1.x']]
+																		'spring-cloud-commons' : ['1.2.x', '1.3.x'],
+																		'spring-cloud-config' : ['1.3.x', '1.4.x'],
+																		'spring-cloud-zookeeper' : ['1.1.x', '1.2.x'],
+																		'spring-cloud-bus': ['1.2.x', '1.3.x'],
+																		'spring-cloud-build': ['1.2.x', '1.3.x'],
+																		'spring-cloud-aws': ['1.1.x', '1.2.x'],
+																		'spring-cloud-gateway': ['1.0.x'],
+																		'spring-cloud-security': ['1.1.x', '1.2.x']]
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} for some jobs we don't want to check whether their branches
 	 * compile properly against latest boot version. Here we provide a list of such jobs

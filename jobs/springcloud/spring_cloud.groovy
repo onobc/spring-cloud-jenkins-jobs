@@ -70,9 +70,8 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	}
 }
 // Release branches for Spring Cloud Release
-// TODO: Remove once Edgware  is done
-//branchMaker.deploy('spring-cloud-release', 'Camden', false)
 branchMaker.deploy('spring-cloud-release', 'Dalston', false)
+branchMaker.deploy('spring-cloud-release', 'Edgware', false)
 branchMaker.deploy('spring-cloud-release', 'Finchley', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
@@ -82,21 +81,20 @@ new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy('1.0.x')
-	deploy('2.0.x')
+	deploy('1.1.x')
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").deploy("spring-cloud-contract-raml")
 // CI BUILDS FOR SPRING CLOUD CONTRACTS
 new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.1.x")
-	deploy("2.0.x")
+	deploy("1.2.x")
 }
 
 new SpringCloudNetflixDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
-	deploy("1.2.x")
 	deploy("1.3.x")
-	deploy("2.0.x")
+	deploy("1.4.x")
 }
 // issue #159
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").build("spring-cloud-contract-159", everyThreeHours())
@@ -123,7 +121,7 @@ new FinchleyBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.1.x")
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "2.0.x")
+	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.2.x")
 }
 
 // E2E on CF

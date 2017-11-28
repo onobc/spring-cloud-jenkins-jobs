@@ -84,7 +84,8 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	}
 
 	protected String jdkVersion(String branchName) {
-		return branchName == '2.0.x' ? jdk8() : jdk7()
+        //TODO: better matching. All 1.*.x branches are jdk7
+		return branchName.startsWith('1.') && branchName.endsWith('.x') ? jdk7() : jdk8()
 	}
 
 	protected abstract String preStep()
