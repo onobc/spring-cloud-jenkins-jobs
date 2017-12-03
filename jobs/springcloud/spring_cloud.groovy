@@ -153,6 +153,7 @@ new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForDalston()
 	buildForEdgware()
+	buildForFinchley()
 }
 
 // SONAR
