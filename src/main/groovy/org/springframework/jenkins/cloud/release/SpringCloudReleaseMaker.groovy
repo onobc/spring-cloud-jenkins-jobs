@@ -73,6 +73,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Cloning to [\${tmpDir}] and building the releaser"
 				git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "\${tmpDir}"
 				pushd "\${tmpDir}"
+				rm -rf ~/.m2/repository/org/springframework/cloud
 				./mvnw clean install > "\${currentDir}/.git/releaser.log"
 				popd
 				echo "Run the releaser against the project"
