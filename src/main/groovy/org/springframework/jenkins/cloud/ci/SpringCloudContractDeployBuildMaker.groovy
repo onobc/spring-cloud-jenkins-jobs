@@ -62,6 +62,9 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
 					usernamePassword(repoUserNameEnvVar(),
 							repoPasswordEnvVar(),
 							repoSpringIoUserCredentialId())
