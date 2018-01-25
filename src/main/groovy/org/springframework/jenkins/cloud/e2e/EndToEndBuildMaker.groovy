@@ -69,7 +69,7 @@ class EndToEndBuildMaker implements TestPublisher,
 				git {
 					remote {
 						url "https://github.com/${organization}/$repoName"
-						branch 'master'
+						branch branchName()
 					}
 					extensions {
 						wipeOutWorkspace()
@@ -106,6 +106,10 @@ class EndToEndBuildMaker implements TestPublisher,
 				}
 			}
 		}
+	}
+
+	protected String branchName() {
+		return "master"
 	}
 
 	protected void customConfiguration(String projectName, Node node) {

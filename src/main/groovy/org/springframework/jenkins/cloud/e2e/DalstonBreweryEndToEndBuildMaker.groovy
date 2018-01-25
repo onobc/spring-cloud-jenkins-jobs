@@ -22,6 +22,11 @@ class DalstonBreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 		buildForBoot("${RELEASE_TRAIN_NAME}-latest-boot", AllCloudConstants.LATEST_BOOT_VERSION)
 	}
 
+	@Override
+	protected String branchName() {
+		return "edgware"
+	}
+
 	private void buildWithSwitches(String prefix, String defaultSwitches) {
 		super.build("$prefix-zookeeper", repoName, "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", everyThreeHours())
 		super.build("$prefix-sleuth", repoName, "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", everyThreeHours())
