@@ -42,6 +42,6 @@ class DalstonBreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 
 	private String defaultSwitches() {
 		String releaseTrain = RELEASE_TRAIN_NAME.capitalize()
-		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT -r"
+		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT -r --branch ${branchName()}"
 	}
 }
