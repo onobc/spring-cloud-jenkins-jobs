@@ -31,7 +31,7 @@ class EdgwareBreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 
 	private String defaultSwitches() {
 		String releaseTrain = RELEASE_TRAIN_NAME.capitalize()
-		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT -b 2.0.0.M7 -r"
+		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT --branch ${branchName()} -r"
 	}
 
 	@Override
