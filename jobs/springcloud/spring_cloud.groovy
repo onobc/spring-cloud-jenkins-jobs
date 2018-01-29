@@ -109,10 +109,10 @@ new NetflixEndToEndBuildMaker(dsl).with {
 	def maker = new EndToEndBuildMaker(dsl)
 	maker.build(projectName, maker.everySixHours())
 }
+
+// Finchley
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(everySixHours())
-	buildSleuthStream(everySixHours())
-	buildSleuthStreamKafka(everySixHours())
 }
 // All jobs for e2e with Brewery
 new DalstonBreweryEndToEndBuildMaker(dsl).build()
@@ -120,7 +120,6 @@ new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.1.x")
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.2.x")
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "2.0.x")
 }
 
