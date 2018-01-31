@@ -25,7 +25,7 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 	}
 
 	void buildBreweryForDocs() {
-		build('spring-cloud-brewery-for-docs', 'spring-cloud-samples', 'brewery', "runAcceptanceTests.sh --whattotest SLEUTH_STREAM --usecloudfoundry --cloudfoundryprefix docsbrewing", everySunday())
+		build('spring-cloud-brewery-for-docs', 'spring-cloud-samples', 'brewery', "runAcceptanceTests.sh --whattotest SLEUTH --usecloudfoundry --cloudfoundryprefix docsbrewing", everySunday())
 	}
 
 	void buildSleuthDocApps() {
