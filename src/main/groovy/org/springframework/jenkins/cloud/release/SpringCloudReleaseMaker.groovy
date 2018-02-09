@@ -48,6 +48,9 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
