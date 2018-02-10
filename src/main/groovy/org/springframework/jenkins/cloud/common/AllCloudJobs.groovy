@@ -69,7 +69,8 @@ class AllCloudJobs {
 																		'spring-cloud-build': ['1.2.x', '1.3.x'],
 																		'spring-cloud-aws': ['1.1.x', '1.2.x'],
 																		'spring-cloud-gateway': ['1.0.x'],
-																		'spring-cloud-security': ['1.1.x', '1.2.x']]
+																		'spring-cloud-security': ['1.1.x', '1.2.x'],
+									   									'spring-cloud-cloudfoundry': ['1.1.x']]
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} for some jobs we don't want to check whether their branches
 	 * compile properly against latest boot version. Here we provide a list of such jobs
