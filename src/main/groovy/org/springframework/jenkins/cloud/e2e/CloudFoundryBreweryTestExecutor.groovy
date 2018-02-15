@@ -23,7 +23,7 @@ class CloudFoundryBreweryTestExecutor implements TestPublisher, JdkConfig, Brewe
 	void buildBreweryForDocsTests() {
 		// Run acceptance tests - skip building, deploying to CF, add docsbrewing prefix to CF
 		build('spring-cloud-brewery-for-docs-tests', 'spring-cloud-samples',
-				'brewery', "runAcceptanceTests.sh --whattotest SLEUTH --usecloudfoundry --cloudfoundryprefix docsbrewing --skipbuilding --skipdeployment", everyThreeHours())
+				'brewery', "runAcceptanceTests.sh --whattotest SLEUTH --usecloudfoundry --cloudfoundryprefix docsbrewing --skipbuilding --skipdeployment", oncePerDay())
 	}
 
 	protected void build(String description, String githubOrg, String projectName, String script, String cronExpr) {

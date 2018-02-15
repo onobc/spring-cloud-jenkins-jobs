@@ -18,22 +18,18 @@ class DalstonBreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 		buildWithSwitches(RELEASE_TRAIN_NAME, defaultSwitches())
 	}
 
-	void buildForLatestBoot() {
-		buildForBoot("${RELEASE_TRAIN_NAME}-latest-boot", AllCloudConstants.LATEST_BOOT_VERSION)
-	}
-
 	@Override
 	protected String branchName() {
 		return "edgware"
 	}
 
 	private void buildWithSwitches(String prefix, String defaultSwitches) {
-		super.build("$prefix-zookeeper", repoName, "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", everyThreeHours())
-		super.build("$prefix-sleuth", repoName, "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", everyThreeHours())
-		super.build("$prefix-sleuth-stream", repoName, "runAcceptanceTests.sh -t SLEUTH_STREAM $defaultSwitches", everyThreeHours())
-		super.build("$prefix-sleuth-stream-kafka", repoName, "runAcceptanceTests.sh -t SLEUTH_STREAM -k $defaultSwitches", everyThreeHours())
-		super.build("$prefix-eureka", repoName, "runAcceptanceTests.sh -t EUREKA $defaultSwitches", everyThreeHours())
-		super.build("$prefix-consul", repoName, "runAcceptanceTests.sh -t CONSUL $defaultSwitches", everyThreeHours())
+		super.build("$prefix-zookeeper", repoName, "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", oncePerDay())
+		super.build("$prefix-sleuth", repoName, "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", oncePerDay())
+		super.build("$prefix-sleuth-stream", repoName, "runAcceptanceTests.sh -t SLEUTH_STREAM $defaultSwitches", oncePerDay())
+		super.build("$prefix-sleuth-stream-kafka", repoName, "runAcceptanceTests.sh -t SLEUTH_STREAM -k $defaultSwitches", oncePerDay())
+		super.build("$prefix-eureka", repoName, "runAcceptanceTests.sh -t EUREKA $defaultSwitches", oncePerDay())
+		super.build("$prefix-consul", repoName, "runAcceptanceTests.sh -t CONSUL $defaultSwitches", oncePerDay())
 	}
 
 	private void buildForBoot(String prefix, String bootVersion) {

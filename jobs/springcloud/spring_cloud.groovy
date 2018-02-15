@@ -101,26 +101,26 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").buildWithoutTests("s
 
 // E2E BUILDS
 new NetflixEndToEndBuildMaker(dsl).with {
-	build(everySixHours())
+	build(oncePerDay())
 }
 
 // CUSTOM E2E FOR SPRING CLOUD PROJECTS
 ['spring-cloud-zookeeper', 'spring-cloud-consul'].each { String projectName ->
 	def maker = new EndToEndBuildMaker(dsl)
-	maker.build(projectName, maker.everySixHours())
+	maker.build(projectName, maker.oncePerDay())
 }
 
 // Finchley
 new SleuthEndToEndBuildMaker(dsl).with {
-	buildSleuth(everySixHours())
+	buildSleuth(oncePerDay())
 }
 // All jobs for e2e with Brewery
 new DalstonBreweryEndToEndBuildMaker(dsl).build()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours())
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "1.1.x")
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", everySixHours(), "2.0.x")
+	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay())
+	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "1.1.x")
+	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "2.0.x")
 }
 
 // E2E on CF
