@@ -144,12 +144,12 @@ new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
 			everyThreeHours(),
 			'scripts/kill_all.sh')
 }
-/*new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
+new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
 	build('bootiful-reactive-microservices-finchley',
 			'scripts/scenario_finchley_tester.sh',
 			everyThreeHours(),
 			'scripts/kill_all.sh')
-}*/
+}
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForDalston()
 	buildForEdgware()
