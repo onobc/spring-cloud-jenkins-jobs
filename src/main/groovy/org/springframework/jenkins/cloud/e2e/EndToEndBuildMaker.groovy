@@ -77,18 +77,15 @@ class EndToEndBuildMaker implements TestPublisher,
 			weight(MAX_EC2_EXECUTORS)
 			steps {
 				shell(killAllApps())
-				shell("""
-					#!/bin/bash
+				shell("""#!/bin/bash
 					echo "Cleaning up .m2"
 					rm -rf ~/.m2/repository/org/springframework/cloud/launcher 
 				""")
-				shell("""
-						#!/bin/bash
+				shell("""#!/bin/bash
 						sh -e ${scriptName}
 					""")
 				if (postBuildScripts) {
-					shell("""
-						#!/bin/bash
+					shell("""#!/bin/bash
 						sh -e ${postBuildScripts}
 					""")
 				}
