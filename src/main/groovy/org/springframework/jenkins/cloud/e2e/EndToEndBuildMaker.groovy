@@ -53,11 +53,9 @@ class EndToEndBuildMaker implements TestPublisher,
 			wrappers {
 				timestamps()
 				colorizeOutput()
-				label aws()
 				environmentVariables([
 						TERM: 'dumb',
-						RETRIES: 70,
-						(jdk8HomeEnvVar()): jdk8DefaultPath()
+						RETRIES: 70
 				])
 				timeout {
 					noActivity(defaultInactivity())
@@ -80,14 +78,17 @@ class EndToEndBuildMaker implements TestPublisher,
 			steps {
 				shell(killAllApps())
 				shell("""
+					#!/bin/bash
 					echo "Cleaning up .m2"
 					rm -rf ~/.m2/repository/org/springframework/cloud/launcher 
 				""")
 				shell("""
+						#!/bin/bash
 						sh -e ${scriptName}
 					""")
 				if (postBuildScripts) {
 					shell("""
+						#!/bin/bash
 						sh -e ${postBuildScripts}
 					""")
 				}
