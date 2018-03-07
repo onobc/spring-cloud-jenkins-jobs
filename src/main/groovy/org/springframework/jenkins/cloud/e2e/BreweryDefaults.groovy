@@ -6,6 +6,7 @@ package org.springframework.jenkins.cloud.e2e
 trait BreweryDefaults {
 	String killAllApps() {
 		return '''
+			#!/bin/bash
 			function kill_all_apps() {
 				kill_app_with_port 9991
 				kill_app_with_port 9992
