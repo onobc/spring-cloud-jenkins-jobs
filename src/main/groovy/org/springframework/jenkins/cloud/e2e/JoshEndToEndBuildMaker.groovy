@@ -54,10 +54,10 @@ class JoshEndToEndBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
-				shell("""
+				shell("""#!/bin/bash
 						./${scriptName} && echo "Tests passed!" || (echo "Tests failed!! Clearing up" && ./${postBuildScripts} && exit 1)
 					""")
-				shell("""
+				shell("""#!/bin/bash
 					echo "Clearing up after successful tests"
 					./${postBuildScripts}
 				""")

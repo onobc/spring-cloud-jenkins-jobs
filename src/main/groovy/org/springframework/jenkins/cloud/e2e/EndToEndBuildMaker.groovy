@@ -82,11 +82,11 @@ class EndToEndBuildMaker implements TestPublisher,
 					rm -rf ~/.m2/repository/org/springframework/cloud/launcher 
 				""")
 				shell("""#!/bin/bash
-						sh -e ${scriptName}
+						./${scriptName}
 					""")
 				if (postBuildScripts) {
 					shell("""#!/bin/bash
-						sh -e ${postBuildScripts}
+						./${postBuildScripts}
 					""")
 				}
 			}

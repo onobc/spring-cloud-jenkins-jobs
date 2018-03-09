@@ -66,7 +66,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
-				shell("""
+				shell("""#!/bin/bash
 						./mvnw --fail-at-end clean package -Dspring-cloud.version=${cloudTrainVersion} -U
 					""")
 			}

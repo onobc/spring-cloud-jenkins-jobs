@@ -75,11 +75,11 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
-				shell("""
+				shell("""#!/bin/bash
 						./${scriptName}
 					""")
 				if (postBuildScripts) {
-					shell("""
+					shell("""#!/bin/bash
 						./${postBuildScripts}
 					""")
 				}
