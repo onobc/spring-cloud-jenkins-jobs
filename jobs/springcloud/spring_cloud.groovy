@@ -14,7 +14,6 @@ import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.DalstonBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.JoshEndToEndBuildMaker
@@ -115,7 +114,6 @@ new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
 }
 // All jobs for e2e with Brewery
-new DalstonBreweryEndToEndBuildMaker(dsl).build()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay())
