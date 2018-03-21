@@ -109,6 +109,11 @@ new NetflixEndToEndBuildMaker(dsl).with {
 	maker.build(projectName, maker.oncePerDay())
 }
 
+// Eureka Interop
+new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
+		build("eureka-release-train-interop", oncePerDay())
+}
+
 // Finchley
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
