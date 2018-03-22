@@ -34,6 +34,10 @@ class EndToEndBuildMaker implements TestPublisher,
 		build(projectName, "scripts/runAcceptanceTests.sh", cronExpr)
 	}
 
+	void buildWithoutTests(String projectName, String cronExpr) {
+		build(projectName, "scripts/runAcceptanceTests.sh", cronExpr, false)
+	}
+
 	void build(String projectName, String scriptName, String cronExpr, boolean withTests = true) {
 		build(projectName, projectName, scriptName, cronExpr, withTests)
 	}

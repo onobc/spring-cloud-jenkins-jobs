@@ -111,7 +111,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 
 // Eureka Interop
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
-		build("eureka-release-train-interop", oncePerDay())
+	buildWithoutTests("eureka-release-train-interop", oncePerDay())
 }
 
 // Finchley
