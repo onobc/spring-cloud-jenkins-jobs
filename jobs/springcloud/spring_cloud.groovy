@@ -82,7 +82,7 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy('1.1.x')
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").deploy("spring-cloud-contract-raml")
-// CI BUILDS FOR SPRING CLOUD CONTRACTS
+// CI BUILDS FOR SPRING CLOUD CONTRACT
 new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.1.x")
@@ -122,7 +122,6 @@ new SleuthEndToEndBuildMaker(dsl).with {
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay())
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "1.1.x")
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "2.0.x")
 }
 
