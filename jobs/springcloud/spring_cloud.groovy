@@ -121,6 +121,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 // All jobs for e2e with Brewery
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
+	buildWithoutTests("spring-cloud-contract-nodejs", "2.0.x", oncePerDay())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "2.0.x")
 }
