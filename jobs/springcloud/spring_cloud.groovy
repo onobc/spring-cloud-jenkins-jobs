@@ -158,7 +158,9 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForEdgware()
 	buildForFinchley()
 }
-
+// Pilo's apps
+new SpringCloudSamplesEndToEndBuildMaker(dsl)
+		.build("messaging-application", everyThreeHours())
 // SONAR
 
 ['spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-sleuth', 'spring-cloud-netflix',
