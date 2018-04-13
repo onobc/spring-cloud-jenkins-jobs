@@ -44,7 +44,9 @@ new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
 new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
 
 // CI BUILDS
-new DocsAppBuildMaker(dsl).buildDocs(everyThreeHours())
+new DocsAppBuildMaker(dsl).with {
+	buildDocs(everyThreeHours())
+}
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
 new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
@@ -73,30 +75,36 @@ branchMaker.deploy('spring-cloud-release', 'Dalston', false)
 branchMaker.deploy('spring-cloud-release', 'Edgware', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
+
 // CI BUILDS FOR INCUBATOR
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
-
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy('1.0.x')
 	deploy('1.1.x')
 }
-new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").deploy("spring-cloud-contract-raml")
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
+		.deploy("spring-cloud-contract-raml")
+
 // CI BUILDS FOR SPRING CLOUD CONTRACT
 new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.1.x")
 	deploy("1.2.x")
 }
-
-new SpringCloudNetflixDeployBuildMaker(dsl).with {
-	deploy(masterBranch())
-	deploy("1.3.x")
-	deploy("1.4.x")
-}
 // issue #159
-new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").build("spring-cloud-contract-159", everyThreeHours())
-new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
+new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
+	build("spring-cloud-contract-159", everyThreeHours())
+}
+
+// SLEUTH
+new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
+	buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
+}
+new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
+	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
+	buildWithGradleTests("sleuth-documentation-apps", "edgware", everyThreeHours())
+}
 
 // E2E BUILDS
 new NetflixEndToEndBuildMaker(dsl).with {
@@ -121,7 +129,6 @@ new SleuthEndToEndBuildMaker(dsl).with {
 // All jobs for e2e with Brewery
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithoutTests("spring-cloud-contract-nodejs", "2.0.x", oncePerDay())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay())
 	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "2.0.x")
 }
@@ -158,16 +165,13 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForEdgware()
 	buildForFinchley()
 }
-// Pilo's apps
-new SpringCloudSamplesEndToEndBuildMaker(dsl)
-		.build("messaging-application", everyThreeHours())
+
 // SONAR
 
 ['spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-sleuth', 'spring-cloud-netflix',
  'spring-cloud-zookeeper', 'spring-cloud-contract'].each {
 	new SonarBuildMaker(dsl).buildSonar(it)
 }
-// TODO: Fix Consul Sonar Build
 new ConsulSonarBuildMaker(dsl).buildSonar()
 
 // F2F
@@ -177,17 +181,4 @@ new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
 // RELEASER
 ALL_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
-}
-// ========== FUNCTIONS ==========
-
-String everyThreeHours() {
-	return "H H/3 * * *"
-}
-
-String every12Hours() {
-	return "H H/12 * * *"
-}
-
-String everyDay() {
-	return "H H * * *"
 }

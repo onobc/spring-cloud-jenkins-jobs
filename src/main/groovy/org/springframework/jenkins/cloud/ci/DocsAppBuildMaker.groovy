@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
+import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -8,7 +9,7 @@ import org.springframework.jenkins.cloud.common.SpringCloudNotification
 /**
  * @author Marcin Grzejszczak
  */
-class DocsAppBuildMaker implements JdkConfig, SpringCloudJobs {
+class DocsAppBuildMaker implements JdkConfig, SpringCloudJobs, Cron {
 	private final DslFactory dsl
 
 	DocsAppBuildMaker(DslFactory dsl) {
