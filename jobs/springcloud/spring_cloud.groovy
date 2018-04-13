@@ -59,6 +59,11 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
 new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
+new SpringCloudSamplesTestsBuildMaker(dsl).with {
+	buildForDalston()
+	buildForEdgware()
+	buildForFinchley()
+}
 
 // BRANCHES BUILD - spring-cloud organization
 // Build that allows you to deploy, and build gh-pages of multiple branches. Used for projects
@@ -102,6 +107,7 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 	buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
+	//buildWithoutTests("spring-cloud-contract-nodejs", "2.0.x", oncePerDay())
 	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "edgware", everyThreeHours())
 }
@@ -160,14 +166,13 @@ new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
 			everyThreeHours(),
 			'scripts/kill_all.sh')
 }
-new SpringCloudSamplesTestsBuildMaker(dsl).with {
-	buildForDalston()
-	buildForEdgware()
-	buildForFinchley()
+
+// Pilo's apps
+new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
+	build("messaging-application", everyThreeHours())
 }
 
 // SONAR
-
 ['spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-sleuth', 'spring-cloud-netflix',
  'spring-cloud-zookeeper', 'spring-cloud-contract'].each {
 	new SonarBuildMaker(dsl).buildSonar(it)
