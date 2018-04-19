@@ -37,6 +37,10 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, '', false, true)
 	}
 
+	void buildWithMavenTests(String projectName, String branch, String cronExpr) {
+		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, '', true, false)
+	}
+
 	void buildWithoutTests(String projectName, String branch, String cronExpr) {
 		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, "", false, false)
 	}

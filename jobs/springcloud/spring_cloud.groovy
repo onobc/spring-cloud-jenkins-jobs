@@ -1,5 +1,6 @@
 package springcloud
 
+import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.DocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
@@ -7,15 +8,14 @@ import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudContractDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudNetflixDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.JoshEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
@@ -26,7 +26,6 @@ import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesMavenBuildMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
-import javaposse.jobdsl.dsl.DslFactory
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS
@@ -97,9 +96,11 @@ new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy("1.1.x")
 	deploy("1.2.x")
 }
-// issue #159
+
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
 	build("spring-cloud-contract-159", everyThreeHours())
+	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
+	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
 }
 
 // SLEUTH
