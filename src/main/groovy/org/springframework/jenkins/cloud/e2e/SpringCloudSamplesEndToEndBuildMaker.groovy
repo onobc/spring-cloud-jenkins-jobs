@@ -105,6 +105,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 				}
 				if (mavenTests) {
 					archiveJunit mavenJUnitResults()
+					archiveJunit '**/*-reports/*.xml'
 				}
 			}
 		}
