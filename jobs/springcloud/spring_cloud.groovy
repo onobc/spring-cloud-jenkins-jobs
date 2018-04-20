@@ -108,7 +108,8 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 	buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	//buildWithoutTests("spring-cloud-contract-nodejs", "2.0.x", oncePerDay())
+	buildWithoutTests("spring-cloud-contract-nodejs", "2.0.x", oncePerDay())
+	buildWithMavenTests("sleuth-issues", masterBranch(), everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "edgware", everyThreeHours())
 }
