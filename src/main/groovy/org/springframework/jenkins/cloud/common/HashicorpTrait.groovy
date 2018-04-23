@@ -23,7 +23,7 @@ trait HashicorpTrait {
 	}
 
 	String postConsulShell() {
-		return """echo 'Kill consul' && kill -9 \$(ps aux | grep '[c]onsul' | awk '{print \$2}') && echo 'Killed consul' || echo 'Can't find consul in running processes'"""
+		return '''echo 'Kill consul' && kill -9 $(ps aux | grep '[c]onsul' | awk '{print $2}') && echo 'Killed consul' || echo 'Can't find consul in running processes';'''
 	}
 
 	String preVaultShell() {
@@ -41,6 +41,6 @@ trait HashicorpTrait {
 	}
 
 	String postVaultShell() {
-		return """pkill vault && echo 'Vault killed' || echo 'No Vault process was running'"""
+		return """pkill vault && echo 'Vault killed' || echo 'No Vault process was running';"""
 	}
 }
