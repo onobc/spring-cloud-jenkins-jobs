@@ -70,9 +70,9 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				shell(buildDocsWithGhPages())
 				shell("""\
 						${preStep()}
-						${cleanAndDeploy()} || ${postStep()}
+						trap "{ ${postStep()} }" EXIT
+						${cleanAndDeploy()}
 					""")
-				shell postStep()
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
