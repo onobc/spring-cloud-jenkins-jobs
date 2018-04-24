@@ -137,8 +137,8 @@ new SleuthEndToEndBuildMaker(dsl).with {
 // All jobs for e2e with Brewery
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay())
-	buildWithGradleAndMavenTests("spring-cloud-contract-samples", oncePerDay(), "2.0.x")
+	buildWithoutTests("spring-cloud-contract-samples", oncePerDay())
+	buildWithoutTests("spring-cloud-contract-samples", "2.0.x", oncePerDay())
 }
 
 // E2E on CF
