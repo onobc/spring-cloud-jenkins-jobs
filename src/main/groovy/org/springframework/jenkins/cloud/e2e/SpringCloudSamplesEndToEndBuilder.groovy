@@ -13,7 +13,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	String projectName
 	String organization = "spring-cloud-samples"
 	String repoName
-	String scriptName
+	String scriptName = "scripts/runAcceptanceTests.sh"
 	String cronExpr
 	String branchName = masterBranch()
 	String postBuildScripts = ""
@@ -23,6 +23,12 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 
 	SpringCloudSamplesEndToEndBuilder withProjectName(String projectName) {
 		this.projectName = projectName
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withProjectAndRepoName(String projectName) {
+		this.projectName = projectName
+		this.repoName = projectName
 		return this
 	}
 

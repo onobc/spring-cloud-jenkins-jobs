@@ -116,7 +116,7 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withBranchName("2.0.x")
-	.withProjectName("spring-cloud-contract-nodejs")
+	.withProjectAndRepoName("spring-cloud-contract-nodejs")
 	.withCronExpr(oncePerDay())
 	.withWithNodeJs(true)
 	.withMavenTests(false)
