@@ -20,6 +20,7 @@ import org.springframework.jenkins.cloud.e2e.JoshEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesGradleBuildMaker
 import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesMavenBuildMaker
@@ -108,11 +109,19 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 	buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithoutTests("spring-cloud-contract-nodejs", "2.0.x", oncePerDay())
 	buildWithMavenTests("sleuth-issues", masterBranch(), everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "edgware", everyThreeHours())
 }
+
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withBranchName("2.0.x")
+	.withProjectName("spring-cloud-contract-nodejs")
+	.withCronExpr(oncePerDay())
+	.withWithNodeJs(true)
+	.withMavenTests(false)
+	.withGradleTests(false)
+}.build(dsl)
 
 // E2E BUILDS
 new NetflixEndToEndBuildMaker(dsl).with {

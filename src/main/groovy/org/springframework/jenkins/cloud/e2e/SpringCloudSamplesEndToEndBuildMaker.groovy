@@ -14,8 +14,6 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 		JdkConfig, BreweryDefaults, Label, Cron, SpringCloudJobs {
 
-	private static final int MAX_EC2_EXECUTORS = 1
-
 	private final DslFactory dsl
 	private final String organization
 
@@ -55,7 +53,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 
 	protected void build(String projectName, String repoName, String scriptName, String cronExpr, String branchName = masterBranch(),
 						 String postBuildScripts = "", boolean mavenTests = false,
-						 boolean gradleTests = false) {
+						 boolean gradleTests = false, boolean withNodeJs = false) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
 			triggers {
@@ -73,6 +71,9 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 					noActivity(defaultInactivity())
 					failBuild()
 					writeDescription('Build failed due to timeout after {0} minutes of inactivity')
+				}
+				if (withNodeJs) {
+					nodejs("9.11.1 Latest Stable")
 				}
 			}
 			scm {
@@ -109,5 +110,70 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 			}
 		}
 	}
+}
 
+class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
+		JdkConfig, BreweryDefaults, Label, Cron, SpringCloudJobs {
+	String projectName
+	String organization = "spring-cloud-samples"
+	String repoName
+	String scriptName
+	String cronExpr
+	String branchName = masterBranch()
+	String postBuildScripts = ""
+	boolean mavenTests = false
+	boolean gradleTests = false
+	boolean withNodeJs = false
+
+	SpringCloudSamplesEndToEndBuilder withProjectName(String projectName) {
+		this.projectName = projectName
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withRepoName(String repoName) {
+		this.repoName = repoName
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withScriptName(String scriptName) {
+		this.scriptName = scriptName
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withCronExpr(String cronExpr) {
+		this.cronExpr = cronExpr
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withBranchName(String branchName) {
+		this.branchName = branchName
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withPostBuildScripts(String postBuildScripts) {
+		this.postBuildScripts = postBuildScripts
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withMavenTests(boolean mavenTests) {
+		this.mavenTests = mavenTests
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withGradleTests(boolean gradleTests) {
+		this.gradleTests = gradleTests
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withWithNodeJs(boolean withNodeJs) {
+		this.withNodeJs = withNodeJs
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuildMaker build(DslFactory dsl) {
+		return new SpringCloudSamplesEndToEndBuildMaker(dsl)
+				.build(this.projectName, this.repoName, this.scriptName, this.cronExpr,
+		this.branchName, this.postBuildScripts, this.mavenTests, this.gradleTests,
+		this.withNodeJs)
+	}
 }
