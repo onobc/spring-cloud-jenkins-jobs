@@ -58,17 +58,16 @@ abstract class CompatibilityTasks {
 		return """
 		echo -e "Will:\\n1)Download releaser\\n2)Clone SC-Build\\n3)Use releaser to bump boot for SC-Build\\n4)Install new SC-Build locally\\n5)Build the project"
 		mkdir -p target
+		./mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
+		./mvnw dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT
+		mv target/dependency/*.jar target/dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
 		pushd target
-		echo -e "Downloading the releaser"
-		../mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
-		../mvnw dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT
-		mv ../dependency/*.jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
 		echo -e "Cloning Spring Cloud Build"
 		git clone https://github.com/spring-cloud/spring-cloud-build.git
 		pushd spring-cloud-build
 		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" -u -i=false
-		./mvnw clean install -DskipTests
+		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
+		./mvnw clean install -fae -U
 		popd
 		popd
 """

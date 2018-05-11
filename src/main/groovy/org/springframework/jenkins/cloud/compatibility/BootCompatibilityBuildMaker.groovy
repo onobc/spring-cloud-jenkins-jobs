@@ -39,6 +39,9 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 						url "https://github.com/${organization}/$repoName"
 						branch branchName
 					}
+					extensions {
+						wipeOutWorkspace()
+					}
 				}
 			}
 			steps checkTests ? defaultStepsWithTestsForBoot() : defaultStepsForBoot()
