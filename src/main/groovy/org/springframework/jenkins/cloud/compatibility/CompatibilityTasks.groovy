@@ -15,6 +15,7 @@ abstract class CompatibilityTasks {
 	protected static final String DEFAULT_BOOT_VERSION = AllCloudConstants.LATEST_BOOT_VERSION
 	protected static final String SPRING_BOOT_VERSION_VAR = 'SPRING_BOOT_VERSION'
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
+	protected static final String SPRING_CLOUD_BUILD_BRANCH = 'SPRING_CLOUD_BUILD_BRANCH'
 
 	Closure defaultStepsForBoot() {
 		return buildStep {
@@ -38,15 +39,29 @@ abstract class CompatibilityTasks {
 	}
 
 	protected String compileProductionForBoot() {
-		return """
+		return """#!/bin/bash
 					echo -e "Checking if prod code compiles against latest boot"
 					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"""
 	}
 
 	protected String runTestsForBoot() {
-		return """
-					echo -e "Checking if prod code compiles against latest boot"
-					./mvnw clean install -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR}"""
+		return """#!/bin/bash
+					echo -e "Will:\n1)Download releaser\n2)Clone SC-Build\n3)Use releaser to bump boot for SC-Build\n4)Install new SC-Build locally\n5)Build the project"
+					mkdir -p target
+					pushd target
+					echo -e "Downloading the releaser"
+					../mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
+					../mvnw dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT
+					echo -e "Cloning Spring Cloud Build"
+					git clone https://github.com/spring-cloud/spring-cloud-build.git
+					pushd spring-cloud-build
+					echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
+					java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0*.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" -u -i=false
+					./mvnw clean install -DskipTests
+					popd
+					popd
+					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
+					./mvnw clean install -U -fae"""
 	}
 
 	Closure defaultStepsForSpring() {

@@ -7,6 +7,7 @@ import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import static org.springframework.jenkins.cloud.common.AllCloudConstants.LATEST_SPRING_VERSION
 import static CompatibilityTasks.SPRING_VERSION_VAR
 import static SpringCompatibilityBuildMaker.COMPATIBILITY_BUILD_SPRING_SUFFIX
+import static SpringCompatibilityBuildMaker.SPRING_CLOUD_BUILD_BRANCH
 
 /**
  * Creates the jobs for the Boot Compatibility verifier
@@ -25,6 +26,7 @@ class ManualSpringCompatibilityBuildMaker implements SpringCloudJobs {
 		dsl.multiJob("spring-cloud-${COMPATIBILITY_BUILD_SPRING_SUFFIX}") {
 			parameters {
 				stringParam(SPRING_VERSION_VAR, LATEST_SPRING_VERSION, 'Which version of Spring should be used for the build')
+				stringParam(SPRING_CLOUD_BUILD_BRANCH, masterBranch(), 'Which branch of Spring Cloud Build should be cloned')
 			}
 			steps {
 				phase('spring-compatibility-phase') {
@@ -39,7 +41,7 @@ class ManualSpringCompatibilityBuildMaker implements SpringCloudJobs {
 		}
 	}
 
-	void buildAllRelatedJobs() {
+	private void buildAllRelatedJobs() {
 		AllCloudJobs.ALL_DEFAULT_JOBS.each { String projectName->
 			new SpringCompatibilityBuildMaker(dsl, COMPATIBILITY_BUILD_SPRING_SUFFIX).buildWithoutTests(projectName)
 		}

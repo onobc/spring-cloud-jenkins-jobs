@@ -12,6 +12,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildM
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.compatibility.ManualSpringCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
@@ -198,3 +199,6 @@ new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
 ALL_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
+
+// Compatibility builds
+new ManualSpringCompatibilityBuildMaker(dsl).build()
