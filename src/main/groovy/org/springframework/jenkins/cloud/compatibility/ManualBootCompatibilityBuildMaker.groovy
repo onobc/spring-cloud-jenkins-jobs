@@ -46,6 +46,7 @@ class ManualBootCompatibilityBuildMaker implements SpringCloudJobs {
 		AllCloudJobs.ALL_DEFAULT_JOBS.each { String projectName->
 			new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTests(projectName)
 		}
+
 		AllCloudJobs.JOBS_WITHOUT_TESTS.each {
 			new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTests(it)
 		}
