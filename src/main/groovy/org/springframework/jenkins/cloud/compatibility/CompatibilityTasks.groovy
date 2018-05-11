@@ -68,6 +68,7 @@ abstract class CompatibilityTasks {
 		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
 		./mvnw clean install -fae -U
+		trap 'rm -rf ~/.m2/repository/org/springframework/cloud/spring-cloud-build/' EXIT
 		popd
 		popd
 """
