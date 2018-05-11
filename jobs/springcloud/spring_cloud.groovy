@@ -12,6 +12,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildM
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualSpringCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
@@ -201,4 +202,4 @@ ALL_JOBS.each {
 }
 
 // Compatibility builds
-new ManualSpringCompatibilityBuildMaker(dsl).build()
+new ManualBootCompatibilityBuildMaker(dsl).build()

@@ -26,7 +26,6 @@ class ManualSpringCompatibilityBuildMaker implements SpringCloudJobs {
 		dsl.multiJob("spring-cloud-${COMPATIBILITY_BUILD_SPRING_SUFFIX}") {
 			parameters {
 				stringParam(SPRING_VERSION_VAR, LATEST_SPRING_VERSION, 'Which version of Spring should be used for the build')
-				stringParam(SPRING_CLOUD_BUILD_BRANCH, masterBranch(), 'Which branch of Spring Cloud Build should be cloned')
 			}
 			steps {
 				phase('spring-compatibility-phase') {
