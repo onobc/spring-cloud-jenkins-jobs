@@ -40,6 +40,7 @@ abstract class CompatibilityTasks {
 
 	protected String compileProductionForBoot() {
 		return """#!/bin/bash
+					set -o errexit
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
 					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"""
@@ -47,6 +48,7 @@ abstract class CompatibilityTasks {
 
 	protected String runTestsForBoot() {
 		return """#!/bin/bash
+					set -o errexit
 					${bumpBoot()}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae"""
@@ -60,11 +62,12 @@ abstract class CompatibilityTasks {
 		echo -e "Downloading the releaser"
 		../mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
 		../mvnw dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT
+		mv ../dependency/*.jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
 		echo -e "Cloning Spring Cloud Build"
 		git clone https://github.com/spring-cloud/spring-cloud-build.git
 		pushd spring-cloud-build
 		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0*.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" -u -i=false
+		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" -u -i=false
 		./mvnw clean install -DskipTests
 		popd
 		popd
