@@ -9,7 +9,7 @@ import groovy.transform.CompileStatic
 trait HashicorpTrait {
 
 	String preConsulShell() {
-		return '''
+		return ''' #!/bin/bash
 					echo "Clearing consul data"
 					rm -rf /tmp/consul
 					rm -rf /tmp/consul-config
@@ -23,11 +23,11 @@ trait HashicorpTrait {
 	}
 
 	String postConsulShell() {
-		return '''echo 'Kill consul' && kill -9 $(ps aux | grep '[c]onsul' | awk '{print $2}') && echo 'Killed consul' || echo 'Can't find consul in running processes';'''
+		return '''echo 'Kill consul' && kill -9 $(ps aux | grep '[c]onsul' | awk '{print $2}') && echo 'Killed consul' || echo "Can't find consul in running processes";'''
 	}
 
 	String preVaultShell() {
-		return '''
+		return ''' #!/bin/bash
 					echo "Kill Vault"
 					pkill vault && echo "Vault killed" || echo "No Vault process was running"
 
