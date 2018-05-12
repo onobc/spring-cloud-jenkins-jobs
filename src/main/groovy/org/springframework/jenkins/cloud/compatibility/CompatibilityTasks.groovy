@@ -41,6 +41,8 @@ abstract class CompatibilityTasks {
 	protected String compileProductionForBoot() {
 		return """#!/bin/bash
 					set -o errexit
+					echo -e "Getting latest version of Spring Boot"
+					${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp)"'
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
 					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"""
@@ -64,6 +66,7 @@ abstract class CompatibilityTasks {
 		pushd target
 		echo -e "Cloning Spring Cloud Build"
 		git clone https://github.com/spring-cloud/spring-cloud-build.git
+		git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 		pushd spring-cloud-build
 		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false

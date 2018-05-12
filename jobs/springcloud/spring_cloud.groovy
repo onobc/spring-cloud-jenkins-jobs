@@ -12,8 +12,8 @@ import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildM
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.ManualSpringCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
@@ -53,6 +53,8 @@ new DocsAppBuildMaker(dsl).with {
 new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
 		maker.deploy(it)
+		// compatibility build
+		new BootCompatibilityBuildMaker(dsl).buildWithoutTests(it, oncePerDay())
 	}
 	JOBS_WITHOUT_TESTS.each {
 		maker.deployWithoutTests(it)
