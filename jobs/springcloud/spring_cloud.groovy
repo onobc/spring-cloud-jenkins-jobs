@@ -54,7 +54,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
 		maker.deploy(it)
 		// compatibility build
-		new BootCompatibilityBuildMaker(dsl).buildWithoutTests(it, oncePerDay())
+		new BootCompatibilityBuildMaker(dsl).buildWithoutTests(it, oncePerDay(), false)
 	}
 	JOBS_WITHOUT_TESTS.each {
 		maker.deployWithoutTests(it)

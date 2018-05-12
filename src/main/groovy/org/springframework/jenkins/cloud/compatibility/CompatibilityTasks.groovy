@@ -42,7 +42,8 @@ abstract class CompatibilityTasks {
 		return """#!/bin/bash
 					set -o errexit
 					echo -e "Getting latest version of Spring Boot"
-					${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp)"'
+					${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
+					echo -e "Latest version of boot is [\$${SPRING_BOOT_VERSION_VAR}]"
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
 					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"""
@@ -66,6 +67,7 @@ abstract class CompatibilityTasks {
 		pushd target
 		echo -e "Cloning Spring Cloud Build"
 		git clone https://github.com/spring-cloud/spring-cloud-build.git
+		${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
 		git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 		pushd spring-cloud-build
 		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"

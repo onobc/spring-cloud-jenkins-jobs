@@ -20,12 +20,15 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 		super(dsl, suffix, organization)
 	}
 
-	protected void buildWithTests(String projectName, String repoName, String branchName, String cronExpr, boolean checkTests) {
+	protected void buildWithTests(String projectName, String repoName, String branchName, String cronExpr, boolean checkTests,
+								  boolean parametrizedBoot = true) {
 		String prefixedProjectName = prefixJob(projectName)
 		dsl.job("${prefixedProjectName}-${suffix}") {
 			concurrentBuild()
-			parameters {
-				stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_VERSION, 'Which version of Spring Boot should be used for the build')
+			if (parametrizedBoot) {
+				parameters {
+					stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_VERSION, 'Which version of Spring Boot should be used for the build')
+				}
 			}
 			triggers {
 				if (cronExpr) {
