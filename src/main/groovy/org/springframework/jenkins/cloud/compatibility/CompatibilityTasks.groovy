@@ -60,6 +60,7 @@ abstract class CompatibilityTasks {
 	protected String bumpBoot() {
 		return """
 		echo -e "Will:\\n1)Download releaser\\n2)Clone SC-Build\\n3)Use releaser to bump boot for SC-Build\\n4)Install new SC-Build locally\\n5)Build the project"
+		rm -rf target
 		mkdir -p target
 		./mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
 		./mvnw dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT
