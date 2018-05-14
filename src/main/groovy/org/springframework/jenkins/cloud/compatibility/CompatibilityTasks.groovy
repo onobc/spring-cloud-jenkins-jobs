@@ -42,7 +42,9 @@ abstract class CompatibilityTasks {
 		return """#!/bin/bash
 					set -o errexit
 					echo -e "Getting latest version of Spring Boot"
-					${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
+					# Uncomment this to get latest version at all (not necessarily 2.0.x)
+					#${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
+					${SPRING_BOOT_VERSION_VAR}="\\\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>2.0." | tail -1 | sed -ne '/<latest>/s#\\\\s*<[^>]*>\\\\s*##gp')"
 					echo -e "Latest version of boot is [\$${SPRING_BOOT_VERSION_VAR}]"
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
