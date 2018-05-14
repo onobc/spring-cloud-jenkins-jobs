@@ -14,6 +14,7 @@ abstract class CompatibilityTasks {
 
 	protected static final String DEFAULT_BOOT_VERSION = AllCloudConstants.LATEST_BOOT_VERSION
 	protected static final String SPRING_BOOT_VERSION_VAR = 'SPRING_BOOT_VERSION'
+	protected static final String SPRING_BOOT_MINOR = '2.0'
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
 	protected static final String SPRING_CLOUD_BUILD_BRANCH = 'SPRING_CLOUD_BUILD_BRANCH'
 
@@ -44,7 +45,7 @@ abstract class CompatibilityTasks {
 					echo -e "Getting latest version of Spring Boot"
 					# Uncomment this to get latest version at all (not necessarily 2.0.x)
 					#${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
-					${SPRING_BOOT_VERSION_VAR}="\\\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>2.0." | tail -1 | sed -ne '/<latest>/s#\\\\s*<[^>]*>\\\\s*##gp')"
+					${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>${SPRING_BOOT_MINOR}." | tail -1 | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
 					echo -e "Latest version of boot is [\$${SPRING_BOOT_VERSION_VAR}]"
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
