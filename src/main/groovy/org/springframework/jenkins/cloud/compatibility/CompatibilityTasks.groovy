@@ -21,7 +21,6 @@ abstract class CompatibilityTasks {
 	Closure defaultStepsForBoot() {
 		return buildStep {
 			shell compileProductionForBoot()
-			shell(printDepsForBoot())
 		}
 	}
 
@@ -35,7 +34,6 @@ abstract class CompatibilityTasks {
 	Closure defaultStepsWithTestsForBoot() {
 		return buildStep {
 			shell runTestsForBoot()
-			shell(printDepsForBoot())
 		}
 	}
 
@@ -49,7 +47,9 @@ abstract class CompatibilityTasks {
 					echo -e "Latest version of boot is [\$${SPRING_BOOT_VERSION_VAR}]"
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
-					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"""
+					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests
+					${printDepsForBoot()}
+"""
 	}
 
 	protected String runTestsForBoot() {
@@ -57,7 +57,9 @@ abstract class CompatibilityTasks {
 					set -o errexit
 					${bumpBoot()}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-					./mvnw clean install -U -fae"""
+					./mvnw clean install -U -fae
+					${printDepsForBoot()}
+					"""
 	}
 
 	protected String bumpBoot() {
@@ -85,7 +87,6 @@ abstract class CompatibilityTasks {
 	Closure defaultStepsForSpring() {
 		return buildStep {
 			shell compileProductionForSpring()
-			shell(printDepsForSpring())
 		}
 	}
 
@@ -99,20 +100,23 @@ abstract class CompatibilityTasks {
 	Closure defaultStepsWithTestsForSpring() {
 		return buildStep {
 			shell runTestsForSpring()
-			shell(printDepsForSpring())
 		}
 	}
 
 	protected String compileProductionForSpring() {
 		return """
 					echo -e "Checking if prod code compiles against latest spring"
-					./mvnw clean compile -U -fae -Dspring.version=\$${SPRING_VERSION_VAR}"""
+					./mvnw clean compile -U -fae -Dspring.version=\$${SPRING_VERSION_VAR}
+					${printDepsForSpring()}
+"""
 	}
 
 	protected String runTestsForSpring() {
 		return """
 					echo -e "Checking if prod code compiles against latest spring"
-					./mvnw clean install -U -fae -Dspring.version=\$${SPRING_VERSION_VAR}"""
+					./mvnw clean install -U -fae -Dspring.version=\$${SPRING_VERSION_VAR}
+					${printDepsForSpring()}
+"""
 	}
 
 	private Closure buildStep(@DelegatesTo(StepContext) Closure buildSteps) {
