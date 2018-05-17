@@ -53,7 +53,6 @@ new DocsAppBuildMaker(dsl).with {
 new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
 		maker.deploy(it)
-		// compatibility build
 		new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
 	}
 	JOBS_WITHOUT_TESTS.each {
@@ -100,6 +99,7 @@ new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 	deploy("1.1.x")
 	deploy("1.2.x")
+	//new BootCompatibilityBuildMaker(dsl).build("spring-cloud-contract", oncePerDay(), false)
 }
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {

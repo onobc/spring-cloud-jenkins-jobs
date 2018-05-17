@@ -38,7 +38,7 @@ abstract class CompatibilityBuildMaker extends CompatibilityTasks implements Tes
 		buildWithTests(projectName, projectName, masterBranch(), cronExpr, true, parametrizedVersions)
 	}
 
-	void build(String projectName, String repoName, String branch, String cronExpr) {
+	void build(String projectName, String repoName, String branch, String cronExpr, boolean parametrizedVersions = true) {
 		buildWithTests(projectName, repoName, branch, cronExpr, true)
 	}
 
