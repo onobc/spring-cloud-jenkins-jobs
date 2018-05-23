@@ -69,7 +69,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				}
 				shell(buildDocsWithGhPages())
 				shell("""\
-						export JAVA_OPTS="-Xmx1024m"
+						export JAVA_OPTS="-XX:MaxPermSize=1024m"
 						${preStep()}
 						trap "{ ${postStep()} }" EXIT
 						${cleanAndDeploy()}
