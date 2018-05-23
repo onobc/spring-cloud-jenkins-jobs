@@ -67,9 +67,9 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(buildDocsWithGhPages())
+				shell(antiPermgenHack() + "\n" + buildDocsWithGhPages())
 				shell("""\
-						export JAVA_OPTS="-XX:MaxPermSize=1024m"
+						${antiPermgenHack()}
 						${preStep()}
 						trap "{ ${postStep()} }" EXIT
 						${cleanAndDeploy()}
@@ -82,6 +82,10 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				archiveJunit mavenJUnitResults()
 			}
 		}
+	}
+
+	protected String antiPermgenHack() {
+		return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:+UseConcMarkSweepGC -XX:+CMSPermGenSweepingEnabled -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=4096M"'
 	}
 
 	protected String jdkVersion(String branchName) {
