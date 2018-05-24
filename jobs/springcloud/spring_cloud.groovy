@@ -149,10 +149,22 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 // All jobs for e2e with Brewery
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
-new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithoutTests("spring-cloud-contract-samples", oncePerDay())
-	buildWithoutTests("spring-cloud-contract-samples", "2.0.x", oncePerDay())
-}
+
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
+			.withCronExpr(everyThreeHours())
+			.withWithNodeJs(true)
+			.withMavenTests(false)
+			.withGradleTests(false)
+}.build(dsl)
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
+			.withBranchName("2.0.x")
+			.withCronExpr(everyThreeHours())
+			.withWithNodeJs(true)
+			.withMavenTests(false)
+			.withGradleTests(false)
+}.build(dsl)
 
 // E2E on CF
 new CloudFoundryEndToEndBuildMaker(dsl).with {
