@@ -118,14 +118,14 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleTests("sleuth-documentation-apps", "edgware", everyThreeHours())
 }
 
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withBranchName("2.0.x")
-	.withProjectAndRepoName("spring-cloud-contract-nodejs")
-	.withCronExpr(oncePerDay())
-	.withWithNodeJs(true)
-	.withMavenTests(false)
-	.withGradleTests(false)
-}.build(dsl)
+//new SpringCloudSamplesEndToEndBuilder().with {
+//	it.withBranchName("2.0.x")
+//	.withProjectAndRepoName("spring-cloud-contract-nodejs")
+//	.withCronExpr(oncePerDay())
+//	.withWithNodeJs(true)
+//	.withMavenTests(false)
+//	.withGradleTests(false)
+//}.build(dsl)
 
 // E2E BUILDS
 new NetflixEndToEndBuildMaker(dsl).with {
