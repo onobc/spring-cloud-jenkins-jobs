@@ -24,7 +24,7 @@ class AllCloudJobs {
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-security', 'spring-cloud-config',
 												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build', 'spring-cloud-release',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
-						                                                 'spring-cloud-openfeign']
+						                                                 'spring-cloud-openfeign', 'spring-cloud-function']
 	/**
 	 * Some projects need to have the test report generation skipped (since they have no tests).
 	 */
