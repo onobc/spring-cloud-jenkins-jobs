@@ -64,6 +64,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 				timestamps()
 				colorizeOutput()
 				environmentVariables([
+						KILL_AT_THE_END: 'yes',
 						TERM: 'dumb',
 						RETRIES: 70
 				])
