@@ -64,15 +64,9 @@ dsl.nestedView('Spring Cloud') {
 			}
 			columns defaultColumns()
 		}
-		listView('F2F') {
-			jobs {
-				regex('spring-cloud.*-f2f')
-			}
-			columns defaultColumns()
-		}
-		nestedView('F2F-pipelines') {
+		nestedView('CD-pipelines') {
 			def nested = delegate
-			['github-analytics','github-webhook'].each {
+			['github-analytics', 'github-webhook', 'app-monolith'].each {
 				String artifactName = it
 				String projectName = "${artifactName}-pipeline"
 				nested.views {
