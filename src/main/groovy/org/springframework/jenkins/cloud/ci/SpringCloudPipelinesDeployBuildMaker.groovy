@@ -28,6 +28,7 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 		dsl.job("${project}-${masterBranch()}-ci") {
 			triggers {
 				cron everyThreeHours()
+				githubPush()
 			}
 			jdk jdk8()
 			scm {
@@ -96,7 +97,7 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 	}
 
 	private String build() {
-		return "./gradlew clean release"
+		return "./gradlew clean build generateDocs"
 	}
 
 	private String syncDocs() {
