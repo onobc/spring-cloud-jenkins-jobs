@@ -160,7 +160,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
-			.withBranchName("2.0.x")
+			.withBranchName("1.2.x")
 			.withCronExpr(everyThreeHours())
 			.withWithNodeJs(true)
 			.withMavenTests(false)
