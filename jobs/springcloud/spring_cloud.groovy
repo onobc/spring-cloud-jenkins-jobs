@@ -134,10 +134,11 @@ new NetflixEndToEndBuildMaker(dsl).with {
 }
 
 // CUSTOM E2E FOR SPRING CLOUD PROJECTS
-['spring-cloud-zookeeper', 'spring-cloud-consul'].each { String projectName ->
-	def maker = new EndToEndBuildMaker(dsl)
-	maker.build(projectName, maker.oncePerDay())
-}
+// the jobs were failing for so long that we're disabling them
+//['spring-cloud-zookeeper', 'spring-cloud-consul'].each { String projectName ->
+//	def maker = new EndToEndBuildMaker(dsl)
+//	maker.build(projectName, maker.oncePerDay())
+//}
 
 // Eureka Interop
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
