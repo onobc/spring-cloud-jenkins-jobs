@@ -26,6 +26,7 @@ import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesGradleBuildMaker
 import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesMavenBuildMaker
+import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
@@ -63,7 +64,6 @@ new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
 new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
-	buildForDalston()
 	buildForEdgware()
 	buildForFinchley()
 }
@@ -119,26 +119,10 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleTests("sleuth-documentation-apps", "edgware", everyThreeHours())
 }
 
-//new SpringCloudSamplesEndToEndBuilder().with {
-//	it.withBranchName("2.0.x")
-//	.withProjectAndRepoName("spring-cloud-contract-nodejs")
-//	.withCronExpr(oncePerDay())
-//	.withWithNodeJs(true)
-//	.withMavenTests(false)
-//	.withGradleTests(false)
-//}.build(dsl)
-
 // E2E BUILDS
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
-
-// CUSTOM E2E FOR SPRING CLOUD PROJECTS
-// the jobs were failing for so long that we're disabling them
-//['spring-cloud-zookeeper', 'spring-cloud-consul'].each { String projectName ->
-//	def maker = new EndToEndBuildMaker(dsl)
-//	maker.build(projectName, maker.oncePerDay())
-//}
 
 // Eureka Interop
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
@@ -152,6 +136,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 // All jobs for e2e with Brewery
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 
+// Spring Cloud Contract samples
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 			.withCronExpr(everyThreeHours())
@@ -216,6 +201,8 @@ new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
 ALL_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
+// META-RELEASER
+new SpringCloudMetaReleaseMaker(dsl).release()
 
 // Compatibility builds
 new ManualBootCompatibilityBuildMaker(dsl).build()

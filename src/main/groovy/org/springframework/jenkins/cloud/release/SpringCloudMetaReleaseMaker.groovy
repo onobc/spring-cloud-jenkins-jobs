@@ -1,0 +1,121 @@
+package org.springframework.jenkins.cloud.release
+
+import javaposse.jobdsl.dsl.DslFactory
+
+import org.springframework.jenkins.cloud.common.AllCloudConstants
+import org.springframework.jenkins.cloud.common.SpringCloudJobs
+import org.springframework.jenkins.cloud.common.SpringCloudNotification
+import org.springframework.jenkins.common.job.JdkConfig
+import org.springframework.jenkins.common.job.TestPublisher
+
+/**
+ * @author Marcin Grzejszczak
+ */
+class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
+		SpringCloudJobs {
+	private static final String RELEASER_CONFIG_PARAM = "RELEASER_CONFIG"
+	private final DslFactory dsl
+
+	SpringCloudMetaReleaseMaker(DslFactory dsl) {
+		this.dsl = dsl
+	}
+
+	void release() {
+		dsl.job("spring-cloud-meta-releaser") {
+			parameters {
+				textParam(RELEASER_CONFIG_PARAM, AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT, "Properties file used by the meta-releaser")
+			}
+			jdk jdk8()
+			scm {
+				git {
+					remote {
+						url "https://github.com/spring-cloud/spring-cloud-release-tools"
+						branch masterBranch()
+					}
+					extensions {
+						wipeOutWorkspace()
+					}
+				}
+			}
+			wrappers {
+				timestamps()
+				colorizeOutput()
+				maskPasswords()
+				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
+					usernamePassword(githubRepoUserNameEnvVar(),
+							githubRepoPasswordEnvVar(),
+							githubUserCredentialId())
+					file(gpgSecRing(), "spring-signing-secring.gpg")
+					file(gpgPubRing(), "spring-signing-pubring.gpg")
+					string(gpgPassphrase(), "spring-gpg-passphrase")
+					string(githubToken(), githubTokenCredId())
+					usernamePassword(sonatypeUser(), sonatypePassword(),
+							"oss-token")
+				}
+				timeout {
+					noActivity(300)
+					failBuild()
+					writeDescription('Build failed due to timeout after {0} minutes of inactivity')
+				}
+			}
+			steps {
+				// build the releaser
+				shell("""#!/bin/bash
+				rm -rf ~/.m2/repository/org/springframework/cloud
+				mkdir -p target
+				./mvnw clean install > "target/releaser.log"
+				echo "Run the meta-releaser!"
+				${setupGitCredentials()}
+				rm -rf config && mkdir -p config && echo "\$${RELEASER_CONFIG_PARAM} > config/releaser.properties"
+				set +x
+				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
+				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false -x=true || exit 1
+				${cleanGitCredentials()}
+				""")
+			}
+			configure {
+				SpringCloudNotification.cloudSlack(it as Node) {
+					notifyFailure()
+					notifySuccess()
+					notifyUnstable()
+					includeFailedTests(false)
+					includeTestSummary(false)
+				}
+			}
+			publishers {
+				archiveJunit mavenJUnitResults()
+			}
+		}
+	}
+
+	private String gpgSecRing() {
+		return 'FOO_SEC'
+	}
+
+	private String gpgPubRing() {
+		return 'FOO_PUB'
+	}
+
+	private String gpgPassphrase() {
+		return 'FOO_PASSPHRASE'
+	}
+
+	private String sonatypeUser() {
+		return 'SONATYPE_USER'
+	}
+
+	private String sonatypePassword() {
+		return 'SONATYPE_PASSWORD'
+	}
+
+	private String githubToken() {
+		return 'RELEASER_GIT_OAUTH_TOKEN'
+	}
+
+	private String githubTokenCredId() {
+		return '7b3ebbea-7001-479b-8578-b8c464dab973'
+	}
+}
