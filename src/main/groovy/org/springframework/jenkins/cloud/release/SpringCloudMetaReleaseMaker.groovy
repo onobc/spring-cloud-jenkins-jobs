@@ -80,7 +80,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				if [[ \${$START_FROM_PARAM} != "" ]]; then
 					ADDITIONAL_OPTS="--start-from '\${$START_FROM_PARAM}'"
-				else if [[ \${$TASK_NAMES_PARAM} != "" ]]; then
+				elif [[ \${$TASK_NAMES_PARAM} != "" ]]; then
 					ADDITIONAL_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
 				fi
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false --meta-release=true \${ADDITIONAL_OPTS} || exit 1
