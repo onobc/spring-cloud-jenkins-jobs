@@ -14,6 +14,9 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs {
 	private static final String RELEASER_CONFIG_PARAM = "RELEASER_CONFIG"
+	private static final String START_FROM_PARAM = "START_FROM"
+	private static final String TASK_NAMES_PARAM = "TASK_NAMES"
+
 	private final DslFactory dsl
 
 	SpringCloudMetaReleaseMaker(DslFactory dsl) {
@@ -24,6 +27,8 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		dsl.job("spring-cloud-meta-releaser") {
 			parameters {
 				textParam(RELEASER_CONFIG_PARAM, AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT, "Properties file used by the meta-releaser")
+				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
+				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
 			}
 			jdk jdk8()
 			scm {
@@ -66,13 +71,19 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				shell("""#!/bin/bash
 				rm -rf ~/.m2/repository/org/springframework/cloud
 				mkdir -p target
+				echo "Building the releaser. Please wait..."
 				./mvnw clean install > "target/releaser.log"
 				echo "Run the meta-releaser!"
 				${setupGitCredentials()}
-				rm -rf config && mkdir -p config && echo "\$${RELEASER_CONFIG_PARAM} > config/releaser.properties"
+				rm -rf config && mkdir -p config && echo "\$${RELEASER_CONFIG_PARAM}" > config/releaser.properties
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false -x=true || exit 1
+				if [[ \${$START_FROM_PARAM} != "" ]]; then
+					ADDITIONAL_OPTS="--start-from '\${$START_FROM_PARAM}'"
+				else if [[ \${$TASK_NAMES_PARAM} != "" ]]; then
+					ADDITIONAL_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
+				fi
+				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false --meta-release=true \${ADDITIONAL_OPTS} || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
