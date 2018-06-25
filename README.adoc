@@ -49,6 +49,10 @@ There's nothing that you have to do. If you've added the newest branch under `JO
 the project automatically takes the latest branch version and reuses it as point of entry for
 `JOBS_WITH_BRANCHES_FOR_COMPATIBILITY_BUILD`.
 
+== I want to add / change default versions for meta-release
+
+Just modify the default properties file contents here `AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT`
+
 = Jenkins
 
 The Gradle build comes with some useful tasks (run `./gradlew tasks` to see the whole list). Let's focus on
