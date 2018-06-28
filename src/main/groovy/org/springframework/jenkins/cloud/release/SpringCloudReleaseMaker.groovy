@@ -43,6 +43,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 					}
 				}
 			}
+			label(releaserLabel())
 			wrappers {
 				timestamps()
 				colorizeOutput()

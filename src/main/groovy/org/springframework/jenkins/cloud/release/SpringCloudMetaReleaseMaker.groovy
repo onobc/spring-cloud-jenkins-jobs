@@ -42,10 +42,8 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					}
 				}
 			}
+			label(releaserLabel())
 			wrappers {
-				environmentVariables {
-					env("RELEASER.GIT.CLONE_DESTINATION_DIR", '${WORKSPACE}/target')
-				}
 				timestamps()
 				colorizeOutput()
 				maskPasswords()

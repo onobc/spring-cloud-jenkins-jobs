@@ -12,6 +12,10 @@ trait SpringCloudJobs extends BuildAndDeploy {
 		return 'spring-cloud'
 	}
 
+	String releaserLabel() {
+		return "releaser"
+	}
+
 	String setupGitCredentials() {
 		return """
 					set +x
