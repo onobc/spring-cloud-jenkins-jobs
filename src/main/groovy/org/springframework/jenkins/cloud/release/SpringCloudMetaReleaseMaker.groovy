@@ -42,6 +42,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					}
 				}
 			}
+
 			wrappers {
 				timestamps()
 				colorizeOutput()
@@ -69,7 +70,6 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 			steps {
 				// build the releaser
 				shell("""#!/bin/bash
-				rm -rf ~/.m2/repository/org/springframework/cloud
 				mkdir -p target
 				echo "Building the releaser. Please wait..."
 				./mvnw clean install > "target/releaser.log"
