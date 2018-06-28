@@ -29,7 +29,6 @@ class AllCloudConstants {
 	public static final String DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT = """\
 releaser.fixed-versions[spring-boot]=2.0.3.RELEASE
 releaser.fixed-versions[spring-cloud-build]=2.0.3.BUILD-SNAPSHOT
-releaser.fixed-versions[spring-cloud-release]=Finchley.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-commons]=2.0.1.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-stream]=Elmhurst.RELEASE
 releaser.fixed-versions[spring-cloud-function]=1.0.0.BUILD-SNAPSHOT
@@ -47,5 +46,6 @@ releaser.fixed-versions[spring-cloud-zookeeper]=2.0.1.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-sleuth]=2.0.1.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-contract]=2.0.1.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-vault]=2.0.1.BUILD-SNAPSHOT
+releaser.fixed-versions[spring-cloud-release]=Finchley.BUILD-SNAPSHOT
 """
 }
