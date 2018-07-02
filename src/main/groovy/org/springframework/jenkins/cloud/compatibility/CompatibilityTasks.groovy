@@ -71,7 +71,12 @@ abstract class CompatibilityTasks {
 
 	protected String bumpBoot() {
 		return """
-		echo -e "Will:\\n1)Download releaser\\n2)Clone SC-Build\\n3)Use releaser to bump boot for SC-Build\\n4)Install new SC-Build locally\\n5)Build the project"
+		echo -e "Will:
+		1)Download releaser
+		2)Clone SC-Build
+		3)Use releaser to bump boot for SC-Build
+		4)Install new SC-Build locally
+		5)Build the project"
 		rm -rf target
 		mkdir -p target
 		./mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
@@ -85,7 +90,6 @@ abstract class CompatibilityTasks {
 		pushd spring-cloud-build
 		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -b -i=false
-		./mvnw clean install -fae -U
 		popd
 		popd
 """
