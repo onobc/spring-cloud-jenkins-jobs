@@ -71,6 +71,8 @@ abstract class CompatibilityTasks {
 
 	protected String bumpBoot() {
 		return """
+		echo "Removing stored spring-cloud-release-tools"
+		rm -rf ~/.m2/repository/org/springframework/cloud/internal
 		echo -e "Will:
 		1)Download releaser
 		2)Clone SC-Build
