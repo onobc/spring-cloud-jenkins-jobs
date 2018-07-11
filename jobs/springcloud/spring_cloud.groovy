@@ -60,6 +60,8 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		maker.deployWithoutTests(it)
 	}
 }
+new SpringCloudDeployBuildMaker(dsl)
+		.deploy("spring-cloud-repository-management")
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
 new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
