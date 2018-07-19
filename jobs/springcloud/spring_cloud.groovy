@@ -99,8 +99,8 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
 // CI BUILDS FOR SPRING CLOUD CONTRACT
 new SpringCloudContractDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
-	deploy("1.1.x")
 	deploy("1.2.x")
+	deploy("2.0.x")
 	//new BootCompatibilityBuildMaker(dsl).build("spring-cloud-contract", oncePerDay(), false)
 }
 
