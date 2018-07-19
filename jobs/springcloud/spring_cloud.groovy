@@ -139,21 +139,16 @@ new SleuthEndToEndBuildMaker(dsl).with {
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 
 // Spring Cloud Contract samples
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
-			.withCronExpr(everyThreeHours())
-			.withWithNodeJs(true)
-			.withMavenTests(false)
-			.withGradleTests(false)
-}.build(dsl)
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
-			.withBranchName("1.2.x")
-			.withCronExpr(everyThreeHours())
-			.withWithNodeJs(true)
-			.withMavenTests(false)
-			.withGradleTests(false)
-}.build(dsl)
+["master", "2.1.x", "1.2.x"].each { String branch ->
+	new SpringCloudSamplesEndToEndBuilder().with {
+		it.withProjectAndRepoName("spring-cloud-contract-samples")
+				.withBranchName(branch)
+				.withCronExpr(everyThreeHours())
+				.withWithNodeJs(true)
+				.withMavenTests(false)
+				.withGradleTests(false)
+	}.build(dsl)
+}
 
 // E2E on CF
 new CloudFoundryEndToEndBuildMaker(dsl).with {
