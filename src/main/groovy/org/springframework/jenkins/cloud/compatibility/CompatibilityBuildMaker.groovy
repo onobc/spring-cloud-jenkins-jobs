@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.compatibility
 
+import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -9,7 +10,7 @@ import org.springframework.jenkins.common.job.TestPublisher
  * @author Marcin Grzejszczak
  */
 abstract class CompatibilityBuildMaker extends CompatibilityTasks implements TestPublisher,
-		JdkConfig, SpringCloudJobs {
+		JdkConfig, SpringCloudJobs, Cron {
 	public static final String COMPATIBILITY_BUILD_DEFAULT_SUFFIX = 'compatibility-check'
 
 	protected final DslFactory dsl

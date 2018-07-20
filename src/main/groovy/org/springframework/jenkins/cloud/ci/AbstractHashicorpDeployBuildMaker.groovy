@@ -1,6 +1,8 @@
 package org.springframework.jenkins.cloud.ci
 
 import groovy.transform.PackageScope
+
+import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.HashicorpTrait
 import org.springframework.jenkins.common.job.JdkConfig
 import javaposse.jobdsl.dsl.DslFactory
@@ -15,7 +17,7 @@ import org.springframework.jenkins.common.job.TestPublisher
  */
 @PackageScope
 abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPublisher, HashicorpTrait,
-		Cron, SpringCloudJobs, Maven {
+		Cron, SpringCloudJobs, Maven, CustomJob {
 	protected final DslFactory dsl
 	protected final String organization
 	protected final String project
@@ -26,6 +28,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 		this.project = project
 	}
 
+	@Override
 	void deploy(String branchName = 'master') {
 		dsl.job("$project-$branchName-ci") {
 			triggers {

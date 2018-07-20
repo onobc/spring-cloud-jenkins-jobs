@@ -1,17 +1,19 @@
 package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
+
 import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.ci.CustomJobFactory
 import org.springframework.jenkins.cloud.ci.DocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudContractDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
@@ -60,6 +62,27 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		maker.deployWithoutTests(it)
 	}
 }
+
+// Custom jobs builder
+CustomJobFactory customJobFactory = new CustomJobFactory(dsl)
+AllCloudJobs.CUSTOM_BUILD_JOBS.each { String projectName ->
+	customJobFactory.deploy(projectName)
+	List<String> branches = JOBS_WITH_BRANCHES[projectName]
+	if (branches) {
+		branches.each {
+			customJobFactory.deploy(projectName, it)
+		}
+	}
+	new BootCompatibilityBuildMaker(dsl) {
+		@Override
+		protected String buildCommand() {
+			return customJobFactory.compileOnlyCommand()
+		}
+	}.with {
+		build(projectName, oncePerDay(), false)
+	}
+}
+
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy("spring-cloud-repository-management")
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
@@ -95,14 +118,6 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
 		.deploy("spring-cloud-contract-raml")
-
-// CI BUILDS FOR SPRING CLOUD CONTRACT
-new SpringCloudContractDeployBuildMaker(dsl).with {
-	deploy(masterBranch())
-	deploy("1.2.x")
-	deploy("2.0.x")
-	//new BootCompatibilityBuildMaker(dsl).build("spring-cloud-contract", oncePerDay(), false)
-}
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
 	build("spring-cloud-contract-159", everyThreeHours())

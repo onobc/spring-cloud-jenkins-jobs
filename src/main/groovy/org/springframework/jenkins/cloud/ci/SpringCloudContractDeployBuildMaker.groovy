@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
+import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
@@ -12,7 +13,7 @@ import org.springframework.jenkins.cloud.common.SpringCloudNotification
  * @author Marcin Grzejszczak
  */
 class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
-		SpringCloudJobs, Maven {
+		SpringCloudJobs, Maven, CustomJob {
 	private final DslFactory dsl
 	final String organization
 	final String projectName
@@ -29,12 +30,29 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 		this.projectName = projectName
 	}
 
+	@Override
 	void deploy() {
 		doDeploy("${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch())
 	}
 
+	@Override
 	void deploy(String branchName) {
 		doDeploy("${prefixJob(projectName)}-${branchName}-ci", this.projectName, branchName)
+	}
+
+	@Override
+	String compileOnlyCommand() {
+		return "./scripts/compileOnly.sh"
+	}
+
+	@Override
+	String projectName() {
+		return "spring-cloud-contract"
+	}
+
+	@Override
+	boolean checkTests() {
+		return true
 	}
 
 	private void doDeploy(String projectName, String repoName, String branchName, boolean trigger = true) {

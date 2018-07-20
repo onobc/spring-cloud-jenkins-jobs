@@ -43,9 +43,13 @@ abstract class CompatibilityTasks {
 					${fetchLatestBootVersion()}
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
-					./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests
+					${buildCommand()}
 					${printDepsForBoot()}
 """
+	}
+
+	protected String buildCommand() {
+		return "./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"
 	}
 
 	protected String fetchLatestBootVersion() {

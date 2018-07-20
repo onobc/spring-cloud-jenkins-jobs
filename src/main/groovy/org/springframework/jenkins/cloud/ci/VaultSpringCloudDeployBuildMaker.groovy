@@ -26,4 +26,19 @@ class VaultSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMaker
 	protected String postStep() {
 		return postVaultShell()
 	}
+
+	@Override
+	String compileOnlyCommand() {
+		return "./mvnw clean install -DskipTests"
+	}
+
+	@Override
+	String projectName() {
+		return "spring-cloud-vault"
+	}
+
+	@Override
+	boolean checkTests() {
+		return true
+	}
 }

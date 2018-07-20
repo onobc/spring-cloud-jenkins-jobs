@@ -1,5 +1,7 @@
 package org.springframework.jenkins.cloud.common
 
+import javax.lang.model.element.NestingKind
+
 import groovy.transform.CompileStatic
 
 /**
@@ -53,30 +55,24 @@ class AllCloudJobs {
 														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
-	 * List of branches to be built when doing Consul builds
-	 */
-	public static final List<String> CONSUL_BRANCHES = ['master', '1.3.x', '1.2.x']
-
-	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.2.x', '1.3.x'],
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.3.x'],
 																		'spring-cloud-cli' : ['1.0.x', '1.1.x'],
 																		'spring-cloud-commons' : ['1.2.x', '1.3.x'],
+																		'spring-cloud-contract' : ['2.0.x', '1.2.x'],
 																		'spring-cloud-config' : ['1.3.x', '1.4.x'],
+																		'spring-cloud-netflix' : ['1.3.x', '1.4.x'],
+																		'spring-cloud-consul' : ['1.3.x', '1.2.x'],
 																		'spring-cloud-zookeeper' : ['1.1.x', '1.2.x'],
 																		'spring-cloud-bus': ['1.2.x', '1.3.x'],
 																		'spring-cloud-build': ['1.2.x', '1.3.x'],
 																		'spring-cloud-aws': ['1.1.x', '1.2.x'],
 																		'spring-cloud-gateway': ['1.0.x'],
 																		'spring-cloud-security': ['1.1.x', '1.2.x'],
+																		'spring-cloud-vault': ['1.1.x', '2.0.x'],
 									   									'spring-cloud-cloudfoundry': ['1.1.x']]
-	/**
-	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} for some jobs we don't want to check whether their branches
-	 * compile properly against latest boot version. Here we provide a list of such jobs
-	 */
-	public static final List<String> IGNORED_PROJECT_BRANCHES_FOR_COMPATIBILITY_BUILD = ['spring-cloud-commons']
 
 	/**
 	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
@@ -100,41 +96,4 @@ class AllCloudJobs {
 	 */
 	public static final List<String> BOOT_COMPATIBILITY_BUILD_JOBS = ALL_JOBS + ALL_SAMPLES_JOBS - JOBS_WITHOUT_BOOT_COMPATIBILITY
 
-	/**
-	 * List of all jobs that need to be executed when doing compatibility builds against
-	 * latest version of spring. This is a list of names of jobs. The proper implementations
-	 * like {@link org.springframework.jenkins.cloud.compatibility.ManualSpringCompatibilityBuildMaker} or
-	 * {@link org.springframework.jenkins.cloud.compatibility.SpringCompatibilityBuildMaker} will try
-	 * to execute the jobs having those predefined names (with a proper suffix). It's up to
-	 * the implementors to ensure that those jobs really exist.
-	 */
-	public static final List<String> SPRING_COMPATIBILITY_BUILD_JOBS = ALL_JOBS + ALL_SAMPLES_JOBS - JOBS_WITHOUT_BOOT_COMPATIBILITY
-
-	/**
-	 * List of all jobs that need to be executed when doing compatibility builds against
-	 * latest version of boot. This is a list of names of jobs. These jobs include only those
-	 * builds that are not custom in any way. The difference between this and the {@link AllCloudJobs#BOOT_COMPATIBILITY_BUILD_JOBS}
-	 * is that this one contains only default jobs whereas the other contains all jobs
-	 */
-	public static final List<String> DEFAULT_BOOT_COMPATIBILITY_BUILD_JOBS = ALL_DEFAULT_JOBS - JOBS_WITHOUT_BOOT_COMPATIBILITY
-
-	/**
-	 * List of all jobs that need to be executed when doing compatibility builds against
-	 * latest version of spring. This is a list of names of jobs. These jobs include only those
-	 * builds that are not custom in any way. The difference between this and the {@link AllCloudJobs#SPRING_COMPATIBILITY_BUILD_JOBS}
-	 * is that this one contains only default jobs whereas the other contains all jobs
-	 */
-	public static final List<String> DEFAULT_SPRING_COMPATIBILITY_BUILD_JOBS = ALL_DEFAULT_JOBS - JOBS_WITHOUT_BOOT_COMPATIBILITY
-
-
-	/**
-	 * Jobs with branches to be checked against latest boot versions. Defaults to latest branch of {@link AllCloudJobs#JOBS_WITH_BRANCHES}
-	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES_FOR_COMPATIBILITY_BUILD = JOBS_WITH_BRANCHES.collectEntries {
-		String project, List<String> branches ->
-			if (IGNORED_PROJECT_BRANCHES_FOR_COMPATIBILITY_BUILD.contains(project)) {
-				return [:]
-			}
-			return [(project) : [branches.last()]]
-	} as Map<String, List<String>>
 }
