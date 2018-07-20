@@ -4,13 +4,14 @@ import groovy.transform.CompileStatic
 import groovy.transform.PackageScope
 import javaposse.jobdsl.dsl.helpers.step.StepContext
 import org.springframework.jenkins.cloud.common.AllCloudConstants
+import org.springframework.jenkins.common.job.Maven
 
 /**
  * @author Marcin Grzejszczak
  */
 @PackageScope
 @CompileStatic
-abstract class CompatibilityTasks {
+abstract class CompatibilityTasks implements Maven {
 
 	protected static final String DEFAULT_BOOT_VERSION = AllCloudConstants.LATEST_BOOT_VERSION
 	protected static final String SPRING_BOOT_VERSION_VAR = 'SPRING_BOOT_VERSION'
@@ -85,21 +86,30 @@ abstract class CompatibilityTasks {
 		5)Build the project"
 		rm -rf target
 		mkdir -p target
-		./mvnw dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
-		./mvnw dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT
-		mv target/dependency/*.jar target/dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
+		export MAVEN_PATH=${mavenBin()}
 		pushd target
-		echo -e "Cloning Spring Cloud Build"
-		git clone https://github.com/spring-cloud/spring-cloud-build.git
-		${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
-		git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
-		pushd spring-cloud-build
-		echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-		java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
-		./mvnw clean install -fae -U
-		popd
+			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
+			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dproject.basedir=../
+			mv dependency/*.jar dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
+			echo "Cloning Spring Cloud Build"
+			git clone https://github.com/spring-cloud/spring-cloud-build.git
+			${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
+			git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
+			pushd spring-cloud-build
+				echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
+				java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
+				./mvnw clean install -fae -U
+			popd
 		popd
 """
+	}
+
+	/**
+	 * Dirty hack cause Jenkins is not inserting Maven to path...
+	 * Requires using Maven3 installation before calling
+	 */
+	String mavenBin() {
+		return "/opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/apache-maven-3.3.9/bin/"
 	}
 
 	Closure defaultStepsForSpring() {

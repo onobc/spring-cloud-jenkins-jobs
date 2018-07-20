@@ -47,6 +47,12 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 					}
 				}
 			}
+			steps {
+				maven {
+					mavenInstallation(maven33())
+					goals('--version')
+				}
+			}
 			steps checkTests ? defaultStepsWithTestsForBoot() : defaultStepsForBoot()
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
