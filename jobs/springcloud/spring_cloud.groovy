@@ -76,7 +76,7 @@ AllCloudJobs.CUSTOM_BUILD_JOBS.each { String projectName ->
 	new BootCompatibilityBuildMaker(dsl) {
 		@Override
 		protected String buildCommand() {
-			return customJobFactory.compileOnlyCommand()
+			return customJobFactory.compileOnlyCommand(projectName)
 		}
 	}.with {
 		buildWithoutTests(projectName, oncePerDay(), false)
