@@ -79,7 +79,7 @@ AllCloudJobs.CUSTOM_BUILD_JOBS.each { String projectName ->
 			return customJobFactory.compileOnlyCommand()
 		}
 	}.with {
-		build(projectName, oncePerDay(), false)
+		buildWithoutTests(projectName, oncePerDay(), false)
 	}
 }
 
