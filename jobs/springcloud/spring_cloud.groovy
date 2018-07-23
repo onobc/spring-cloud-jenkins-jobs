@@ -36,6 +36,7 @@ import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.CUSTOM_BUILD_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITHOUT_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITH_BRANCHES
 
@@ -65,7 +66,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 
 // Custom jobs builder
 CustomJobFactory customJobFactory = new CustomJobFactory(dsl)
-AllCloudJobs.CUSTOM_BUILD_JOBS.each { String projectName ->
+CUSTOM_BUILD_JOBS.each { String projectName ->
 	customJobFactory.deploy(projectName)
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
@@ -98,6 +99,9 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 // where we support multiple versions
 def branchMaker = new SpringCloudDeployBuildMaker(dsl)
 JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
+	if (CUSTOM_BUILD_JOBS.contains(project)) {
+		return
+	}
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 		branchMaker.deploy(project, branch, checkTests)
