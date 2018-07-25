@@ -58,7 +58,7 @@ class AllCloudJobs {
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.3.x'],
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.3.x', '2.0.x'],
 																		'spring-cloud-cli' : ['1.0.x', '1.1.x'],
 																		'spring-cloud-commons' : ['1.2.x', '1.3.x'],
 																		'spring-cloud-contract' : ['2.0.x', '1.2.x'],
