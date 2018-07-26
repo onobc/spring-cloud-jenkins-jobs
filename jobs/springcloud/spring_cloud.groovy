@@ -85,7 +85,7 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 }
 
 new SpringCloudDeployBuildMaker(dsl)
-		.deploy("spring-cloud-repository-management")
+		.deploy("project-crawler")
 new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
 new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
