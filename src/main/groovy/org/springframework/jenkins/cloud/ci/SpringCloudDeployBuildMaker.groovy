@@ -33,7 +33,9 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 
 	void deploy(String project, String branchToBuild, boolean checkTests = true) {
 		String projectNameWithBranch = branchToBuild ? "$branchToBuild-" : ''
-		dsl.job("$project-${projectNameWithBranch}ci") {
+		String springCloudPrefixedProjectName = project.startsWith("spring-cloud-") ?
+				project : "spring-cloud-${project}"
+		dsl.job("${springCloudPrefixedProjectName}-${projectNameWithBranch}ci") {
 			triggers {
 				cron everyThreeHours()
 				githubPush()
