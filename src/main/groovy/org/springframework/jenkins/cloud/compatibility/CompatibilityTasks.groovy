@@ -15,7 +15,7 @@ abstract class CompatibilityTasks implements Maven {
 
 	protected static final String DEFAULT_BOOT_VERSION = AllCloudConstants.LATEST_BOOT_VERSION
 	protected static final String SPRING_BOOT_VERSION_VAR = 'SPRING_BOOT_VERSION'
-	protected static final String SPRING_BOOT_MINOR = '2.1'
+	protected static final String SPRING_BOOT_MINOR = AllCloudConstants.BOOT_MINOR_FOR_API_COMPATIBILITY
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
 	protected static final String SPRING_CLOUD_BUILD_BRANCH = 'SPRING_CLOUD_BUILD_BRANCH'
 

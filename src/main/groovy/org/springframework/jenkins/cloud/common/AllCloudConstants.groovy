@@ -10,6 +10,11 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class AllCloudConstants {
 	/**
+	 * The minor against which the compatibility builds should be checked
+	 */
+	public static final String BOOT_MINOR_FOR_API_COMPATIBILITY = '2.1'
+
+	/**
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)
 	 * and in compatibility builds
 	 */
