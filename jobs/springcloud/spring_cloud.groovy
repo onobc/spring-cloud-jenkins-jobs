@@ -110,6 +110,7 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 // Release branches for Spring Cloud Release
 branchMaker.deploy('spring-cloud-release', 'Dalston', false)
 branchMaker.deploy('spring-cloud-release', 'Edgware', false)
+branchMaker.deploy('spring-cloud-release', 'Finchley', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 
