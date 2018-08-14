@@ -1,4 +1,4 @@
-package org.springframework.jenkins.cloud.ci
+package org.springframework.jenkins.cloudpipelines.ci
 
 import org.springframework.jenkins.cloud.common.TapPublisher
 import org.springframework.jenkins.common.job.JdkConfig
@@ -12,20 +12,20 @@ import org.springframework.jenkins.common.job.TestPublisher
 /**
  * @author Marcin Grzejszczak
  */
-class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
+class CloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 		SpringCloudJobs, Maven {
 	private final DslFactory dsl
 	final String organization
 	final String project
 
-	SpringCloudPipelinesDeployBuildMaker(DslFactory dsl) {
+	CloudPipelinesDeployBuildMaker(DslFactory dsl, String project) {
 		this.dsl = dsl
-		this.organization = 'spring-cloud'
-		this.project = "spring-cloud-pipelines"
+		this.organization = 'CloudPipelines'
+		this.project = project
 	}
 
 	void deploy() {
-		dsl.job("${project}-${masterBranch()}-ci") {
+		dsl.job("cloudpipelines-${this.project}-${masterBranch()}-ci") {
 			triggers {
 				cron everyThreeHours()
 				githubPush()
@@ -67,11 +67,15 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 				shell(buildWithDocs())
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node)
-				TapPublisher.cloudTap(it as Node)
+				SpringCloudNotification.cloudPipelinesSlack(it as Node)
+				TapPublisher.cloudTap(it as Node) {
+					failIfNoResults(false)
+				}
 			}
 			publishers {
-				archiveJunit gradleJUnitResults()
+				archiveJunit(gradleJUnitResults()) {
+					allowEmptyResults()
+				}
 			}
 		}
 	}
@@ -84,7 +88,6 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 					${build()} || exit 1 
 					${syncDocs()} || echo "Failed to sync docs"
 					${cleanGitCredentials()}
-					${dockerBuildAndPush()}
 					"""
 	}
 
@@ -97,7 +100,7 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 	}
 
 	private String build() {
-		return "./gradlew clean build generateDocs -PskipDist"
+		return "./gradlew clean build generateDocs -PskipDist -PreleaseDocker"
 	}
 
 	private String syncDocs() {
@@ -106,22 +109,5 @@ class SpringCloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, 
 
 	private String buildNumber() {
 		return '${BUILD_NUMBER}'
-	}
-
-	private String dockerBuildAndPush() {
-		return """
-			echo "Deploying image to DockerHub"
-			docker login --username=\$${dockerhubUserNameEnvVar()} --password=\$${dockerhubPasswordEnvVar()}
-			echo "Docker images"
-			docker images
-			echo "Performing Docker Build"
-			docker build -t springcloud/spring-cloud-pipeline-jenkins ./jenkins
-			echo "Docker images post build"
-			docker images
-			echo "Pushing LATEST image to DockerHub"
-			docker push springcloud/spring-cloud-pipeline-jenkins:latest
-			echo "Removing all local images"
-			docker rmi -f springcloud/spring-cloud-pipeline-jenkins
-		"""
 	}
 }

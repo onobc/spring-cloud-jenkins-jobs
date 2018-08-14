@@ -1,4 +1,4 @@
-package org.springframework.jenkins.cloud.ci
+package org.springframework.jenkins.cloudpipelines.ci
 
 import javaposse.jobdsl.dsl.DslFactory
 
@@ -13,20 +13,20 @@ import org.springframework.jenkins.common.job.TestPublisher
 /**
  * @author Marcin Grzejszczak
  */
-class SpringCloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
+class CloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 		SpringCloudJobs, Maven {
 	private final DslFactory dsl
 	final String organization
 	final String project
 
-	SpringCloudPipelinesBaseDeployBuildMaker(DslFactory dsl) {
+	CloudPipelinesBaseDeployBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
-		this.organization = 'spring-cloud'
+		this.organization = 'CloudPipelines'
 		this.project = "pipeline-base"
 	}
 
 	void deploy() {
-		dsl.job("spring-cloud-${project}-${masterBranch()}-ci") {
+		dsl.job("cloudpipelines-${project}-${masterBranch()}-ci") {
 			triggers {
 				githubPush()
 			}
@@ -70,16 +70,16 @@ class SpringCloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublish
 				echo "Docker images"
 				docker images
 				echo "Building image"
-				docker build . -t springcloud/pipeline-base
-				docker tag springcloud/pipeline-base springcloud/pipeline-base:\${tagName}
-				docker push springcloud/pipeline-base:\${tagName}
-				docker push springcloud/pipeline-base:latest
+				docker build . -t cloudpipelines/pipeline-base
+				docker tag cloudpipelines/pipeline-base springcloud/pipeline-base:\${tagName}
+				docker push cloudpipelines/pipeline-base:\${tagName}
+				docker push cloudpipelines/pipeline-base:latest
 				echo "Removing all local images"
-				docker rmi -f springcloud/pipeline-base
+				docker rmi -f cloudpipelines/pipeline-base
 				""")
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node)
+				SpringCloudNotification.cloudPipelinesSlack(it as Node)
 			}
 		}
 	}

@@ -9,11 +9,8 @@ import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesBaseDeployBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudPipelinesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
-import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
@@ -86,8 +83,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy("project-crawler")
-new SpringCloudPipelinesDeployBuildMaker(dsl).deploy()
-new SpringCloudPipelinesBaseDeployBuildMaker(dsl).deploy()
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForEdgware()
