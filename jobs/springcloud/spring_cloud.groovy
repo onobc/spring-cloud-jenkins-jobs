@@ -81,8 +81,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	}
 }
 
-new SpringCloudDeployBuildMaker(dsl)
-		.deploy("project-crawler")
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForEdgware()

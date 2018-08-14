@@ -16,26 +16,45 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 		SpringCloudJobs, Maven {
 	private final DslFactory dsl
 	final String organization
+	final String prefix
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
 		this.organization = 'spring-cloud'
+		this.prefix = ""
 	}
 
 	SpringCloudDeployBuildMaker(DslFactory dsl, String organization) {
 		this.dsl = dsl
 		this.organization = organization
+		this.prefix = ""
+	}
+
+	SpringCloudDeployBuildMaker(DslFactory dsl, String organization, String prefix) {
+		this.dsl = dsl
+		this.organization = organization
+		this.prefix = prefix
+	}
+
+	static SpringCloudDeployBuildMaker cloudPipelines(DslFactory dsl) {
+		return new SpringCloudDeployBuildMaker(dsl, "CloudPipelines", "cloudpipelines")
 	}
 
 	void deploy(String project, boolean checkTests = true) {
 		deploy(project, masterBranch(), checkTests)
 	}
 
+	private String prefix(String project) {
+		if (this.prefix) {
+			return this.prefix.endsWith("-") ? this.prefix : this.prefix + "-"
+		}
+		return project.startsWith("spring-cloud-") ? "" : "spring-cloud-"
+	}
+
 	void deploy(String project, String branchToBuild, boolean checkTests = true) {
 		String projectNameWithBranch = branchToBuild ? "$branchToBuild-" : ''
-		String springCloudPrefixedProjectName = project.startsWith("spring-cloud-") ?
-				project : "spring-cloud-${project}"
-		dsl.job("${springCloudPrefixedProjectName}-${projectNameWithBranch}ci") {
+		String prefixedName = prefix(project) + project
+		dsl.job("${prefixedName}-${projectNameWithBranch}ci") {
 			triggers {
 				cron everyThreeHours()
 				githubPush()
