@@ -68,9 +68,9 @@ class AllCloudJobs {
 																		'spring-cloud-zookeeper' : ['1.1.x', '1.2.x', '2.0.x'],
 																		'spring-cloud-bus': ['1.2.x', '1.3.x', '2.0.x'],
 																		'spring-cloud-build': ['1.2.x', '1.3.x', '2.0.x'],
-																		'spring-cloud-aws': ['1.1.x', '1.2.x', '2.0.x'],
+																		'spring-cloud-aws': ['1.1.x', '1.2.x'],
 																		'spring-cloud-gateway': ['1.0.x', '2.0.x'],
-																		'spring-cloud-security': ['1.1.x', '1.2.x', '2.0.x'],
+																		'spring-cloud-security': ['1.1.x', '1.2.x'],
 																		'spring-cloud-vault': ['1.1.x', '2.0.x'],
 									   									'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x']]
 
