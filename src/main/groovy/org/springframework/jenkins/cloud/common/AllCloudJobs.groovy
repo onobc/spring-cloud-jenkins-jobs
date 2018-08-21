@@ -72,7 +72,7 @@ class AllCloudJobs {
 																		'spring-cloud-gateway': ['1.0.x', '2.0.x'],
 																		'spring-cloud-security': ['1.1.x', '1.2.x'],
 																		'spring-cloud-vault': ['1.1.x', '2.0.x'],
-									   									'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x']]
+									   									'spring-cloud-cloudfoundry': ['1.1.x']]
 
 	/**
 	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
