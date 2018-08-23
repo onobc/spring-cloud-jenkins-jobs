@@ -16,6 +16,14 @@ trait SpringCloudJobs extends BuildAndDeploy {
 		return "releaser"
 	}
 
+	String ubuntu18_04() {
+		return "jenkins-15"
+	}
+
+	String openJdk7() {
+		return "openjdk7"
+	}
+
 	String setupGitCredentials() {
 		return """
 					set +x

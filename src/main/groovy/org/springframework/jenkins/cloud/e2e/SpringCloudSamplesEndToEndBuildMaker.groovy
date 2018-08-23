@@ -43,6 +43,10 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, "", false, false)
 	}
 
+	void buildWithoutTestsForNewUbuntu(String projectName, String branch, String cronExpr) {
+		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, "", false, false, ubuntu18_04())
+	}
+
 	void buildWithoutTests(String projectName, String cronExpr) {
 		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, masterBranch(), "", false, false)
 	}
@@ -53,13 +57,14 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 
 	protected void build(String projectName, String repoName, String scriptName, String cronExpr, String branchName = masterBranch(),
 						 String postBuildScripts = "", boolean mavenTests = false,
-						 boolean gradleTests = false, boolean withNodeJs = false) {
+						 boolean gradleTests = false, String newLabel = "", boolean withNodeJs = false) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
 			triggers {
 				cron cronExpr
 			}
 			jdk jdk8()
+			label(newLabel)
 			wrappers {
 				timestamps()
 				colorizeOutput()

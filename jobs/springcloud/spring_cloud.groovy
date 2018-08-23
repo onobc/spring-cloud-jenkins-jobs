@@ -125,8 +125,8 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
 
 // SLEUTH
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
-	buildWithoutTests("sleuth-webmvc-example", everyThreeHours())
-	buildWithoutTests("sleuth-webmvc-example", "rabbitmq-sender", everyThreeHours())
+	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", masterBranch(), everyThreeHours())
+	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", "rabbitmq-sender", everyThreeHours())
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", masterBranch(), everyThreeHours())

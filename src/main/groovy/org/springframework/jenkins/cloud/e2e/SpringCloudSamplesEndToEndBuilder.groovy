@@ -16,6 +16,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	String scriptName = "scripts/runAcceptanceTests.sh"
 	String cronExpr
 	String branchName = masterBranch()
+	String label = ""
 	String postBuildScripts = ""
 	boolean mavenTests = false
 	boolean gradleTests = false
@@ -72,10 +73,15 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 		return this
 	}
 
+	SpringCloudSamplesEndToEndBuilder withLabel(String label) {
+		this.label = label
+		return this
+	}
+
 	SpringCloudSamplesEndToEndBuildMaker build(DslFactory dsl) {
 		return new SpringCloudSamplesEndToEndBuildMaker(dsl)
 				.build(this.projectName, this.repoName, this.scriptName, this.cronExpr,
 				this.branchName, this.postBuildScripts, this.mavenTests, this.gradleTests,
-				this.withNodeJs)
+				this.label, this.withNodeJs)
 	}
 }
