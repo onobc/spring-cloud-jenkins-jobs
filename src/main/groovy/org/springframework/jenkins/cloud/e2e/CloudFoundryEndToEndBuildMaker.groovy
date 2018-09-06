@@ -60,6 +60,7 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 				}
 				environmentVariables {
 					env(cfSpacePropName(), cfSpace())
+					env("TERM", "dumb")
 				}
 			}
 			steps {

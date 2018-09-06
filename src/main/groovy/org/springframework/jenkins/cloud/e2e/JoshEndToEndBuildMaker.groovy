@@ -34,6 +34,7 @@ class JoshEndToEndBuildMaker implements TestPublisher,
 				timestamps()
 				colorizeOutput()
 				environmentVariables([
+						TERM: "dumb",
 						RETRIES: 50
 				])
 				timeout {
