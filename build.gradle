@@ -14,6 +14,8 @@ sourceSets {
     jobs {
         groovy {
             srcDirs 'jobs'
+            compileClasspath += main.compileClasspath
+            compileClasspath += main.output
         }
     }
 }
