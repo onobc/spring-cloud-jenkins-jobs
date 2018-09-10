@@ -22,7 +22,7 @@ class SpringCloudNotification {
 			notifyUnstable(true)
 			notifyRegression(false)
 			notifyFailure(false)
-			notifyBackToNormal(true)
+			notifyBackToNormal(false)
 			notifyRepeatedFailure(true)
 			includeTestSummary(true)
 			includeFailedTests(true)
