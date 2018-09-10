@@ -86,7 +86,8 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 				}
 			}
 			steps {
-				shell("rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/")
+				shell(removeMavenInstallation())
+				shell(stopRunningDocker())
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')

@@ -80,6 +80,7 @@ class EndToEndBuildMaker implements TestPublisher,
 			}
 			weight(MAX_EC2_EXECUTORS)
 			steps {
+				shell(stopRunningDocker())
 				shell(killAllApps())
 				shell("""#!/bin/bash
 					echo "Cleaning up .m2"

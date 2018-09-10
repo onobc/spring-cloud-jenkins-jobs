@@ -52,6 +52,16 @@ trait SpringCloudJobs extends BuildAndDeploy {
 					"""
 	}
 
+	String removeMavenInstallation() {
+		return "rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/"
+	}
+
+	String stopRunningDocker() {
+		return """#!/bin/bash
+docker ps -a -q | xargs -n 1 -P 8 -I {} docker stop {} || echo "No running docker containers are left"
+"""
+	}
+
 	/**
 	 * Dirty hack cause Jenkins is not inserting Maven to path...
 	 * Requires using Maven3 installation before calling

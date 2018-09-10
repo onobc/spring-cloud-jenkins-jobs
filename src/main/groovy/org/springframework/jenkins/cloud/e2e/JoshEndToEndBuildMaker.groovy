@@ -55,6 +55,7 @@ class JoshEndToEndBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
+				shell(stopRunningDocker())
 				shell("""#!/bin/bash
 						./${scriptName} && echo "Tests passed!" || (echo "Tests failed!! Clearing up" && ./${postBuildScripts} && exit 1)
 					""")
