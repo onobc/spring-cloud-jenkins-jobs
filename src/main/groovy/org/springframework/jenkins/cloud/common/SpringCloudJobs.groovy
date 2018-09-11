@@ -58,7 +58,8 @@ trait SpringCloudJobs extends BuildAndDeploy {
 
 	String stopRunningDocker() {
 		return """#!/bin/bash
-docker ps -a -q | xargs -n 1 -P 8 -I {} docker stop {} || echo "No running docker containers are left"
+if [ -n "\$(type -t timeout)" ]; then timeout 10s docker ps -a -q | xargs -n 1 -P 8 -I {} docker stop {} || echo "Failed to stop docker... Hopefully you know what you're doing"; fi
+if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P 8 -I {} docker stop {} || echo "Failed to stop docker... Hopefully you know what you're doing"; fi
 """
 	}
 
