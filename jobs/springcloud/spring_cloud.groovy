@@ -204,8 +204,10 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 new ConsulSonarBuildMaker(dsl).buildSonar()
 
 // F2F
+/*
 new SpringCloudPipelinesMavenBuildMaker(dsl).build('github-webhook')
 new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
+*/
 
 // RELEASER
 ALL_JOBS.each {
