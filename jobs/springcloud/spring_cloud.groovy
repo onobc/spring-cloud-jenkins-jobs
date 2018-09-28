@@ -8,6 +8,7 @@ import org.springframework.jenkins.cloud.ci.DocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
@@ -23,8 +24,6 @@ import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
-import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesGradleBuildMaker
-import org.springframework.jenkins.cloud.f2f.SpringCloudPipelinesMavenBuildMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
@@ -51,13 +50,17 @@ new DocsAppBuildMaker(dsl).with {
 	buildDocs(everyThreeHours())
 }
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
-new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
+new SpringCloudDeployBuildMakerBuilder().dsl(dsl).with { SpringCloudDeployBuildMakerBuilder maker ->
 	(ALL_DEFAULT_JOBS).each {
-		maker.deploy(it)
+		maker.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
+				.build().deploy(it)
+		maker.build().deploy(it)
 		new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
 	}
 	JOBS_WITHOUT_TESTS.each {
-		maker.deployWithoutTests(it)
+		maker.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
+				.build().deployWithoutTests(it)
+		maker.build().deployWithoutTests(it)
 	}
 }
 

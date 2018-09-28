@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
+import groovy.transform.builder.Builder
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -17,23 +18,20 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	private final DslFactory dsl
 	final String organization
 	final String prefix
+	String jdkVersion = jdk8()
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
-		this.dsl = dsl
-		this.organization = 'spring-cloud'
-		this.prefix = ""
+		this(dsl, 'spring-cloud', '')
 	}
 
 	SpringCloudDeployBuildMaker(DslFactory dsl, String organization) {
-		this.dsl = dsl
-		this.organization = organization
-		this.prefix = ""
+		this(dsl, organization, '')
 	}
 
 	SpringCloudDeployBuildMaker(DslFactory dsl, String organization, String prefix) {
 		this.dsl = dsl
-		this.organization = organization
-		this.prefix = prefix
+		this.organization = organization ?: 'spring-cloud'
+		this.prefix = prefix ?: ''
 	}
 
 	static SpringCloudDeployBuildMaker cloudPipelines(DslFactory dsl) {
@@ -62,7 +60,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 			parameters {
 				stringParam(branchVarName(), branchToBuild ?: masterBranch(), 'Which branch should be built')
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			scm {
 				git {
 					remote {
