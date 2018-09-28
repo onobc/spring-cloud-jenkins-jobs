@@ -42,10 +42,6 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cr
 		return this
 	}
 
-	static SpringCloudDeployBuildMakerBuilder builder() {
-		return new SpringCloudDeployBuildMakerBuilder()
-	}
-
 	SpringCloudDeployBuildMaker build() {
 		def maker = new SpringCloudDeployBuildMaker(this.dsl, this.organization, this.prefix)
 		if (this.jdkVersion) maker.jdkVersion = this.jdkVersion

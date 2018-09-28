@@ -50,17 +50,25 @@ new DocsAppBuildMaker(dsl).with {
 	buildDocs(everyThreeHours())
 }
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
-new SpringCloudDeployBuildMakerBuilder().dsl(dsl).with { SpringCloudDeployBuildMakerBuilder maker ->
+new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
-		maker.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
+		new SpringCloudDeployBuildMakerBuilder()
+				.dsl(dsl)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.build().deploy(it)
-		maker.build().deploy(it)
+		new SpringCloudDeployBuildMakerBuilder()
+				.dsl(dsl)
+				.build().deploy(it)
 		new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
 	}
 	JOBS_WITHOUT_TESTS.each {
-		maker.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
+		new SpringCloudDeployBuildMakerBuilder()
+				.dsl(dsl)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.build().deployWithoutTests(it)
-		maker.build().deployWithoutTests(it)
+		new SpringCloudDeployBuildMakerBuilder()
+				.dsl(dsl)
+				.build().deployWithoutTests(it)
 	}
 }
 
