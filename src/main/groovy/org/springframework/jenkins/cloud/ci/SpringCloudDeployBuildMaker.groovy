@@ -19,6 +19,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	final String organization
 	final String prefix
 	boolean deploy = true
+	boolean uploadDocs = true
 	String jdkVersion = jdk8()
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
@@ -95,7 +96,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(buildDocsWithGhPages())
+				if (uploadDocs) shell(buildDocsWithGhPages())
 				shell(buildCommand())
 			}
 			configure {
@@ -110,7 +111,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	}
 
 	String buildCommand() {
-		return this.deploy ? cleanAndDeploy() : "./mvnw clean install -fae"
+		return this.deploy ? cleanAndDeploy() : "./mvnw clean install -Pdocs -fae"
 	}
 
 	void deployWithoutTests(String project) {
