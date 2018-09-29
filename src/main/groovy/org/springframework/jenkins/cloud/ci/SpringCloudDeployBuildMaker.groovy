@@ -18,6 +18,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	private final DslFactory dsl
 	final String organization
 	final String prefix
+	boolean deploy = true
 	String jdkVersion = jdk8()
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
@@ -95,7 +96,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 					goals('--version')
 				}
 				shell(buildDocsWithGhPages())
-				shell(cleanAndDeploy())
+				shell(buildCommand())
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
@@ -106,6 +107,10 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 				}
 			}
 		}
+	}
+
+	String buildCommand() {
+		return this.deploy ? cleanAndDeploy() : "./mvnw clean install -fae"
 	}
 
 	void deployWithoutTests(String project) {

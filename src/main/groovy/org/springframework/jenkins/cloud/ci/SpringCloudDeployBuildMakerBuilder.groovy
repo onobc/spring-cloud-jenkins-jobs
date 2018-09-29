@@ -1,8 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
 import groovy.transform.CompileStatic
-import groovy.transform.builder.Builder
-import groovy.transform.builder.ExternalStrategy
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -17,14 +15,14 @@ import org.springframework.jenkins.common.job.TestPublisher
 @CompileStatic
 class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cron,
 		SpringCloudJobs, Maven {
-	DslFactory dsl
+	private final DslFactory dsl
 	String organization
 	String prefix
 	String jdkVersion = jdk8()
+	boolean deploy = true
 
-	SpringCloudDeployBuildMakerBuilder dsl(DslFactory dsl) {
+	SpringCloudDeployBuildMakerBuilder(DslFactory dsl) {
 		this.dsl = dsl
-		return this
 	}
 
 	SpringCloudDeployBuildMakerBuilder organization(String organization) {
@@ -39,6 +37,11 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cr
 
 	SpringCloudDeployBuildMakerBuilder jdkVersion(String jdkVersion) {
 		this.jdkVersion = jdkVersion
+		return this
+	}
+
+	SpringCloudDeployBuildMakerBuilder deploy(boolean deploy) {
+		this.deploy = deploy
 		return this
 	}
 
