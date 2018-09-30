@@ -52,17 +52,22 @@ new DocsAppBuildMaker(dsl).with {
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
 new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
+		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
 				.uploadDocs(false).build().deploy(it)
+		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deploy(it)
+		// Boot compatibility
 		new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
 	}
 	JOBS_WITHOUT_TESTS.each {
+		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
 				.uploadDocs(false).build().deployWithoutTests(it)
+		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deployWithoutTests(it)
 	}
@@ -71,7 +76,10 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 // Custom jobs builder
 CustomJobFactory customJobFactory = new CustomJobFactory(dsl)
 CUSTOM_BUILD_JOBS.each { String projectName ->
-	customJobFactory.deploy(projectName)
+	customJobFactory.with {
+		it.deploy(projectName)
+		it.jdkVersion(projectName, jdk11())
+	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
 		branches.each {

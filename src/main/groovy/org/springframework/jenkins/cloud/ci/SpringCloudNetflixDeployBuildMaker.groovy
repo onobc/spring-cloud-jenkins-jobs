@@ -50,18 +50,21 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 		return true
 	}
 
-	private void doDeploy(String projectName, String branchName, boolean trigger = true) {
+	@Override
+	void jdkBuild(String jdkVersion) {
+		doDeploy(projectName(), masterBranch(), jdkVersion, false)
+	}
+
+	private void doDeploy(String projectName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
 		dsl.job(projectName) {
-			if (trigger) {
-				triggers {
-					cron everyThreeHours()
-					githubPush()
-				}
+			triggers {
+				cron everyThreeHours()
+				githubPush()
 			}
 			parameters {
 				stringParam(branchVarName(), branchName, 'Which branch should be built')
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			scm {
 				git {
 					remote {
@@ -93,7 +96,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 					goals('--version')
 				}
 				shell(buildDocsWithGhPages(firstBuildContractModule()))
-				shell(cleanAndDeploy())
+				shell(deploy ? cleanAndDeploy() : "./mvnw clean install -fae")
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)

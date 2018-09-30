@@ -41,4 +41,11 @@ abstract class SpringCloudCustomJobDeployBuildMaker implements JdkConfig, TestPu
 		this.buildMaker.deploy(projectName(), branch, checkTests())
 	}
 
+	@Override
+	void jdkBuild(String jdkVersion) {
+		def maker = new SpringCloudDeployBuildMaker(dsl, this.organization, "spring-cloud-${jdkVersion}")
+		maker.jdkVersion = jdkVersion
+		maker.deploy = false
+		maker.deploy(projectName(), checkTests())
+	}
 }

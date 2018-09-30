@@ -4,12 +4,13 @@ import groovy.transform.CompileStatic
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.CustomJob
+import org.springframework.jenkins.common.job.JdkConfig
 
 /**
  * @author Marcin Grzejszczak
  */
 @CompileStatic
-class CustomJobFactory {
+class CustomJobFactory implements JdkConfig {
 	private final Map<String, CustomJob> jobs = [:]
 	private final DslFactory dsl
 	private final String organization
@@ -35,6 +36,11 @@ class CustomJobFactory {
 		} else {
 			job.deploy()
 		}
+	}
+
+	void jdkVersion(String projectName, String jdkVersion) {
+		CustomJob job = jobOrException(projectName)
+		job.jdkBuild(jdkVersion)
 	}
 
 	private CustomJob jobOrException(String projectName) {

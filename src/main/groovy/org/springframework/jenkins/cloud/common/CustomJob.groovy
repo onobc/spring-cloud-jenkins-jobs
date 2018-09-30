@@ -9,4 +9,5 @@ interface CustomJob {
 	String compileOnlyCommand()
 	String projectName()
 	boolean checkTests()
+	void jdkBuild(String jdkVersion)
 }

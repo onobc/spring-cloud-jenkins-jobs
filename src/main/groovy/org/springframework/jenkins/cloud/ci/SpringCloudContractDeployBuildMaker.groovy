@@ -1,5 +1,7 @@
 package org.springframework.jenkins.cloud.ci
 
+import groovy.transform.CompileStatic
+
 import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.common.job.Cron
@@ -12,6 +14,7 @@ import org.springframework.jenkins.cloud.common.SpringCloudNotification
 /**
  * @author Marcin Grzejszczak
  */
+@CompileStatic
 class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 		SpringCloudJobs, Maven, CustomJob {
 	private final DslFactory dsl
@@ -55,24 +58,27 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 		return true
 	}
 
-	private void doDeploy(String projectName, String repoName, String branchName, boolean trigger = true) {
+	@Override
+	void jdkBuild(String jdkVersion) {
+		doDeploy("spring-cloud-${jdkVersion}-${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch(), jdkVersion)
+	}
+
+	private void doDeploy(String projectName, String repoName, String branchName, String jdkVersion=jdk8(), boolean deploy = true) {
 		dsl.job(projectName) {
-			if (trigger) {
-				triggers {
-					cron everyThreeHours()
-					githubPush()
-				}
+			triggers {
+				cron everyThreeHours()
+				githubPush()
 			}
 			parameters {
 				stringParam(branchVarName(), branchName, 'Which branch should be built')
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			scm {
 				git {
 					remote {
 						url "https://github.com/${organization}/${repoName}"
-						branch branchVar()
 					}
+					branch branchVar()
 				}
 			}
 			wrappers {
@@ -108,7 +114,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					${setupGitCredentials()}
 					echo "Building Spring Cloud Contract docs"
 					./scripts/generateDocs.sh
-					${deployDocs()}
+					${if (deploy) deployDocs() else "./mvnw clean install -Pintegration"}
 					${cleanGitCredentials()}
 					""")
 			}

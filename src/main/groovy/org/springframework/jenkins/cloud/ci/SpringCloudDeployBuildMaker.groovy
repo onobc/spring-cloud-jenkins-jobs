@@ -67,8 +67,8 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 				git {
 					remote {
 						url "https://github.com/${organization}/${project}"
-						branch "\$${branchVarName()}"
 					}
+					branch "\$${branchVarName()}"
 					extensions {
 						wipeOutWorkspace()
 					}
