@@ -52,7 +52,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 
 	@Override
 	void jdkBuild(String jdkVersion) {
-		doDeploy(projectName(), masterBranch(), jdkVersion, false)
+		doDeploy("spring-cloud-${jdkVersion}-${projectName()}-${masterBranch()}-ci", masterBranch(), jdkVersion, false)
 	}
 
 	private void doDeploy(String projectName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
