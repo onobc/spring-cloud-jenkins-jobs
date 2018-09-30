@@ -68,7 +68,7 @@ class CustomJobFactory implements JdkConfig {
 		return new SpringCloudCustomJobDeployBuildMaker(dsl) {
 			@Override
 			String compileOnlyCommand() {
-				return "./mvnw clean install -DskipTests"
+				return cleanInstall()
 			}
 
 			@Override

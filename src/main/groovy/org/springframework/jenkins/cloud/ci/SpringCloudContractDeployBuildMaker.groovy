@@ -114,7 +114,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					${setupGitCredentials()}
 					echo "Building Spring Cloud Contract docs"
 					./scripts/generateDocs.sh
-					${if (deploy) deployDocs() else "./mvnw clean install -Pintegration"}
+					${if (deploy) deployDocs() else cleanInstall() }
 					${cleanGitCredentials()}
 					""")
 			}

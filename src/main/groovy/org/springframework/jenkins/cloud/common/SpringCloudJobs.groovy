@@ -75,6 +75,10 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return "rm -rf /tmp/gitcredentials"
 	}
 
+	String cleanInstall() {
+		return "./mvnw clean install -U -Pdocs,integration"
+	}
+
 	String buildDocs() {
 		return '''./mvnw clean install -P docs -q -U -DskipTests=true -Dmaven.test.redirectTestOutputToFile=true'''
 	}

@@ -111,7 +111,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	}
 
 	String buildCommand() {
-		return this.deploy ? cleanAndDeploy() : "./mvnw clean install -Pdocs -fae"
+		return this.deploy ? cleanAndDeploy() : cleanInstall()
 	}
 
 	void deployWithoutTests(String project) {

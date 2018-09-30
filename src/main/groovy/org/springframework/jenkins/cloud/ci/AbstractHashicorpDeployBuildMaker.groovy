@@ -22,6 +22,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	protected final String organization
 	protected final String project
 	protected String jdkVersion = jdk8()
+	protected boolean deploy
 
 	AbstractHashicorpDeployBuildMaker(DslFactory dsl, String organization, String project) {
 		this.dsl = dsl
@@ -79,7 +80,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 						${antiPermgenAndJava7TlsHack()}
 						${preStep()}
 						trap "{ ${postStep()} }" EXIT
-						${cleanAndDeploy()}
+						${deploy ? cleanAndDeploy() : cleanInstall()}
 					""")
 			}
 			configure {
@@ -94,6 +95,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	@Override
 	void jdkBuild(String jdkVersion) {
 		this.jdkVersion = jdkVersion
+		this.deploy = false
 		deploy(masterBranch())
 	}
 

@@ -29,7 +29,7 @@ class VaultSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMaker
 
 	@Override
 	String compileOnlyCommand() {
-		return "./mvnw clean install -DskipTests -fae"
+		return "./mvnw clean install -DskipTests -U -fae"
 	}
 
 	@Override
