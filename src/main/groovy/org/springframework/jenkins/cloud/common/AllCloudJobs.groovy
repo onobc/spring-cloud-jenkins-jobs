@@ -26,7 +26,14 @@ class AllCloudJobs {
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-security', 'spring-cloud-config',
 												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
-												 'spring-cloud-gcp', 'spring-cloud-openfeign', 'spring-cloud-function']
+												 'spring-cloud-openfeign', 'spring-cloud-function']
+
+	/**
+	 * List of all single project jobs to be used by the releaser
+	 */
+	public static final List<String> ALL_RELEASER_JOBS = ALL_JOBS + [
+												'spring-cloud-gcp'
+												]
 	/**
 	 * Some projects need to have the test report generation skipped (since they have no tests).
 	 */

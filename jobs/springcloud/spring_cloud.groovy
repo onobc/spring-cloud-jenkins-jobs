@@ -30,7 +30,7 @@ import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
-import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_RELEASER_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.CUSTOM_BUILD_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITHOUT_TESTS
@@ -225,7 +225,7 @@ new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
 */
 
 // RELEASER
-ALL_JOBS.each {
+ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
 // META-RELEASER
