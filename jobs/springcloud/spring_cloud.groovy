@@ -55,7 +55,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
-				.uploadDocs(false).build().deploy(it)
+				.upload(false).build().deploy(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deploy(it)
@@ -66,7 +66,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
-				.uploadDocs(false).build().deployWithoutTests(it)
+				.upload(false).build().deployWithoutTests(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deployWithoutTests(it)

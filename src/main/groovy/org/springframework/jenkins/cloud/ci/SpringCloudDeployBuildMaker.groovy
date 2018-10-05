@@ -1,6 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
-import groovy.transform.builder.Builder
+
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -19,7 +19,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	final String organization
 	final String prefix
 	boolean deploy = true
-	boolean uploadDocs = true
+	boolean upload = true
 	String jdkVersion = jdk8()
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
@@ -96,7 +96,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				if (uploadDocs) shell(buildDocsWithGhPages())
+				if (upload) shell(buildDocsWithGhPages())
 				shell(buildCommand())
 			}
 			configure {

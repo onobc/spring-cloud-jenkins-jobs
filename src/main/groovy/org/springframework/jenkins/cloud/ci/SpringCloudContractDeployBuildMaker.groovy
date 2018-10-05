@@ -60,7 +60,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 
 	@Override
 	void jdkBuild(String jdkVersion) {
-		doDeploy("spring-cloud-${jdkVersion}-${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch(), jdkVersion)
+		doDeploy("spring-cloud-${jdkVersion}-${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch(), jdkVersion, false)
 	}
 
 	private void doDeploy(String projectName, String repoName, String branchName, String jdkVersion=jdk8(), boolean deploy = true) {
@@ -108,7 +108,9 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(removeStubAndDeploy())
+				if (deploy) {
+					shell(removeStubAndDeploy())
+				}
 				shell("""#!/bin/bash -x
 					export MAVEN_PATH=${mavenBin()}
 					${setupGitCredentials()}

@@ -20,7 +20,7 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cr
 	String prefix
 	String jdkVersion = jdk8()
 	boolean deploy = true
-	boolean uploadDocs = true
+	boolean upload = true
 
 	SpringCloudDeployBuildMakerBuilder(DslFactory dsl) {
 		this.dsl = dsl
@@ -46,15 +46,15 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cr
 		return this
 	}
 
-	SpringCloudDeployBuildMakerBuilder uploadDocs(boolean uploadDocs) {
-		this.uploadDocs = uploadDocs
+	SpringCloudDeployBuildMakerBuilder upload(boolean upload) {
+		this.upload = upload
 		return this
 	}
 
 	SpringCloudDeployBuildMaker build() {
 		def maker = new SpringCloudDeployBuildMaker(this.dsl, this.organization, this.prefix)
 		if (this.jdkVersion) maker.jdkVersion = this.jdkVersion
-		if (this.uploadDocs) maker.uploadDocs = this.uploadDocs
+		if (this.upload) maker.upload = this.upload
 		maker.deploy = this.deploy
 		return maker
 	}
