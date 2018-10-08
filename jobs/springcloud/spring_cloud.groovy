@@ -172,11 +172,19 @@ new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 				.withBranchName(branch)
 				.withCronExpr(everyThreeHours())
-				.withWithNodeJs(true)
 				.withMavenTests(false)
 				.withGradleTests(false)
 	}.build(dsl)
 }
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
+			.withBranchName("2.1.x")
+			.withCronExpr(everyThreeHours())
+			.withJdk(jdk11())
+			.withMavenTests(false)
+			.withGradleTests(false)
+}.build(dsl)
+
 
 // E2E on CF
 new CloudFoundryEndToEndBuildMaker(dsl).with {

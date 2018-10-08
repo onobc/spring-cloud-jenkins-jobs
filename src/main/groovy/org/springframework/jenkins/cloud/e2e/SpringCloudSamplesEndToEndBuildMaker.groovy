@@ -16,6 +16,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 
 	private final DslFactory dsl
 	private final String organization
+	String jdkVersion = jdk8()
 
 	SpringCloudSamplesEndToEndBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
@@ -55,15 +56,19 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, '', true, true)
 	}
 
+	protected String jdkPart() {
+		return this.jdkVersion == jdk8() ? "" : "${this.jdkVersion}-"
+	}
+
 	protected void build(String projectName, String repoName, String scriptName, String cronExpr, String branchName = masterBranch(),
 						 String postBuildScripts = "", boolean mavenTests = false,
 						 boolean gradleTests = false, String newLabel = "", boolean withNodeJs = false) {
 		String organization = this.organization
-		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
+		dsl.job("${prefixJob(projectName)}-${jdkPart()}${branchName}-e2e") {
 			triggers {
 				cron cronExpr
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			label(newLabel)
 			wrappers {
 				timestamps()

@@ -18,6 +18,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	String branchName = masterBranch()
 	String label = ""
 	String postBuildScripts = ""
+	String jdk = jdk8()
 	boolean mavenTests = false
 	boolean gradleTests = false
 	boolean withNodeJs = false
@@ -30,6 +31,11 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	SpringCloudSamplesEndToEndBuilder withProjectAndRepoName(String projectName) {
 		this.projectName = projectName
 		this.repoName = projectName
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withJdk(String jdk) {
+		this.jdk = jdk
 		return this
 	}
 
@@ -68,7 +74,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withWithNodeJs(boolean withNodeJs) {
+	SpringCloudSamplesEndToEndBuilder withNodeJs(boolean withNodeJs) {
 		this.withNodeJs = withNodeJs
 		return this
 	}
@@ -79,7 +85,9 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	}
 
 	SpringCloudSamplesEndToEndBuildMaker build(DslFactory dsl) {
-		return new SpringCloudSamplesEndToEndBuildMaker(dsl)
+		def maker = new SpringCloudSamplesEndToEndBuildMaker(dsl)
+		maker.jdkVersion = jdk
+		return maker
 				.build(this.projectName, this.repoName, this.scriptName, this.cronExpr,
 				this.branchName, this.postBuildScripts, this.mavenTests, this.gradleTests,
 				this.label, this.withNodeJs)
