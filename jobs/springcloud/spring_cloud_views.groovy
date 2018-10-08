@@ -48,7 +48,7 @@ dsl.nestedView('Spring Cloud') {
 		}
 		listView('JDK') {
 			jobs {
-				regex('spring-cloud-jdk.*')
+				regex('spring-cloud.*-jdk.*')
 			}
 			columns defaultColumns()
 		}
