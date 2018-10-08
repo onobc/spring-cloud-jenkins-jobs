@@ -216,6 +216,10 @@ new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
 			'scripts/scenario_finchley_tester.sh',
 			everyThreeHours(),
 			'scripts/kill_all.sh')
+	build('bootiful-reactive-microservices-greenwich',
+			'scripts/scenario_greenwich_tester.sh',
+			everyThreeHours(),
+			'scripts/kill_all.sh')
 }
 
 // Pilo's apps
