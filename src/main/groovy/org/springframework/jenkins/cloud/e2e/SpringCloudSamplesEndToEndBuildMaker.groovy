@@ -17,6 +17,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 	private final DslFactory dsl
 	private final String organization
 	String jdkVersion = jdk8()
+	Map<String, String> additionalEnvs = [:]
 
 	SpringCloudSamplesEndToEndBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
@@ -70,6 +71,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 			}
 			jdk jdkVersion
 			label(newLabel)
+			environmentVariables(this.additionalEnvs)
 			wrappers {
 				timestamps()
 				colorizeOutput()

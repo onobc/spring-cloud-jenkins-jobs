@@ -185,6 +185,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 			// for postman <-> swagger
 			.withNodeJs(true)
 			.withJdk(jdk11())
+			.withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
 			.withMavenTests(false)
 			.withGradleTests(false)
 }.build(dsl)

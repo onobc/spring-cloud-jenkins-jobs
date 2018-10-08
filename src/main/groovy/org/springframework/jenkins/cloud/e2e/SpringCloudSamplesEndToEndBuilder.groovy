@@ -22,6 +22,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	boolean mavenTests = false
 	boolean gradleTests = false
 	boolean withNodeJs = false
+	Map<String, String> envs = [:]
 
 	SpringCloudSamplesEndToEndBuilder withProjectName(String projectName) {
 		this.projectName = projectName
@@ -59,6 +60,11 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 		return this
 	}
 
+	SpringCloudSamplesEndToEndBuilder withEnvs(Map<String, String> envs) {
+		this.envs = envs
+		return this
+	}
+
 	SpringCloudSamplesEndToEndBuilder withPostBuildScripts(String postBuildScripts) {
 		this.postBuildScripts = postBuildScripts
 		return this
@@ -86,7 +92,8 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 
 	SpringCloudSamplesEndToEndBuildMaker build(DslFactory dsl) {
 		def maker = new SpringCloudSamplesEndToEndBuildMaker(dsl)
-		maker.jdkVersion = jdk
+		maker.jdkVersion = this.jdk
+		maker.additionalEnvs = this.envs
 		return maker
 				.build(this.projectName, this.repoName, this.scriptName, this.cronExpr,
 				this.branchName, this.postBuildScripts, this.mavenTests, this.gradleTests,
