@@ -172,6 +172,8 @@ new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 				.withBranchName(branch)
 				.withCronExpr(everyThreeHours())
+				// for postman <-> swagger
+				.withNodeJs(true)
 				.withMavenTests(false)
 				.withGradleTests(false)
 	}.build(dsl)
@@ -180,6 +182,8 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 			.withBranchName("2.1.x")
 			.withCronExpr(everyThreeHours())
+			// for postman <-> swagger
+			.withNodeJs(true)
 			.withJdk(jdk11())
 			.withMavenTests(false)
 			.withGradleTests(false)
