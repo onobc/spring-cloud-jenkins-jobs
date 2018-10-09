@@ -17,6 +17,7 @@ import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.JoshEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
@@ -164,6 +165,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 // All jobs for e2e with Brewery
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
+new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 
 // Spring Cloud Contract samples
 ["master", "2.1.x", "1.2.x"].each { String branch ->
