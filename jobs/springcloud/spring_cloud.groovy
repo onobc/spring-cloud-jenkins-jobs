@@ -12,7 +12,6 @@ import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
-import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
@@ -60,7 +59,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deploy(it)
 		// Boot compatibility
-		new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
+		//new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
 	}
 	JOBS_WITHOUT_TESTS.each {
 		// JDK compatibility
@@ -86,14 +85,14 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 			customJobFactory.deploy(projectName, it)
 		}
 	}
-	new BootCompatibilityBuildMaker(dsl) {
+	/*new BootCompatibilityBuildMaker(dsl) {
 		@Override
 		protected String buildCommand() {
 			return customJobFactory.compileOnlyCommand(projectName)
 		}
 	}.with {
 		buildWithoutTests(projectName, oncePerDay(), false)
-	}
+	}*/
 }
 
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
