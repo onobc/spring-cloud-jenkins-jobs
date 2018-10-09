@@ -22,17 +22,18 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 		buildWithSwitches(prefix, defaultSwitches(releaseTrainName))
 	}
 
-	private void buildWithSwitches(String prefix, String defaultSwitches) {
-		super.build("$prefix-zookeeper", repoName, "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", oncePerDay())
-		super.build("$prefix-sleuth", repoName, "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", oncePerDay())
-		super.build("$prefix-sleuth-stream", repoName, "runAcceptanceTests.sh -t SLEUTH_STREAM $defaultSwitches", oncePerDay())
-		super.build("$prefix-sleuth-stream-kafka", repoName, "runAcceptanceTests.sh -t SLEUTH_STREAM -k $defaultSwitches", oncePerDay())
-		super.build("$prefix-eureka", repoName, "runAcceptanceTests.sh -t EUREKA $defaultSwitches", oncePerDay())
-		super.build("$prefix-consul", repoName, "runAcceptanceTests.sh -t CONSUL $defaultSwitches", oncePerDay())
+	protected void buildWithSwitches(String prefix, String defaultSwitches) {
+		super.build("$prefix-zookeeper", repoName(), "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", oncePerDay())
+		super.build("$prefix-sleuth", repoName(), "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", oncePerDay())
+		super.build("$prefix-eureka", repoName(), "runAcceptanceTests.sh -t EUREKA $defaultSwitches", oncePerDay())
+		super.build("$prefix-consul", repoName(), "runAcceptanceTests.sh -t CONSUL $defaultSwitches", oncePerDay())
 	}
 
+	protected String repoName() {
+		return this.repoName
+	}
 
-	private String defaultSwitches(String releaseTrainName) {
+	protected String defaultSwitches(String releaseTrainName) {
 		String releaseTrain = releaseTrainName.capitalize()
 		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT --branch ${branchName()} -r"
 	}

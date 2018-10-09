@@ -21,6 +21,13 @@ class EdgwareBreweryEndToEndBuildMaker extends BreweryEndToEndBuildMaker {
 	}
 
 	@Override
+	protected void buildWithSwitches(String prefix, String defaultSwitches) {
+		super.buildWithSwitches(prefix, defaultSwitches)
+		super.build("$prefix-sleuth-stream", repoName(), "runAcceptanceTests.sh -t SLEUTH_STREAM $defaultSwitches", oncePerDay())
+		super.build("$prefix-sleuth-stream-kafka", repoName(), "runAcceptanceTests.sh -t SLEUTH_STREAM -k $defaultSwitches", oncePerDay())
+	}
+
+	@Override
 	protected String branchName() {
 		return "edgware"
 	}
