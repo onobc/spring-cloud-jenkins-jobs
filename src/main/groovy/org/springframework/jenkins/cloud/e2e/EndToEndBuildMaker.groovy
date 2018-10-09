@@ -53,7 +53,7 @@ class EndToEndBuildMaker implements TestPublisher,
 			triggers {
 				cron cronExpr
 			}
-			jdk jdk8()
+			jdk jdkVersion()
 			wrappers {
 				timestamps()
 				colorizeOutput()
@@ -109,6 +109,10 @@ class EndToEndBuildMaker implements TestPublisher,
 				}
 			}
 		}
+	}
+
+	protected String jdkVersion() {
+		return jdk8()
 	}
 
 	protected String branchName() {
