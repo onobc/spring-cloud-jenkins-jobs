@@ -76,7 +76,7 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 	}
 
 	String cleanInstall() {
-		return "./mvnw clean install -U -Pdocs,integration"
+		return "./mvnw clean install -U -Pintegration"
 	}
 
 	String buildDocs() {
