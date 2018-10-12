@@ -71,15 +71,10 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 			}
 			jdk jdkVersion
 			label(newLabel)
-			environmentVariables(this.additionalEnvs)
+			environmentVariables(envVars())
 			wrappers {
 				timestamps()
 				colorizeOutput()
-				environmentVariables([
-						KILL_AT_THE_END: 'yes',
-						TERM: 'dumb',
-						RETRIES: 70
-				])
 				timeout {
 					noActivity(defaultInactivity())
 					failBuild()
@@ -122,6 +117,16 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 				}
 			}
 		}
+	}
+
+	protected Map<String, String> envVars() {
+		def envVars = [
+				KILL_AT_THE_END: 'yes',
+				TERM           : 'dumb',
+				RETRIES        : '70'
+		]
+		envVars.putAll(this.additionalEnvs)
+		return envVars
 	}
 }
 
