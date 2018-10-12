@@ -74,16 +74,15 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 }
 
 // Custom jobs builder
-CustomJobFactory customJobFactory = new CustomJobFactory(dsl)
 CUSTOM_BUILD_JOBS.each { String projectName ->
-	customJobFactory.with {
+	new CustomJobFactory(dsl).with {
 		it.deploy(projectName)
 		it.jdkVersion(projectName, jdk11())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
 		branches.each {
-			customJobFactory.deploy(projectName, it)
+			new CustomJobFactory(dsl).deploy(projectName, it)
 		}
 	}
 	/*new BootCompatibilityBuildMaker(dsl) {
@@ -105,14 +104,13 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 // BRANCHES BUILD - spring-cloud organization
 // Build that allows you to deploy, and build gh-pages of multiple branches. Used for projects
 // where we support multiple versions
-def branchMaker = new SpringCloudDeployBuildMaker(dsl)
 JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	if (CUSTOM_BUILD_JOBS.contains(project)) {
 		return
 	}
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
-		branchMaker.deploy(project, branch, checkTests)
+		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
 	}
 }
 // Release branches for Spring Cloud Release
