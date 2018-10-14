@@ -110,12 +110,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 			}
 			publishers {
 				if (gradleTests) {
-					archiveJunit(gradleJUnitResults()) {
-						allowEmptyResults()
-					}
-					archiveJunit ('**/*-reports/*.xml') {
-						allowEmptyResults()
-					}
+					archiveJunit gradleJUnitResults()
 				}
 				if (mavenTests) {
 					archiveJunit '**/*-reports/*.xml'

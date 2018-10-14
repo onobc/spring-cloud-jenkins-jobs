@@ -101,8 +101,14 @@ class EndToEndBuildMaker implements TestPublisher,
 			publishers {
 				if (withTests) {
 					archiveJunit gradleJUnitResults()
-					archiveArtifacts acceptanceTestReports()
-					archiveArtifacts acceptanceTestSpockReports()
+					archiveArtifacts {
+						pattern acceptanceTestReports()
+						allowEmpty()
+					}
+					archiveArtifacts {
+						pattern acceptanceTestSpockReports()
+						allowEmpty()
+					}
 				}
 				if (mavenTests) {
 					archiveJunit mavenJUnitResults()
