@@ -54,11 +54,14 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
-				.upload(false).build().deploy(it)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
+				.deploy(false)
+				.upload(false).build()
+				.deploy(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.build().deploy(it)
+				.build()
+				.deploy(it)
 		// Boot compatibility
 		//new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
 	}
@@ -76,8 +79,8 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 // Custom jobs builder
 CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CustomJobFactory(dsl).with {
-		it.deploy(projectName)
-		it.jdkVersion(projectName, jdk11())
+		new CustomJobFactory(dsl).deploy(projectName)
+		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
