@@ -104,6 +104,7 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForEdgware()
 	buildForFinchley()
 	buildForGreenwich()
+	buildForGreenwichWithJdk(jdk11())
 }
 
 // BRANCHES BUILD - spring-cloud organization

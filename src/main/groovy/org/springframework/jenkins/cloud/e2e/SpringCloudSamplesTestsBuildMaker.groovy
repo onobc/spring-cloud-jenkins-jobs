@@ -38,13 +38,18 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 		build("Greenwich.BUILD-SNAPSHOT", "tests", everySixHours(), masterBranch())
 	}
 
-	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(), String branchName = masterBranch()) {
+	void buildForGreenwichWithJdk(String jdk) {
+		build("Greenwich.BUILD-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
+	}
+
+	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),
+					   String branchName = masterBranch(), String jdkVersion = jdk8()) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
 			triggers {
 				cron cronExpr
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			wrappers {
 				timestamps()
 				colorizeOutput()
