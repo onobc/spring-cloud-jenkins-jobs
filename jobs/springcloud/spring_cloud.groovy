@@ -100,8 +100,10 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
+	// TODO: Remember to remove this
 	buildForEdgware()
 	buildForFinchley()
+	buildForGreenwich()
 }
 
 // BRANCHES BUILD - spring-cloud organization
