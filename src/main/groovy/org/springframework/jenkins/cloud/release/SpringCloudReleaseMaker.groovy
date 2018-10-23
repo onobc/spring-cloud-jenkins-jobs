@@ -11,7 +11,7 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs {
 	private static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
-	private static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS_VAR"
+	private static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
 	private final DslFactory dsl
 	final String organization
 
