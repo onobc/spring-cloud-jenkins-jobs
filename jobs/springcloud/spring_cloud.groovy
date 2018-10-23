@@ -7,6 +7,7 @@ import org.springframework.jenkins.cloud.ci.CustomJobFactory
 import org.springframework.jenkins.cloud.ci.DocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
+import org.springframework.jenkins.cloud.ci.SpringCloudAlibabaDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
@@ -136,10 +137,12 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy('1.0.x')
 	deploy('1.1.x')
 }
+new SpringCloudAlibabaDeployBuildMaker(dsl).with {
+	deploy()
+	deploy("1.x")
+}
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
 		.deploy("spring-cloud-contract-raml")
-new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
-		.deploy("spring-cloud-alibaba")
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
 	build("spring-cloud-contract-159", everyThreeHours())
