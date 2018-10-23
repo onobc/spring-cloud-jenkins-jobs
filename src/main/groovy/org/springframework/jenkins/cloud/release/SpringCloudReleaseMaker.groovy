@@ -11,6 +11,7 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs {
 	private static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
+	private static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS_VAR"
 	private final DslFactory dsl
 	final String organization
 
@@ -29,6 +30,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 			parameters {
 				stringParam(branchVarName(), masterBranch(), "Your project's branch")
 				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), 'Spring Cloud Release branch')
+				stringParam(RELEASER_ADDITIONAL_PROPS_VAR, '', 'Additional system properties')
 			}
 			jdk jdk8()
 			scm {
@@ -87,7 +89,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				${setupGitCredentials()}
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || exit 1
+				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --full-release --interactive=false || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
