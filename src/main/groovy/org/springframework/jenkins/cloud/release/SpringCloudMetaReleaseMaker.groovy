@@ -84,6 +84,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				if [[ \${$TASK_NAMES_PARAM} != "" ]]; then
 					TASK_NAMES_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
 				fi
+				echo "Start from opts [\${START_FROM_OPTS}], task names [\${TASK_NAMES_OPTS}]"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false --meta-release=true --full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS}|| exit 1
 				${cleanGitCredentials()}
 				""")
