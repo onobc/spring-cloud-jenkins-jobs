@@ -79,11 +79,12 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				if [[ \${$START_FROM_PARAM} != "" ]]; then
-					ADDITIONAL_OPTS="--start-from '\${$START_FROM_PARAM}'"
-				elif [[ \${$TASK_NAMES_PARAM} != "" ]]; then
-					ADDITIONAL_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
+					START_FROM_OPTS="--start-from '\${$START_FROM_PARAM}'"
 				fi
-				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false --meta-release=true --full-release \${ADDITIONAL_OPTS} || exit 1
+				if [[ \${$TASK_NAMES_PARAM} != "" ]]; then
+					TASK_NAMES_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
+				fi
+				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false --meta-release=true --full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS}|| exit 1
 				${cleanGitCredentials()}
 				""")
 			}
