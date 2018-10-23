@@ -138,6 +138,8 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
 		.deploy("spring-cloud-contract-raml")
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
+		.deploy("spring-cloud-alibaba")
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
 	build("spring-cloud-contract-159", everyThreeHours())
