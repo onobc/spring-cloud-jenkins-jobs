@@ -9,10 +9,10 @@ import org.springframework.jenkins.cloud.common.SpringCloudNotification
 /**
  * @author Marcin Grzejszczak
  */
-class DocsAppBuildMaker implements JdkConfig, SpringCloudJobs, Cron {
+class SleuthDocsAppBuildMaker implements JdkConfig, SpringCloudJobs, Cron {
 	private final DslFactory dsl
 
-	DocsAppBuildMaker(DslFactory dsl) {
+	SleuthDocsAppBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
 	}
 

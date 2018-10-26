@@ -4,10 +4,9 @@ import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.CustomJobFactory
-import org.springframework.jenkins.cloud.ci.DocsAppBuildMaker
+import org.springframework.jenkins.cloud.ci.SleuthDocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
-import org.springframework.jenkins.cloud.ci.SpringCloudAlibabaDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
@@ -42,29 +41,17 @@ DslFactory dsl = this
 println "Projects with tests $ALL_JOBS_WITH_TESTS"
 println "Projects without tests $JOBS_WITHOUT_TESTS"
 
-// BENCHMARK BUILDS
-new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
-new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
-
 // CI BUILDS
-new DocsAppBuildMaker(dsl).with {
-	buildDocs(everyThreeHours())
-}
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
 new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
-				.deploy(false)
-				.upload(false).build()
-				.deploy(it)
+				.deploy(false).upload(false).build().deploy(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.build()
-				.deploy(it)
-		// Boot compatibility
-		//new BootCompatibilityBuildMaker(dsl).build(it, oncePerDay(), false)
+				.build().deploy(it)
 	}
 	JOBS_WITHOUT_TESTS.each {
 		// JDK compatibility
@@ -89,14 +76,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 			new CustomJobFactory(dsl).deploy(projectName, it)
 		}
 	}
-	/*new BootCompatibilityBuildMaker(dsl) {
-		@Override
-		protected String buildCommand() {
-			return customJobFactory.compileOnlyCommand(projectName)
-		}
-	}.with {
-		buildWithoutTests(projectName, oncePerDay(), false)
-	}*/
 }
 
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
@@ -137,20 +116,20 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy('1.0.x')
 	deploy('1.1.x')
 }
-new SpringCloudAlibabaDeployBuildMaker(dsl).with {
-	deploy()
-	deploy("1.x")
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
+	deploy("spring-cloud-alibaba", masterBranch())
+	deploy("spring-cloud-alibaba", "1.x")
+	deploy("spring-cloud-contract-raml")
 }
-new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator")
-		.deploy("spring-cloud-contract-raml")
 
-new SpringCloudSamplesEndToEndBuildMaker(dsl, "marcingrzejszczak").with {
-	build("spring-cloud-contract-159", everyThreeHours())
+new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
 	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
 }
 
 // SLEUTH
+new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
+new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", masterBranch(), everyThreeHours())
 	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", "rabbitmq-sender", everyThreeHours())
@@ -162,26 +141,11 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithGradleTests("sleuth-documentation-apps", "2.0.x", everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "1.3.x", everyThreeHours())
 }
-
-// E2E BUILDS
-new NetflixEndToEndBuildMaker(dsl).with {
-	build(oncePerDay())
-}
-
-// Eureka Interop
-new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
-	buildWithoutTests("eureka-release-train-interop", oncePerDay())
-}
-
-// Finchley
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
 }
-// All jobs for e2e with Brewery
-new EdgwareBreweryEndToEndBuildMaker(dsl).build()
-new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 
-// Spring Cloud Contract samples
+// CONTRACT
 ["master", "2.1.x", "1.2.x"].each { String branch ->
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
@@ -206,15 +170,23 @@ new SpringCloudSamplesEndToEndBuilder().with {
 }.build(dsl)
 
 
-// E2E on CF
+// BREWERY
 new CloudFoundryEndToEndBuildMaker(dsl).with {
 	buildBreweryForDocs()
 	buildSleuthDocApps()
 	buildSpringCloudStream()
 }
+new NetflixEndToEndBuildMaker(dsl).with {
+	build(oncePerDay())
+}
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
+new EdgwareBreweryEndToEndBuildMaker(dsl).build()
+new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 
-// CUSTOM E2E
+// E2E
+new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
+	buildWithoutTests("eureka-release-train-interop", oncePerDay())
+}
 // Josh's CI APP
 new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
 	// TODO: Remove once Edgware is done
@@ -237,30 +209,22 @@ new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
 			everyThreeHours(),
 			'scripts/kill_all.sh')
 }
-
 // Pilo's apps
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	build("messaging-application", everyThreeHours())
 }
 
 // SONAR
-['spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-sleuth', 'spring-cloud-netflix',
- 'spring-cloud-zookeeper', 'spring-cloud-contract'].each {
+(ALL_JOBS_WITH_TESTS - "spring-cloud-consul").each {
 	new SonarBuildMaker(dsl).buildSonar(it)
 }
 new ConsulSonarBuildMaker(dsl).buildSonar()
 
-// F2F
-/*
-new SpringCloudPipelinesMavenBuildMaker(dsl).build('github-webhook')
-new SpringCloudPipelinesGradleBuildMaker(dsl).build('github-analytics')
-*/
 
 // RELEASER
 ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
-// META-RELEASER
 new SpringCloudMetaReleaseMaker(dsl).release()
 
 // Compatibility builds
