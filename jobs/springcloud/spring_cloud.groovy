@@ -122,11 +122,6 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-contract-raml")
 }
 
-new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
-	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
-}
-
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
 new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
@@ -168,7 +163,12 @@ new SpringCloudSamplesEndToEndBuilder().with {
 			.withMavenTests(false)
 			.withGradleTests(false)
 }.build(dsl)
-
+new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
+	buildWithMavenTests("the-legacy-app", masterBranch(), everyThreeHours())
+	buildWithMavenTests("the-legacy-app", "2.0.x", everyThreeHours())
+	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
+	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
+}
 
 // BREWERY
 new CloudFoundryEndToEndBuildMaker(dsl).with {
