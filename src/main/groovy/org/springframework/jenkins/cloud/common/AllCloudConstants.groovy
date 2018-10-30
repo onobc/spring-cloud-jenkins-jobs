@@ -27,6 +27,17 @@ class AllCloudConstants {
 	public static final String LATEST_SPRING_VERSION = '5.0.0.BUILD-SNAPSHOT'
 
 	/**
+	 * List of skipped projects for Spring Cloud meta release
+	 */
+	public static final String DEFAULT_RELEASER_SKIPPED_PROJECTS = "spring-boot,spring-cloud-stream,spring-cloud-task"
+
+	/**
+	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)
+	 * and in compatibility builds
+	 */
+	public static final String DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS = "spring-boot,spring-cloud-build"
+
+	/**
 	 * Default contents of the config/releaser.properties used for meta-release.
 	 * Remember that order of properties matters! We will clone and run the release
 	 * process for every single project in that order.

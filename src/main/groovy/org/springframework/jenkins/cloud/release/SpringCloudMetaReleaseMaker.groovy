@@ -28,6 +28,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
 	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
 	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
+	private static final String RELEASER_PROJECTS_TO_SKIP_VAR= 'RELEASER_PROJECTS_TO_SKIP'
 
 	private final DslFactory dsl
 
@@ -52,6 +53,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
 				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')
 				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
+				stringParam(RELEASER_PROJECTS_TO_SKIP_VAR, options.projectsToSkip, 'Names of projects to skip deployment for meta-release')
 			}
 			jdk jdk8()
 			scm {
@@ -112,6 +114,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
 						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar \\
 						--releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR} \\ 
+						--releaser.meta-release.projects-to-skip=\${$RELEASER_PROJECTS_TO_SKIP_VAR} \\ 
 						--releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR} \\ 
 						--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM} \\
 						--releaser.maven.wait-time-in-minutes=180 \\
