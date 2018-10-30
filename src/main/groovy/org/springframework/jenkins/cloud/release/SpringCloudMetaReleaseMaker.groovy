@@ -16,6 +16,14 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_CONFIG_PARAM = "RELEASER_CONFIG"
 	private static final String START_FROM_PARAM = "START_FROM"
 	private static final String TASK_NAMES_PARAM = "TASK_NAMES"
+	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
+	private static final String RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR = 'RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS'
+	private static final String RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR = 'RELEASER_GIT_UPDATE_SPRING_PROJECTS'
+	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI'
+	private static final String RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR = 'RELEASER_GIT_RUN_UPDATED_SAMPLES'
+	private static final String RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR = 'RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES'
+	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS'
+	private static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
 
 	private final DslFactory dsl
 
@@ -29,6 +37,14 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				textParam(RELEASER_CONFIG_PARAM, AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT, "Properties file used by the meta-releaser")
 				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
 				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
+				booleanParam(RELEASER_SAGAN_UPDATE_VAR, true, 'If true then will update documentation repository with the current URL')
+				booleanParam(RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR, true, 'If true then will update documentation repository with the current URL')
+				booleanParam(RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR, true, 'If true then will update Project Sagan with the current release train values')
+				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR, true, 'If true then will update the release train wiki page with the current release train values')
+				booleanParam(RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR, true, 'If true then will update samples and run the the build')
+				booleanParam(RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR, true, ' If true then will update samples with bumped snapshots after release')
+				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR, true, ' If true then will update the release train documentation project and run the generation')
+				booleanParam(RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR, true, ' If true then will update the release train documentation project and run the generation')
 			}
 			jdk jdk8()
 			scm {
@@ -85,7 +101,23 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					TASK_NAMES_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
 				fi
 				echo "Start from opts [\${START_FROM_OPTS}], task names [\${TASK_NAMES_OPTS}]"
-				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar --releaser.maven.wait-time-in-minutes=180 --spring.config.name=releaser --releaser.maven.system-properties="\${SYSTEM_PROPS}" --interactive=false --meta-release=true --full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS}|| exit 1
+				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
+						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
+						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar \\
+						--releaser.maven.wait-time-in-minutes=180 \\
+						--spring.config.name=releaser \\
+						--releaser.maven.system-properties="\${SYSTEM_PROPS}" \\
+						--interactive=false \\
+						--meta-release=true \\
+						--releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR} \\
+						--releaser.git.update-documentation-repo=\${$RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR} \\
+						--releaser.git.update-spring-project=\${$RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR} \\
+						--releaser.git.update-release-train-wiki=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR} \\
+						--releaser.git.run-updated-samples=\${$RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR} \\
+						--releaser.git.update-all-test-samples=\${$RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR} \\
+						--releaser.git.update-release-train-docs=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR} \\
+						--releaser.git.update-spring-guides=\${$RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR}
+						--full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS} || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
