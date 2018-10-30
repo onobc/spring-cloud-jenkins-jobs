@@ -12,6 +12,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.common.AllCloudConstants
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
@@ -230,6 +231,7 @@ ALL_RELEASER_JOBS.each {
 def streamOptions = ReleaserOptions.builder()
 		.releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
 		.releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
+		.releaserVersions(AllCloudConstants.DEFAULT_STREAM_RELEASER_PROPERTIES_FILE_CONTENT)
 		.releaseTrainProjectName("spring-cloud-stream-starters")
 		.runUpdatedSamples(false)
 		.updateAllTestSamples(false)

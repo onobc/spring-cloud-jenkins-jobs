@@ -53,4 +53,18 @@ releaser.fixed-versions[spring-cloud-contract]=2.0.1.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-vault]=2.0.1.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-release]=Finchley.BUILD-SNAPSHOT
 """
+
+	/**
+	 * Default contents of the config/releaser.properties used for meta-release of stream.
+	 * Remember that order of properties matters! We will clone and run the release
+	 * process for every single project in that order.
+	 */
+	public static final String DEFAULT_STREAM_RELEASER_PROPERTIES_FILE_CONTENT = """\
+releaser.fixed-versions[spring-boot]=2.0.3.RELEASE
+releaser.fixed-versions[spring-cloud-build]=2.0.3.RELEASE
+releaser.fixed-versions[spring-cloud-stream]=2.1.0.BUILD-SNAPSHOT
+releaser.fixed-versions[spring-cloud-stream-binder-rabbit]=2.1.0.BUILD-SNAPSHOT
+releaser.fixed-versions[spring-cloud-stream-binder-kafka]=2.1.0.BUILD-SNAPSHOT
+releaser.fixed-versions[spring-cloud-stream-starters]=Fishtown.BUILD-SNAPSHOT
+"""
 }

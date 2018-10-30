@@ -38,7 +38,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	void release(String jobName, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(jobName) {
 			parameters {
-				textParam(RELEASER_CONFIG_PARAM, AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT, "Properties file used by the meta-releaser")
+				textParam(RELEASER_CONFIG_PARAM, options.releaserVersions, "Properties file used by the meta-releaser")
 				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
 				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
 				booleanParam(RELEASER_SAGAN_UPDATE_VAR, options.updateSagan, 'If true then will update documentation repository with the current URL')

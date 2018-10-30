@@ -2,6 +2,8 @@ package org.springframework.jenkins.cloud.release
 
 import groovy.transform.builder.Builder
 
+import org.springframework.jenkins.cloud.common.AllCloudConstants
+
 /**
  * @author Marcin Grzejszczak
  */
@@ -18,4 +20,5 @@ class ReleaserOptions {
 	String releaseTrainProjectName = "spring-cloud-release"
 	String releaseTrainBomUrl = "https://github.com/spring-cloud/spring-cloud-release"
 	String releaseThisTrainBom = "spring-cloud-dependencies/pom.xml"
+	String releaserVersions = AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT
 }
