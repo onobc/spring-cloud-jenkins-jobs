@@ -112,7 +112,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 								--releaser.maven.system-properties="\${SYSTEM_PROPS}" \\ 
 								--full-release \\ 
 								--releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR} \\
-								--interactive=false || exit 1 \\
+								--interactive=false || exit 1
 				${cleanGitCredentials()}
 				""")
 			}

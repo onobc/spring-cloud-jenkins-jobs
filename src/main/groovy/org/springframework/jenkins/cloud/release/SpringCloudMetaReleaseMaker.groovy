@@ -129,7 +129,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 						--releaser.git.run-updated-samples=\${$RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR} \\
 						--releaser.git.update-all-test-samples=\${$RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR} \\
 						--releaser.git.update-release-train-docs=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR} \\
-						--releaser.git.update-spring-guides=\${$RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR}
+						--releaser.git.update-spring-guides=\${$RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR} \\
 						--full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS} || exit 1
 				${cleanGitCredentials()}
 				""")
