@@ -17,6 +17,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_CONFIG_PARAM = "RELEASER_CONFIG"
 	private static final String START_FROM_PARAM = "START_FROM"
 	private static final String TASK_NAMES_PARAM = "TASK_NAMES"
+	private static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
 	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
 	private static final String RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR = 'RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS'
 	private static final String RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR = 'RELEASER_GIT_UPDATE_SPRING_PROJECTS'
@@ -25,6 +26,8 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR = 'RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES'
 	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS'
 	private static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
+	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
+	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
 
 	private final DslFactory dsl
 
@@ -32,7 +35,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		this.dsl = dsl
 	}
 
-	void release(String jobName, MetaReleaserOptions options = new MetaReleaserOptions()) {
+	void release(String jobName, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(jobName) {
 			parameters {
 				textParam(RELEASER_CONFIG_PARAM, AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT, "Properties file used by the meta-releaser")
@@ -46,6 +49,9 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				booleanParam(RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR, options.updateAllTestSamples, ' If true then will update samples with bumped snapshots after release')
 				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR, options.updateReleaseTrainDocs, ' If true then will update the release train documentation project and run the generation')
 				booleanParam(RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR, options.updateSpringGuides, ' If true then will update the release train documentation project and run the generation')
+				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
+				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')
+				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 			}
 			jdk jdk8()
 			scm {
@@ -105,6 +111,9 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
 						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar \\
+						--releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR} \\ 
+						--releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR} \\ 
+						--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM} \\
 						--releaser.maven.wait-time-in-minutes=180 \\
 						--spring.config.name=releaser \\
 						--releaser.maven.system-properties="\${SYSTEM_PROPS}" \\
@@ -163,18 +172,6 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 
 	private String githubTokenCredId() {
 		return '7b3ebbea-7001-479b-8578-b8c464dab973'
-	}
-
-	@Builder
-	static class MetaReleaserOptions {
-		boolean updateSagan = true
-		boolean updateDocumentationRepos = true
-		boolean updateSpringProjects = true
-		boolean updateReleaseTrainWiki = true
-		boolean runUpdatedSamples = true
-		boolean updateAllTestSamples = true
-		boolean updateReleaseTrainDocs = true
-		boolean updateSpringGuides = true
 	}
 
 }

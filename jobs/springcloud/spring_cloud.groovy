@@ -24,6 +24,7 @@ import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
+import org.springframework.jenkins.cloud.release.ReleaserOptions
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
@@ -32,6 +33,7 @@ import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_RELEASER_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_STREAM_JOBS_FOR_RELEASER
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.CUSTOM_BUILD_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITHOUT_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITH_BRANCHES
@@ -225,19 +227,24 @@ new ConsulSonarBuildMaker(dsl).buildSonar()
 ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
+def streamOptions = ReleaserOptions.builder()
+		.releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
+		.releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
+		.releaseTrainProjectName("spring-cloud-stream-starters")
+		.runUpdatedSamples(false)
+		.updateAllTestSamples(false)
+		.updateDocumentationRepos(false)
+		.updateReleaseTrainDocs(false)
+		.updateReleaseTrainWiki(false)
+		.updateSpringGuides(false)
+		.updateSpringProjects(false)
+		.updateSagan(true)
+		.build()
+ALL_STREAM_JOBS_FOR_RELEASER.each {
+	new SpringCloudReleaseMaker(dsl).release(it, streamOptions)
+}
 new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-meta-releaser")
-new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-stream-meta-releaser",
-		SpringCloudMetaReleaseMaker.MetaReleaserOptions.builder()
-				.runUpdatedSamples(false)
-				.updateAllTestSamples(false)
-				.updateDocumentationRepos(false)
-				.updateReleaseTrainDocs(false)
-				.updateReleaseTrainWiki(false)
-				.updateSpringGuides(false)
-				.updateSpringProjects(false)
-				.updateSagan(true)
-				.build()
-)
+new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-stream-meta-releaser", streamOptions)
 
 // Compatibility builds
 new ManualBootCompatibilityBuildMaker(dsl).build()

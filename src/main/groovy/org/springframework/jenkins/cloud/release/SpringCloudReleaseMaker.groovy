@@ -15,6 +15,10 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
 	private static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
 	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
+	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
+	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
+	private static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
+
 	private final DslFactory dsl
 	final String organization
 
@@ -28,12 +32,15 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 		this.organization = organization
 	}
 
-	void release(String project) {
+	void release(String project, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job("$project-releaser") {
 			parameters {
 				stringParam(branchVarName(), masterBranch(), "Your project's branch")
 				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), 'Spring Cloud Release branch')
 				stringParam(RELEASER_ADDITIONAL_PROPS_VAR, '', 'Additional system properties')
+				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
+				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')
+				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 				booleanParam(RELEASER_SAGAN_UPDATE_VAR, true, 'If true then will update documentation repository with the current URL')
 			}
 			jdk jdk8()
@@ -93,16 +100,19 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				${setupGitCredentials()}
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} \\-Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" 
-								\\-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" 
-								\\-jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar 
-								\\ --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} 
-								\\ --releaser.maven.wait-time-in-minutes=180 
-								\\ --spring.config.name=releaser 
-								\\ --releaser.maven.system-properties="\${SYSTEM_PROPS}" 
-								\\ --full-release 
-								\\ --releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR}
-								\\ --interactive=false || exit 1
+				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} \\-Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\ 
+								-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\ 
+								-jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar \\
+								--releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR} \\ 
+								--releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}\\ 
+								--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM} \\
+								--releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} \\ 
+								--releaser.maven.wait-time-in-minutes=180 \\ 
+								--spring.config.name=releaser \\ 
+								--releaser.maven.system-properties="\${SYSTEM_PROPS}" \\ 
+								--full-release \\ 
+								--releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR} \\
+								--interactive=false || exit 1 \\
 				${cleanGitCredentials()}
 				""")
 			}
