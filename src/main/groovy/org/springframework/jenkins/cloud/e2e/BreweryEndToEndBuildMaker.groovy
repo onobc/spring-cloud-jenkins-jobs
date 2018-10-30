@@ -23,7 +23,6 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	}
 
 	protected void buildWithSwitches(String prefix, String defaultSwitches) {
-		super.build("$prefix-zookeeper", repoName(), "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", oncePerDay())
 		super.build("$prefix-sleuth", repoName(), "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", oncePerDay())
 		super.build("$prefix-eureka", repoName(), "runAcceptanceTests.sh -t EUREKA $defaultSwitches", oncePerDay())
 	}
