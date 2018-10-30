@@ -225,7 +225,19 @@ new ConsulSonarBuildMaker(dsl).buildSonar()
 ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
-new SpringCloudMetaReleaseMaker(dsl).release()
+new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-meta-releaser")
+new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-stream-meta-releaser",
+		SpringCloudMetaReleaseMaker.MetaReleaserOptions.builder()
+				.runUpdatedSamples(false)
+				.updateAllTestSamples(false)
+				.updateDocumentationRepos(false)
+				.updateReleaseTrainDocs(false)
+				.updateReleaseTrainWiki(false)
+				.updateSpringGuides(false)
+				.updateSpringProjects(false)
+				.updateSagan(true)
+				.build()
+)
 
 // Compatibility builds
 new ManualBootCompatibilityBuildMaker(dsl).build()

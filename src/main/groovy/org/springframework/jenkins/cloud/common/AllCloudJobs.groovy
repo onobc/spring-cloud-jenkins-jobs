@@ -27,13 +27,20 @@ class AllCloudJobs {
 												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
 												 'spring-cloud-openfeign', 'spring-cloud-function']
+	/**
+	 * List of all Spring Cloud Stream jobs for the releaser. This list will be used to create the boot compatibility builds
+	 * and will serve as basis for the default jobs
+	 */
+	public static final List<String> ALL_STREAM_JOBS = ["spring-cloud-stream",
+														"spring-cloud-stream-binder-rabbit",
+														"spring-cloud-stream-binder-kafka"]
 
 	/**
 	 * List of all single project jobs to be used by the releaser
 	 */
 	public static final List<String> ALL_RELEASER_JOBS = ALL_JOBS + [
 												'spring-cloud-gcp'
-												]
+												] + ALL_STREAM_JOBS
 	/**
 	 * Some projects need to have the test report generation skipped (since they have no tests).
 	 */

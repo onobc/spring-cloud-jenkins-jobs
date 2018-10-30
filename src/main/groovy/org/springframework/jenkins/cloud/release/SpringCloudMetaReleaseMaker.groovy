@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.release
 
+import groovy.transform.builder.Builder
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.AllCloudConstants
@@ -31,20 +32,20 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		this.dsl = dsl
 	}
 
-	void release() {
-		dsl.job("spring-cloud-meta-releaser") {
+	void release(String jobName, MetaReleaserOptions options = new MetaReleaserOptions()) {
+		dsl.job(jobName) {
 			parameters {
 				textParam(RELEASER_CONFIG_PARAM, AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT, "Properties file used by the meta-releaser")
 				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
 				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
-				booleanParam(RELEASER_SAGAN_UPDATE_VAR, true, 'If true then will update documentation repository with the current URL')
-				booleanParam(RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR, true, 'If true then will update documentation repository with the current URL')
-				booleanParam(RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR, true, 'If true then will update Project Sagan with the current release train values')
-				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR, true, 'If true then will update the release train wiki page with the current release train values')
-				booleanParam(RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR, true, 'If true then will update samples and run the the build')
-				booleanParam(RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR, true, ' If true then will update samples with bumped snapshots after release')
-				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR, true, ' If true then will update the release train documentation project and run the generation')
-				booleanParam(RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR, true, ' If true then will update the release train documentation project and run the generation')
+				booleanParam(RELEASER_SAGAN_UPDATE_VAR, options.updateSagan, 'If true then will update documentation repository with the current URL')
+				booleanParam(RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR, options.updateDocumentationRepos, 'If true then will update documentation repository with the current URL')
+				booleanParam(RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR, options.updateSpringProjects, 'If true then will update Project Sagan with the current release train values')
+				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR, options.updateReleaseTrainWiki, 'If true then will update the release train wiki page with the current release train values')
+				booleanParam(RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR, options.runUpdatedSamples, 'If true then will update samples and run the the build')
+				booleanParam(RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR, options.updateAllTestSamples, ' If true then will update samples with bumped snapshots after release')
+				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR, options.updateReleaseTrainDocs, ' If true then will update the release train documentation project and run the generation')
+				booleanParam(RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR, options.updateSpringGuides, ' If true then will update the release train documentation project and run the generation')
 			}
 			jdk jdk8()
 			scm {
@@ -163,4 +164,17 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private String githubTokenCredId() {
 		return '7b3ebbea-7001-479b-8578-b8c464dab973'
 	}
+
+	@Builder
+	static class MetaReleaserOptions {
+		boolean updateSagan = true
+		boolean updateDocumentationRepos = true
+		boolean updateSpringProjects = true
+		boolean updateReleaseTrainWiki = true
+		boolean runUpdatedSamples = true
+		boolean updateAllTestSamples = true
+		boolean updateReleaseTrainDocs = true
+		boolean updateSpringGuides = true
+	}
+
 }
