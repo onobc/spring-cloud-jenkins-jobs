@@ -17,7 +17,8 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
 	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
 	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
-	private static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
+	private static final String RELEASER_POM_THIS_TRAIN_BOM_VAR = 'RELEASER_POM_THIS_TRAIN'
+	private static final String RELEASER_POST_RELEASE_ONLY_VAR= 'RELEASER_POST_RELEASE_ONLY'
 
 	private final DslFactory dsl
 	final String organization
@@ -40,8 +41,9 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASER_ADDITIONAL_PROPS_VAR, '', 'Additional system properties')
 				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
 				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')
-				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
+				stringParam(RELEASER_POM_THIS_TRAIN_BOM_VAR, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 				booleanParam(RELEASER_SAGAN_UPDATE_VAR, true, 'If true then will update documentation repository with the current URL')
+				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, false, 'If set to true will run only post release tasks')
 			}
 			jdk jdk8()
 			scm {
@@ -103,9 +105,10 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} \\-Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\ 
 								-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\ 
 								-jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar \\
+								--releaser.post-release-tasks-only=\${$RELEASER_POST_RELEASE_ONLY_VAR} \\ 
 								--releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR} \\ 
 								--releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}\\ 
-								--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM} \\
+								--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM_VAR} \\
 								--releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR} \\ 
 								--releaser.maven.wait-time-in-minutes=180 \\ 
 								--spring.config.name=releaser \\ 
