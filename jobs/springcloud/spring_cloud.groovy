@@ -124,7 +124,8 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-alibaba", "1.x")
 	deploy("spring-cloud-contract-raml")
 }
-new SpringCloudReleaseMaker(dsl, "spring-cloud-incubator").release("spring-cloud-alibaba")
+new SpringCloudReleaseMaker(dsl, "spring-cloud-incubator")
+		.release("spring-cloud-alibaba")
 
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
