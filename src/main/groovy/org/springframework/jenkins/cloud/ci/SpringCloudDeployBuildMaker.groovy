@@ -62,6 +62,9 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 			parameters {
 				stringParam(branchVarName(), branchToBuild ?: masterBranch(), 'Which branch should be built')
 			}
+			if (jdkVersion == jdk11()) {
+				label(ubuntu18_04())
+			}
 			jdk jdkVersion
 			scm {
 				git {
