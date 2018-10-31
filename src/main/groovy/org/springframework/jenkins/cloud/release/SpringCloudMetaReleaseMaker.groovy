@@ -114,26 +114,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Start from opts [\${START_FROM_OPTS}], task names [\${TASK_NAMES_OPTS}]"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
-						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar \\
-						--releaser.post-release-tasks-only=\${$RELEASER_POST_RELEASE_ONLY_VAR} \\
-						--releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR} \\ 
-						--releaser.meta-release.projects-to-skip=\${$RELEASER_PROJECTS_TO_SKIP_VAR} \\ 
-						--releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR} \\ 
-						--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM} \\
-						--releaser.maven.wait-time-in-minutes=180 \\
-						--spring.config.name=releaser \\
-						--releaser.maven.system-properties="\${SYSTEM_PROPS}" \\
-						--interactive=false \\
-						--meta-release=true \\
-						--releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR} \\
-						--releaser.git.update-documentation-repo=\${$RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR} \\
-						--releaser.git.update-spring-project=\${$RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR} \\
-						--releaser.git.update-release-train-wiki=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR} \\
-						--releaser.git.run-updated-samples=\${$RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR} \\
-						--releaser.git.update-all-test-samples=\${$RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR} \\
-						--releaser.git.update-release-train-docs=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR} \\
-						--releaser.git.update-spring-guides=\${$RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR} \\
-						--full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS} || exit 1
+						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
@@ -150,6 +131,29 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				archiveJunit mavenJUnitResults()
 			}
 		}
+	}
+
+	protected String releaserOptions() {
+		return """\
+--releaser.post-release-tasks-only=\${$RELEASER_POST_RELEASE_ONLY_VAR}
+--releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR}
+--releaser.meta-release.projects-to-skip=\${$RELEASER_PROJECTS_TO_SKIP_VAR}
+--releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}
+--releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM}
+--releaser.maven.wait-time-in-minutes=180
+--spring.config.name=releaser
+--releaser.maven.system-properties="\${SYSTEM_PROPS}"
+--interactive=false
+--meta-release=true
+--releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR}
+--releaser.git.update-documentation-repo=\${$RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR}
+--releaser.git.update-spring-project=\${$RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR}
+--releaser.git.update-release-train-wiki=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR}
+--releaser.git.run-updated-samples=\${$RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR}
+--releaser.git.update-all-test-samples=\${$RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR}
+--releaser.git.update-release-train-docs=\${$RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR}
+--releaser.git.update-spring-guides=\${$RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR}
+--full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS}""".split("\n").join(" ")
 	}
 
 	private String gpgSecRing() {
