@@ -54,6 +54,9 @@ class EndToEndBuildMaker implements TestPublisher,
 				cron cronExpr
 			}
 			jdk jdkVersion()
+			if (jdkVersion() != jdk8()) {
+				label(ubuntu18_04())
+			}
 			wrappers {
 				timestamps()
 				colorizeOutput()

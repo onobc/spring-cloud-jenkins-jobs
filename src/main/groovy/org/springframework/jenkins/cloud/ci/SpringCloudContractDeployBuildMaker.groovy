@@ -73,6 +73,9 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 				stringParam(branchVarName(), branchName, 'Which branch should be built')
 			}
 			jdk jdkVersion
+			if (jdkVersion != jdk8()) {
+				label(ubuntu18_04())
+			}
 			scm {
 				git {
 					remote {

@@ -4,9 +4,7 @@ import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.CustomJobFactory
-import org.springframework.jenkins.cloud.ci.SleuthDocsAppBuildMaker
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
-import org.springframework.jenkins.cloud.ci.SleuthMemoryBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
@@ -32,8 +30,8 @@ import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
-import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_RELEASER_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_RELEASER_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_STREAM_JOBS_FOR_RELEASER
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.CUSTOM_BUILD_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITHOUT_TESTS
@@ -129,7 +127,6 @@ new SpringCloudReleaseMaker(dsl, "spring-cloud-incubator")
 
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
-new SleuthMemoryBenchmarksBuildMaker(dsl).buildSleuth()
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", masterBranch(), everyThreeHours())
 	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", "rabbitmq-sender", everyThreeHours())
