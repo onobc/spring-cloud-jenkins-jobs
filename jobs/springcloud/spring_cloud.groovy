@@ -12,6 +12,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.AllCloudConstants
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
+import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
@@ -187,6 +188,9 @@ new NetflixEndToEndBuildMaker(dsl).with {
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
+["Finchley", "Greenwich"].each {
+	new BreweryEndToEndBuildMaker(dsl).build(it)
+}
 
 // E2E
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {

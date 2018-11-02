@@ -15,7 +15,7 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	}
 
 	void build(String releaseTrainName) {
-		build(releaseTrainName, releaseTrainName)
+		this.build(releaseTrainName, releaseTrainName)
 	}
 
 	void build(String prefix, String releaseTrainName) {
@@ -25,6 +25,8 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	protected void buildWithSwitches(String prefix, String defaultSwitches) {
 		super.build("$prefix-sleuth", repoName(), "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", oncePerDay())
 		super.build("$prefix-eureka", repoName(), "runAcceptanceTests.sh -t EUREKA $defaultSwitches", oncePerDay())
+		super.build("$prefix-consul", repoName(), "runAcceptanceTests.sh -t CONSUL $defaultSwitches", oncePerDay())
+		super.build("$prefix-zookeeper", repoName(), "runAcceptanceTests.sh -t ZOOKEEPER $defaultSwitches", oncePerDay())
 	}
 
 	protected String repoName() {
