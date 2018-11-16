@@ -71,8 +71,8 @@ releaser.fixed-versions[spring-cloud-release]=Finchley.BUILD-SNAPSHOT
 	 * process for every single project in that order.
 	 */
 	public static final String DEFAULT_STREAM_RELEASER_PROPERTIES_FILE_CONTENT = """\
-releaser.fixed-versions[spring-boot]=2.0.3.RELEASE
-releaser.fixed-versions[spring-cloud-build]=2.0.3.RELEASE
+releaser.fixed-versions[spring-boot]=2.1.0.RELEASE
+releaser.fixed-versions[spring-cloud-build]=2.1.0.RC2
 releaser.fixed-versions[spring-cloud-stream]=2.1.0.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-stream-binder-rabbit]=2.1.0.BUILD-SNAPSHOT
 releaser.fixed-versions[spring-cloud-stream-binder-kafka]=2.1.0.BUILD-SNAPSHOT
