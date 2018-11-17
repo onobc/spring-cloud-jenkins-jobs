@@ -1,14 +1,12 @@
 package org.springframework.jenkins.cloud.release
 
-import groovy.transform.builder.Builder
+
 import javaposse.jobdsl.dsl.DslFactory
 
-import org.springframework.jenkins.cloud.common.AllCloudConstants
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.TestPublisher
-
 /**
  * @author Marcin Grzejszczak
  */
@@ -104,7 +102,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				${setupGitCredentials()}
 				rm -rf config && mkdir -p config && echo "\$${RELEASER_CONFIG_PARAM}" > config/releaser.properties
 				set +x
-				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
+				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}"
 				if [[ \${$START_FROM_PARAM} != "" ]]; then
 					START_FROM_OPTS="--start-from '\${$START_FROM_PARAM}'"
 				fi
