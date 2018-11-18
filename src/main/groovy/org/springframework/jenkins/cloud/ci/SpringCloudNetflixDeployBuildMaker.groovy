@@ -84,6 +84,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
+					string(githubToken(), githubTokenCredId())
 				}
 				timeout {
 					noActivity(300)

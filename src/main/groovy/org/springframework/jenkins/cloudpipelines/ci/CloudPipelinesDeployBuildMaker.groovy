@@ -56,6 +56,7 @@ class CloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 					usernamePassword(dockerhubUserNameEnvVar(),
 							dockerhubPasswordEnvVar(),
 							dockerhubCredentialId())
+					string(githubToken(), githubTokenCredId())
 				}
 				timeout {
 					noActivity(300)

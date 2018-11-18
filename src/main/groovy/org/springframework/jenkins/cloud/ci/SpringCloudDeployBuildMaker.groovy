@@ -85,6 +85,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
+					string(githubToken(), githubTokenCredId())
 				}
 				timeout {
 					noActivity(300)

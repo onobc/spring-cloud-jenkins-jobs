@@ -4,12 +4,10 @@ import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
-import org.springframework.jenkins.cloud.common.TapPublisher
 import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
-
 /**
  * @author Marcin Grzejszczak
  */
@@ -56,6 +54,7 @@ class CloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 					usernamePassword(dockerhubUserNameEnvVar(),
 							dockerhubPasswordEnvVar(),
 							dockerhubCredentialId())
+					string(githubToken(), githubTokenCredId())
 				}
 				timeout {
 					noActivity(300)

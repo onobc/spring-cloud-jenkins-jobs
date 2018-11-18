@@ -131,4 +131,32 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return 'buildmaster@springframework.org'
 	}
 
+	String gpgSecRing() {
+		return 'FOO_SEC'
+	}
+
+	String gpgPubRing() {
+		return 'FOO_PUB'
+	}
+
+	String gpgPassphrase() {
+		return 'FOO_PASSPHRASE'
+	}
+
+	String sonatypeUser() {
+		return 'SONATYPE_USER'
+	}
+
+	String sonatypePassword() {
+		return 'SONATYPE_PASSWORD'
+	}
+
+	String githubToken() {
+		return 'RELEASER_GIT_OAUTH_TOKEN'
+	}
+
+	String githubTokenCredId() {
+		return '7b3ebbea-7001-479b-8578-b8c464dab973'
+	}
+
 }

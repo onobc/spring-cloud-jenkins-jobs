@@ -154,32 +154,4 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 --full-release \${START_FROM_OPTS} \${TASK_NAMES_OPTS}""".split("\n").join(" ")
 	}
 
-	private String gpgSecRing() {
-		return 'FOO_SEC'
-	}
-
-	private String gpgPubRing() {
-		return 'FOO_PUB'
-	}
-
-	private String gpgPassphrase() {
-		return 'FOO_PASSPHRASE'
-	}
-
-	private String sonatypeUser() {
-		return 'SONATYPE_USER'
-	}
-
-	private String sonatypePassword() {
-		return 'SONATYPE_PASSWORD'
-	}
-
-	private String githubToken() {
-		return 'RELEASER_GIT_OAUTH_TOKEN'
-	}
-
-	private String githubTokenCredId() {
-		return '7b3ebbea-7001-479b-8578-b8c464dab973'
-	}
-
 }

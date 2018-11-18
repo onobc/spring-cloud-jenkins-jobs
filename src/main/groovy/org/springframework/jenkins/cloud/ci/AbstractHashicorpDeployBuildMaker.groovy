@@ -58,6 +58,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
+					string(githubToken(), githubTokenCredId())
 				}
 				environmentVariables {
 					env('BRANCH', branchName)
