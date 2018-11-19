@@ -18,6 +18,7 @@ class ReleaserOptions {
 	boolean updateReleaseTrainDocs = true
 	boolean updateSpringGuides = true
 	String releaseTrainProjectName = "spring-cloud-release"
+	List<String> releaseTrainDependencyNames = ["spring-cloud", "spring-cloud-dependencies", "spring-cloud-starter"]
 	String releaseTrainBomUrl = "https://github.com/spring-cloud/spring-cloud-release"
 	String releaseThisTrainBom = "spring-cloud-dependencies/pom.xml"
 	String releaserVersions = AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT

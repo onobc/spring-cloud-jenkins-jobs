@@ -25,6 +25,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS'
 	private static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
 	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
+	private static final String RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_DEPENDENCY_NAMES'
 	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
 	private static final String RELEASER_PROJECTS_TO_SKIP_VAR= 'RELEASER_PROJECTS_TO_SKIP'
 	private static final String RELEASER_POST_RELEASE_ONLY_VAR= 'RELEASER_POST_RELEASE_ONLY'
@@ -51,6 +52,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				booleanParam(RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR, options.updateSpringGuides, ' If true then will update the release train documentation project and run the generation')
 				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, false, 'If set to true will run only post release tasks')
 				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
+				stringParam(RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR, options.releaseTrainDependencyNames.join(","), 'All the names of dependencies that should be updated with the release train project version')
 				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')
 				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 				stringParam(RELEASER_PROJECTS_TO_SKIP_VAR, options.projectsToSkip, 'Names of projects to skip deployment for meta-release')
@@ -135,6 +137,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		return """\
 --releaser.post-release-tasks-only=\${$RELEASER_POST_RELEASE_ONLY_VAR}
 --releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR}
+--releaser.meta-release.release-train-dependency-names=\${$RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR}
 --releaser.meta-release.projects-to-skip=\${$RELEASER_PROJECTS_TO_SKIP_VAR}
 --releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}
 --releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM}
