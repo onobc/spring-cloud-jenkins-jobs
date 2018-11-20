@@ -129,6 +129,12 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 			}
 			publishers {
 				archiveJunit mavenJUnitResults()
+				archiveArtifacts {
+					allowEmpty()
+					pattern("target/*.txt")
+					pattern("target/*.md")
+					pattern("target/*.adoc")
+				}
 			}
 		}
 	}

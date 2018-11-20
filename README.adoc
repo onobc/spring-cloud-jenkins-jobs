@@ -88,7 +88,7 @@ In order to download the latest plugins:
 [source]
 ----
 1) Open in your browser
-http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" 
+http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins
 2) Store the XML to a file
 3) Pipe the contents of the file to this command:
 perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/'

@@ -38,10 +38,6 @@ test {
     }
 }
 
-wrapper {
-    gradleVersion '4.3.1'
-}
-
 // Jenkins
 task startJenkins(dependsOn: [composeUp]) {
     group = "Jenkins"
