@@ -137,8 +137,8 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		return """\
 --releaser.post-release-tasks-only=\${$RELEASER_POST_RELEASE_ONLY_VAR}
 --releaser.meta-release.release-train-project-name=\${$RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR}
---releaser.meta-release.release-train-dependency-names=\${$RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR}
---releaser.meta-release.projects-to-skip=\${$RELEASER_PROJECTS_TO_SKIP_VAR}
+--releaser.meta-release.release-train-dependency-names="\${$RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR}"
+--releaser.meta-release.projects-to-skip="\${$RELEASER_PROJECTS_TO_SKIP_VAR}"
 --releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}
 --releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM}
 --releaser.maven.wait-time-in-minutes=180
