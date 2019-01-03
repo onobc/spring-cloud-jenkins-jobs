@@ -101,16 +101,19 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 			steps {
 				// build the releaser
 				shell("""#!/bin/bash
+				if [[ "\${$RELEASE_VERSION_PARAM}" == "" || "\${$RELEASE_VERSION_PARAM}" == "\"\"" ]]; then
+					echo "\n\n\nYOU MUST PASS THE VERSION OF THE META-RELEASE!!!\n\n\n"
+				fi
 				echo "\n\n\nRUNNING THE [\${$RELEASE_VERSION_PARAM}] META-RELEASE!!!\n\n\n" 
-				mkdir -p target
-				echo "Building the releaser. Please wait..."
-				./mvnw clean install > "target/releaser.log"
 				${setupGitCredentials()}
 				version=\$( echo "\$$RELEASE_VERSION_PARAM" | tr '[:upper:]' '[:lower:]' | tr '.' '_' )
 				configFile="\${version}.properties"
 				configUrl="\${$RELEASER_CONFIG_URL_PARAM}/\${$RELEASER_CONFIG_BRANCH_PARAM}/\${configFile}"
 				echo "Downloading the configuration properties file from [\${configUrl}]"
 				rm -rf config && mkdir -p config && curl --fail "\${configUrl}" -o config/releaser.properties
+				mkdir -p target
+				echo "Building the releaser. Please wait..."
+				./mvnw clean install > "target/releaser.log"
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				if [[ \${$START_FROM_PARAM} != "" ]]; then
