@@ -18,9 +18,10 @@ class ReleaserOptions {
 	boolean updateReleaseTrainDocs = true
 	boolean updateSpringGuides = true
 	String releaseTrainProjectName = "spring-cloud-release"
+	String releaserConfigUrl = "https://raw.githubusercontent.com/spring-cloud/spring-cloud-release"
+	String releaserConfigBranch = "jenkins-releaser-config"
 	List<String> releaseTrainDependencyNames = ["spring-cloud", "spring-cloud-dependencies", "spring-cloud-starter"]
 	String releaseTrainBomUrl = "https://github.com/spring-cloud/spring-cloud-release"
 	String releaseThisTrainBom = "spring-cloud-dependencies/pom.xml"
-	String releaserVersions = AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT
 	String projectsToSkip = AllCloudConstants.DEFAULT_RELEASER_SKIPPED_PROJECTS
 }

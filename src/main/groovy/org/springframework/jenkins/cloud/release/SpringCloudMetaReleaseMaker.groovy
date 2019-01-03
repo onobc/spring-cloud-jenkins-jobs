@@ -12,7 +12,9 @@ import org.springframework.jenkins.common.job.TestPublisher
  */
 class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs {
-	private static final String RELEASER_CONFIG_PARAM = "RELEASER_CONFIG"
+	private static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
+	private static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
+	private static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
 	private static final String START_FROM_PARAM = "START_FROM"
 	private static final String TASK_NAMES_PARAM = "TASK_NAMES"
 	private static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
@@ -39,7 +41,9 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	void release(String jobName, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(jobName) {
 			parameters {
-				textParam(RELEASER_CONFIG_PARAM, options.releaserVersions, "Properties file used by the meta-releaser")
+				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties)")
+				stringParam(RELEASER_CONFIG_URL_PARAM, options.releaserConfigUrl, "Root of the URL where the RAW version of the configuration file is present")
+				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
 				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
 				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
 				booleanParam(RELEASER_SAGAN_UPDATE_VAR, options.updateSagan, 'If true then will update documentation repository with the current URL')
@@ -97,12 +101,16 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 			steps {
 				// build the releaser
 				shell("""#!/bin/bash
+				echo "\n\n\nRUNNING THE [\${$RELEASE_VERSION_PARAM}] META-RELEASE!!!\n\n\n" 
 				mkdir -p target
 				echo "Building the releaser. Please wait..."
 				./mvnw clean install > "target/releaser.log"
-				echo "Run the meta-releaser!"
 				${setupGitCredentials()}
-				rm -rf config && mkdir -p config && echo "\$${RELEASER_CONFIG_PARAM}" > config/releaser.properties
+				version=\$( echo "\$$RELEASE_VERSION_PARAM" | tr '[:upper:]' '[:lower:]' | tr '.' '_' )
+				configFile="\${version}.properties"
+				configUrl="\${$RELEASER_CONFIG_URL_PARAM}/\${$RELEASER_CONFIG_BRANCH_PARAM}/\${configFile}"
+				echo "Downloading the configuration properties file from [\${configUrl}]"
+				rm -rf config && mkdir -p config && curl --fail "\${configUrl}" -o config/releaser.properties
 				set +x
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				if [[ \${$START_FROM_PARAM} != "" ]]; then
@@ -112,6 +120,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					TASK_NAMES_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
 				fi
 				echo "Start from opts [\${START_FROM_OPTS}], task names [\${TASK_NAMES_OPTS}]"
+				echo "Run the meta-releaser!"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
 						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} || exit 1

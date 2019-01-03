@@ -237,7 +237,7 @@ ALL_RELEASER_JOBS.each {
 def streamOptions = ReleaserOptions.builder()
 		.releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
 		.releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
-		.releaserVersions(AllCloudConstants.DEFAULT_STREAM_RELEASER_PROPERTIES_FILE_CONTENT)
+		.releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-stream-starters")
 		.projectsToSkip(AllCloudConstants.DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS)
 		.releaseTrainProjectName("spring-cloud-stream-starters")
 		.releaseTrainDependencyNames(["spring-cloud-stream-dependencies"])
