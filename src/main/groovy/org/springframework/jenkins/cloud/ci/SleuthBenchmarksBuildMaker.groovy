@@ -64,9 +64,16 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 				''')
 			}
 			publishers {
-				archiveArtifacts('results/benchmarks/target/jmeter/results/*.png')
-				archiveArtifacts('results/benchmarks/target/jmeter/results/analysis/*.*')
+				archiveArtifacts {
+					pattern('results/benchmarks/target/jmeter/results/*.png')
+					allowEmpty(true)
+				}
+				archiveArtifacts {
+					pattern('results/benchmarks/target/jmeter/results/analysis/*.*')
+					allowEmpty(true)
+				}
 				archiveArtifacts('results/jmh/target/benchmarks.log')
+
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
