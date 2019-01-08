@@ -116,7 +116,9 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				}
 			}
 			publishers {
-				archiveJunit mavenJUnitResults()
+				archiveJunit(mavenJUnitResults()) {
+					allowEmptyResults()
+				}
 				archiveArtifacts {
 					allowEmpty()
 					pattern("target/*.txt")
