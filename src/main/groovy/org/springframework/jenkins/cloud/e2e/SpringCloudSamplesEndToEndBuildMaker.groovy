@@ -89,6 +89,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 					remote {
 						url "https://github.com/${organization}/$repoName"
 						branch branchName
+						credentials(githubUserCredentialId())
 					}
 					extensions {
 						wipeOutWorkspace()

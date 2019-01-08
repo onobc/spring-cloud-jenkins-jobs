@@ -96,7 +96,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	}
 
 	SpringCloudSamplesEndToEndBuildMaker build(DslFactory dsl) {
-		def maker = new SpringCloudSamplesEndToEndBuildMaker(dsl)
+		def maker = new SpringCloudSamplesEndToEndBuildMaker(dsl, this.organization)
 		maker.jdkVersion = this.jdk
 		maker.additionalEnvs = this.envs
 		return maker
