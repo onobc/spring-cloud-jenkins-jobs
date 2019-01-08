@@ -175,6 +175,15 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
 	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
 }
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withRepoName("Pearson-Contracts")
+			.withProjectName("pearson-contracts")
+			.withOrganization("marcingrzejszczak")
+			.withCronExpr(everyThreeHours())
+			.withJdk(jdk8())
+			.withMavenTests(true)
+			.withGradleTests(true)
+}.build(dsl)
 
 // BREWERY
 new CloudFoundryEndToEndBuildMaker(dsl).with {

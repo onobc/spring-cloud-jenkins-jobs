@@ -24,6 +24,11 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	boolean withNodeJs = false
 	Map<String, String> envs = [:]
 
+	SpringCloudSamplesEndToEndBuilder withOrganization(String organization) {
+		this.organization = organization
+		return this
+	}
+
 	SpringCloudSamplesEndToEndBuilder withProjectName(String projectName) {
 		this.projectName = projectName
 		return this
