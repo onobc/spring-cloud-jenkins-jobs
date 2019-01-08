@@ -35,6 +35,6 @@ class AllCloudConstants {
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)
 	 * and in compatibility builds
 	 */
-	public static final String DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS = "spring-boot,spring-cloud-build"
+	public static final String DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS = "spring-boot,spring-cloud-build,spring-cloud-function"
 
 }
