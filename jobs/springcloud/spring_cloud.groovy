@@ -179,7 +179,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
 			.withProjectName("pearson-contracts")
 			.withOrganization("marcingrzejszczak")
-			.withCronExpr(everySunday())
+			.withCronExpr(oncePerDay())
 			.withJdk(jdk8())
 			.withMavenTests(true)
 			.withGradleTests(true)
