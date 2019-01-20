@@ -183,6 +183,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 			.withJdk(jdk8())
 			.withMavenTests(true)
 			.withGradleTests(true)
+			.withWipeOutWorkspace(false)
 }.build(dsl)
 
 // BREWERY

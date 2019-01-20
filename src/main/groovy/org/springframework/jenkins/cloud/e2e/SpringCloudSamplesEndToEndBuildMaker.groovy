@@ -63,7 +63,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 
 	protected void build(String projectName, String repoName, String scriptName, String cronExpr, String branchName = masterBranch(),
 						 String postBuildScripts = "", boolean mavenTests = false,
-						 boolean gradleTests = false, String newLabel = "", boolean withNodeJs = false) {
+						 boolean gradleTests = false, String newLabel = "", boolean isWipeOutWorkspace = true, boolean withNodeJs = false) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${jdkPart()}${branchName}-e2e") {
 			triggers {
@@ -92,7 +92,9 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 						credentials(githubUserCredentialId())
 					}
 					extensions {
-						wipeOutWorkspace()
+						if (isWipeOutWorkspace) {
+							wipeOutWorkspace()
+						}
 					}
 				}
 			}

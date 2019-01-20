@@ -18,6 +18,7 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	String branchName = masterBranch()
 	String label = ""
 	String postBuildScripts = ""
+	boolean wipeOutWorkspace = true
 	String jdk = jdk8()
 	boolean mavenTests = false
 	boolean gradleTests = false
@@ -42,6 +43,11 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 
 	SpringCloudSamplesEndToEndBuilder withJdk(String jdk) {
 		this.jdk = jdk
+		return this
+	}
+
+	SpringCloudSamplesEndToEndBuilder withWipeOutWorkspace(boolean wipeOutWorkspace = true) {
+		this.wipeOutWorkspace = wipeOutWorkspace
 		return this
 	}
 
@@ -102,6 +108,6 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 		return maker
 				.build(this.projectName, this.repoName, this.scriptName, this.cronExpr,
 				this.branchName, this.postBuildScripts, this.mavenTests, this.gradleTests,
-				this.label, this.withNodeJs)
+				this.label, this.wipeOutWorkspace, this.withNodeJs)
 	}
 }
