@@ -25,7 +25,7 @@ class AllCloudJobs {
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-security', 'spring-cloud-config',
 												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
-												 'spring-cloud-openfeign', 'spring-cloud-function']
+												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-gcp']
 	/**
 	 * List of all Spring Cloud Stream jobs for the releaser. This list will be used to create the boot compatibility builds
 	 * and will serve as basis for the default jobs
@@ -37,9 +37,7 @@ class AllCloudJobs {
 	/**
 	 * List of all single project jobs to be used by the releaser
 	 */
-	public static final List<String> ALL_RELEASER_JOBS = ALL_JOBS + [
-												'spring-cloud-gcp'
-												]
+	public static final List<String> ALL_RELEASER_JOBS = ALL_JOBS
 	/**
 	 * Some projects need to have the test report generation skipped (since they have no tests).
 	 */
@@ -65,7 +63,7 @@ class AllCloudJobs {
 	 * for more info.
 	 */
 	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-consul', 'spring-cloud-build',
-														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
+														'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
@@ -73,6 +71,7 @@ class AllCloudJobs {
 	 */
 	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.3.x', '2.0.x'],
 																		'spring-cloud-cli' : ['1.0.x', '1.1.x', '2.0.x'],
+																		'spring-cloud-gcp' : ['1.0.x', '1.1.x'],
 																		'spring-cloud-commons' : ['1.2.x', '1.3.x', '2.0.x'],
 																		'spring-cloud-contract' : ['2.0.x', '1.2.x'],
 																		'spring-cloud-config' : ['1.3.x', '1.4.x', '2.0.x'],
@@ -85,8 +84,8 @@ class AllCloudJobs {
 																		'spring-cloud-gateway': ['1.0.x', '2.0.x'],
 																		'spring-cloud-security': ['1.1.x', '1.2.x', '2.0.x'],
 																		'spring-cloud-vault': ['1.1.x', '2.0.x'],
-									   									'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x'],
-									                                                                        'spring-cloud-openfeign': ['2.0.x']]
+																		'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x'],
+																		'spring-cloud-openfeign': ['2.0.x']]
 
 	/**
 	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
@@ -109,5 +108,13 @@ class AllCloudJobs {
 	 * the implementors to ensure that those jobs really exist.
 	 */
 	public static final List<String> BOOT_COMPATIBILITY_BUILD_JOBS = ALL_JOBS + ALL_SAMPLES_JOBS - JOBS_WITHOUT_BOOT_COMPATIBILITY
+
+	/**
+	 * Map of projects to email addresses. If a project name is matched, the list of email
+	 * addresses will be applied to the project.
+	 */
+	public static final Map<String, List<String>> EMAIL_NOTIFICATIONS = [
+		"spring-cloud-gcp" : ["abilan@pivotal.io"]
+	]
 
 }
