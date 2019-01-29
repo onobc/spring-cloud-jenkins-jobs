@@ -114,7 +114,7 @@ class AllCloudJobs {
 	 * addresses will be applied to the project.
 	 */
 	public static final Map<String, List<String>> EMAIL_NOTIFICATIONS = [
-		"spring-cloud-gcp" : ["abilan@pivotal.io"]
+		"spring-cloud-gcp" : ["meltsufin@google.com", "abilan@pivotal.io"]
 	]
 
 }
