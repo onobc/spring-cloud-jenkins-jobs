@@ -77,11 +77,8 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
-				JmhPerformance.benchmarkPublisher(it as Node) {
-
+					JmhPerformance.benchmarkPublisher(it as Node) {
 				}
-				appendPerformancePlugin(it as Node,
-						'results/benchmarks/target/jmeter/results/*.jtl')
 			}
 		}
 	}
