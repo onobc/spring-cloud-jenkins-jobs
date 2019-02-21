@@ -147,7 +147,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 
 // CONTRACT
-["master", "2.1.x", "1.2.x"].each { String branch ->
+["master", "2.0.x", "1.2.x"].each { String branch ->
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 				.withBranchName(branch)
@@ -160,7 +160,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
-			.withBranchName("2.1.x")
+			.withBranchName("master")
 			.withCronExpr(everyThreeHours())
 			// for postman <-> swagger
 			.withNodeJs(true)
