@@ -38,8 +38,16 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 		build("Greenwich.BUILD-SNAPSHOT", "tests", everySixHours(), masterBranch())
 	}
 
+	void buildForHoxton() {
+		build("Hoxton.BUILD-SNAPSHOT", "tests", everySixHours(), masterBranch())
+	}
+
 	void buildForGreenwichWithJdk(String jdk) {
-		build("Greenwich.BUILD-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
+		build("Greenwich.BUILD-SNAPSHOT", "tests-greenwich-${jdk}", everySixHours(), masterBranch(), jdk)
+	}
+
+	void buildForHoxtonWithJdk(String jdk) {
+		build("Hoxton.BUILD-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
 	}
 
 	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),

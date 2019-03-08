@@ -87,7 +87,9 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForEdgware()
 	buildForFinchley()
 	buildForGreenwich()
+	buildForHoxton()
 	[jdk9(), jdk10(), jdk11()].each {
+		buildForHoxtonWithJdk(it)
 		buildForGreenwichWithJdk(it)
 	}
 }
@@ -111,6 +113,8 @@ new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Edgware', false)
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Finchley', false)
+new SpringCloudDeployBuildMaker(dsl)
+		.deploy('spring-cloud-release', 'Greenwich', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 
@@ -198,7 +202,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
-["Finchley", "Greenwich"].each {
+["Finchley", "Greenwich", "Hoxton"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 

@@ -63,29 +63,29 @@ class AllCloudJobs {
 	 * for more info.
 	 */
 	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-consul', 'spring-cloud-build',
-														'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
+														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth' : ['1.3.x', '2.0.x'],
-																		'spring-cloud-cli' : ['1.0.x', '1.1.x', '2.0.x'],
-																		'spring-cloud-gcp' : ['1.0.x', '1.1.x'],
-																		'spring-cloud-commons' : ['1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-contract' : ['2.0.x', '1.2.x'],
-																		'spring-cloud-config' : ['1.3.x', '1.4.x', '2.0.x'],
-																		'spring-cloud-netflix' : ['1.3.x', '1.4.x', '2.0.x'],
-																		'spring-cloud-consul' : ['1.3.x', '1.2.x', '2.0.x'],
-																		'spring-cloud-zookeeper' : ['1.1.x', '1.2.x', '2.0.x'],
-																		'spring-cloud-bus': ['1.2.x', '1.3.x', '2.0.x'],
-																		'spring-cloud-build': ['1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-aws': ['1.2.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-gateway': ['1.0.x', '2.0.x'],
-																		'spring-cloud-security': ['1.1.x', '1.2.x', '2.0.x'],
-																		'spring-cloud-vault': ['1.1.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x'],
-																		'spring-cloud-openfeign': ['2.0.x']]
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['1.3.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-cli'         : ['1.0.x', '1.1.x', '2.0.x'],
+																		'spring-cloud-gcp'         : ['1.0.x', '1.1.x'],
+																		'spring-cloud-commons'     : ['1.2.x', '1.3.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-contract'    : ['2.0.x', '1.2.x'],
+																		'spring-cloud-config'      : ['1.3.x', '1.4.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-netflix'     : ['1.3.x', '1.4.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-consul'      : ['1.3.x', '1.2.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-zookeeper'   : ['1.1.x', '1.2.x', '2.0.x'],
+																		'spring-cloud-bus'         : ['1.2.x', '1.3.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-build'       : ['1.3.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-aws'         : ['1.1.x', '1.2.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-gateway'     : ['1.0.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-security'    : ['1.1.x', '1.2.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-vault'       : ['1.1.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-openfeign'   : ['2.0.x', '2.1.x']]
 
 	/**
 	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
@@ -114,7 +114,7 @@ class AllCloudJobs {
 	 * addresses will be applied to the project.
 	 */
 	public static final Map<String, List<String>> EMAIL_NOTIFICATIONS = [
-		"spring-cloud-gcp" : ["meltsufin@google.com", "abilan@pivotal.io"]
+			"spring-cloud-gcp": ["meltsufin@google.com", "abilan@pivotal.io"]
 	]
 
 }
