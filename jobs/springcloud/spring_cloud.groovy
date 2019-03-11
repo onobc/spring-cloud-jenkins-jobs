@@ -127,6 +127,7 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-alibaba", masterBranch())
+	deploy("spring-cloud-circuitbreaker", masterBranch())
 	deploy("spring-cloud-alibaba", "1.x")
 	deploy("spring-cloud-contract-raml")
 }
