@@ -86,6 +86,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 			steps {
 				// build the releaser
 				shell("""#!/bin/bash
+				set -o errexit
 				currentDir="\$(pwd)"
 				tmpDir="\$(mktemp -d)"
 				trap "{ rm -f \${tmpDir}; }" EXIT

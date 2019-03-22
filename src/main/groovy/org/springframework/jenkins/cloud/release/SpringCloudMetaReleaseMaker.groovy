@@ -101,6 +101,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 			steps {
 				// build the releaser
 				shell("""#!/bin/bash
+				set -o errexit
 				if [[ "\${$RELEASE_VERSION_PARAM}" == "" || "\${$RELEASE_VERSION_PARAM}" == "\"\"" ]]; then
 					echo "\n\n\nYOU MUST PASS THE VERSION OF THE META-RELEASE!!!\n\n\n"
 				fi
