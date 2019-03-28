@@ -73,7 +73,7 @@ class AllCloudJobs {
 																		'spring-cloud-cli'         : ['1.0.x', '1.1.x', '2.0.x'],
 																		'spring-cloud-gcp'         : ['1.0.x', '1.1.x'],
 																		'spring-cloud-commons'     : ['1.2.x', '1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-contract'    : ['2.0.x', '1.2.x'],
+																		'spring-cloud-contract'    : ['2.1.x', '2.0.x', '1.2.x'],
 																		'spring-cloud-config'      : ['1.3.x', '1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-netflix'     : ['1.3.x', '1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-consul'      : ['1.3.x', '1.2.x', '2.0.x', '2.1.x'],
