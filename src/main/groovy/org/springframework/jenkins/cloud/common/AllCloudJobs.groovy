@@ -77,7 +77,7 @@ class AllCloudJobs {
 																		'spring-cloud-config'      : ['1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-netflix'     : ['1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-consul'      : ['1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-zookeeper'   : ['1.1.x', '1.2.x', '2.0.x'],
+																		'spring-cloud-zookeeper'   : ['1.2.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-bus'         : ['1.3.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-build'       : ['1.3.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-aws'         : ['1.2.x', '2.0.x', '2.1.x'],
