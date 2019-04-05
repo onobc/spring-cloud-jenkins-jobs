@@ -108,8 +108,6 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 }
 // Release branches for Spring Cloud Release
 new SpringCloudDeployBuildMaker(dsl)
-		.deploy('spring-cloud-release', 'Dalston', false)
-new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Edgware', false)
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Finchley', false)
@@ -213,11 +211,6 @@ new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
 }
 // Josh's CI APP
 new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
-	// TODO: Remove once Edgware is done
-	build('bootiful-microservices-dalston',
-			'scripts/scenario_dalston_tester.sh',
-			everyThreeHours(),
-			'scripts/kill_all.sh')
 	build('bootiful-microservices-edgware',
 			'scripts/scenario_edgware_tester.sh',
 			everyThreeHours(),
