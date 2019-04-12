@@ -18,7 +18,7 @@ class AllCloudConstants {
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)
 	 * and in compatibility builds
 	 */
-	public static final String LATEST_BOOT_VERSION = '2.0.3.BUILD-SNAPSHOT'
+	public static final String LATEST_BOOT_VERSION = '2.2.0.BUILD-SNAPSHOT'
 
 	/**
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)

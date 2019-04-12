@@ -3,6 +3,8 @@ package org.springframework.jenkins.cloud.e2e
 import groovy.transform.CompileStatic
 import javaposse.jobdsl.dsl.DslFactory
 
+import org.springframework.jenkins.cloud.common.AllCloudJobs
+
 /**
  * @author Marcin Grzejszczak
  */
@@ -34,7 +36,9 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	}
 
 	protected String defaultSwitches(String releaseTrainName) {
+		String additionalSwitches = AllCloudJobs.RELEASE_TRAIN_TO_BREWERY_SWITCHES.get(releaseTrainName) ?: ''
+		println "Found additional switches [${additionalSwitches}]"
 		String releaseTrain = releaseTrainName.capitalize()
-		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT --branch ${branchName()} -r"
+		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT --branch ${branchName()} -r ${additionalSwitches}"
 	}
 }

@@ -88,6 +88,13 @@ class AllCloudJobs {
 																		'spring-cloud-openfeign'   : ['2.0.x', '2.1.x']]
 
 	/**
+	 * Mapping of a lowercase release train name to a given boot version
+	 */
+	public static final Map<String, String> RELEASE_TRAIN_TO_BREWERY_SWITCHES = [
+	        "hoxton" : "-b 2.2.0.BUILD-SNAPSHOT" // boot version 2.2.0
+	]
+
+	/**
 	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
 	 * and `./mvwn clean install -Pdocs` + `gh-pages.sh` script will be executed to publish new docs.
 	 * The docs will get published only for master.

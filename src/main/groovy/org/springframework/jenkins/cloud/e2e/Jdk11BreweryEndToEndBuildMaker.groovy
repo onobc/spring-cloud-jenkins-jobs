@@ -8,7 +8,7 @@ import javaposse.jobdsl.dsl.DslFactory
  */
 @CompileStatic
 class Jdk11BreweryEndToEndBuildMaker extends BreweryEndToEndBuildMaker {
-	private static final String RELEASE_TRAIN_NAME = "greenwich"
+	private static final String RELEASE_TRAIN_NAME = "hoxton"
 
 	Jdk11BreweryEndToEndBuildMaker(DslFactory dsl) {
 		super(dsl)
