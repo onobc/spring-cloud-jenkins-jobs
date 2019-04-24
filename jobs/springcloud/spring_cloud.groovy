@@ -174,8 +174,10 @@ new SpringCloudSamplesEndToEndBuilder().with {
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), everyThreeHours())
+	buildWithMavenTests("the-legacy-app", "2.1.x", everyThreeHours())
 	buildWithMavenTests("the-legacy-app", "2.0.x", everyThreeHours())
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
+	buildWithMavenTests("sc-contract-car-rental", "2.1.x", everyThreeHours())
 	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
 }
 new SpringCloudSamplesEndToEndBuilder().with {
