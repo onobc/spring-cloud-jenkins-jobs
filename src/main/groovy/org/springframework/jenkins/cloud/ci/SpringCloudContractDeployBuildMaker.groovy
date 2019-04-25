@@ -1,15 +1,15 @@
 package org.springframework.jenkins.cloud.ci
 
 import groovy.transform.CompileStatic
+import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
+import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
-import javaposse.jobdsl.dsl.DslFactory
-import org.springframework.jenkins.cloud.common.SpringCloudNotification
 
 /**
  * @author Marcin Grzejszczak
@@ -63,7 +63,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 		doDeploy("spring-cloud-${jdkVersion}-${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch(), jdkVersion, false)
 	}
 
-	private void doDeploy(String projectName, String repoName, String branchName, String jdkVersion=jdk8(), boolean deploy = true) {
+	private void doDeploy(String projectName, String repoName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
 		dsl.job(projectName) {
 			triggers {
 				cron everyThreeHours()
@@ -98,9 +98,8 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
-					usernamePassword(gradlePublishKeyEnvVar(),
-							gradlePublishSecretEnvVar(),
-							pluginsGradleOrgUserCredentialId())
+					string(gradlePublishKeyEnvVar(), gradlePublishKeySecretId())
+					string(gradlePublishSecretEnvVar(), gradlePublishSecretSecretId())
 					string(githubToken(), githubTokenCredId())
 				}
 				timeout {
@@ -123,7 +122,14 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					${setupGitCredentials()}
 					echo "Building Spring Cloud Contract docs"
 					./scripts/generateDocs.sh
-					${if (deploy) deployDocs() else cleanInstall() }
+					${
+					if (deploy) {
+						deployDocs()
+					}
+					else {
+						cleanInstall()
+					}
+				}
 					${cleanGitCredentials()}
 					""")
 			}

@@ -111,8 +111,12 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return 'GRADLE_PUBLISH_SECRET'
 	}
 
-	String pluginsGradleOrgUserCredentialId() {
-		return 'plugins-gradle-org'
+	String gradlePublishKeySecretId() {
+		return 'gradle-publish-key'
+	}
+
+	String gradlePublishSecretSecretId() {
+		return 'gradle-publish-secret'
 	}
 
 	String repoSpringIoUserCredentialId() {
