@@ -98,6 +98,9 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
+					usernamePassword(gradlePublishKeyEnvVar(),
+							gradlePublishSecretEnvVar(),
+							pluginsGradleOrgUserCredentialId())
 					string(githubToken(), githubTokenCredId())
 				}
 				timeout {

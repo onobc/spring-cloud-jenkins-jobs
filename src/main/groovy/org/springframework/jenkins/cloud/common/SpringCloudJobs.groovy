@@ -103,6 +103,18 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return 'GITHUB_REPO_PASSWORD'
 	}
 
+	String gradlePublishKeyEnvVar() {
+		return 'GRADLE_PUBLISH_KEY'
+	}
+
+	String gradlePublishSecretEnvVar() {
+		return 'GRADLE_PUBLISH_SECRET'
+	}
+
+	String pluginsGradleOrgUserCredentialId() {
+		return 'plugins-gradle-org'
+	}
+
 	String repoSpringIoUserCredentialId() {
 		return '02bd1690-b54f-4c9f-819d-a77cb7a9822c'
 	}
