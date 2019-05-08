@@ -70,8 +70,7 @@ class SpringCloudReleaseToolsBuildMaker implements JdkConfig, TestPublisher, Cro
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(buildDocsWithGhPages())
-				shell(cleanAndDeploy())
+				shell(deployWithGhPages())
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)

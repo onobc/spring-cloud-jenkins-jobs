@@ -38,11 +38,19 @@ trait SpringCloudJobs extends BuildAndDeploy {
 	} 
 
 	String buildDocsWithGhPages(String additionalCommand = "") {
+		return doBuildDocsWithGhPages(buildDocs(), additionalCommand)
+	}
+
+	String deployWithGhPages(String additionalCommand = "") {
+		return doBuildDocsWithGhPages(deployDocsWithoutSkippingTests(), additionalCommand)
+	}
+
+	private String doBuildDocsWithGhPages(String buildingDocs, String additionalCommand) {
 		return """#!/bin/bash -x
 					git checkout \$${branchVarName()} && git pull
 					export MAVEN_PATH=${mavenBin()}
 					${setupGitCredentials()}
-					${(additionalCommand ? "${additionalCommand}\n" : "") + buildDocs()}
+					${(additionalCommand ? "${additionalCommand}\n" : "") + buildingDocs}
 					echo "Downloading ghpages script from Spring Cloud Build"
 					mkdir -p target
 					rm -rf target/ghpages.sh
@@ -83,8 +91,8 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return '''./mvnw clean install -P docs -q -U -DskipTests=true -Dmaven.test.redirectTestOutputToFile=true'''
 	}
 
-	String buildDocsWithoutCleaning() {
-		return '''./mvnw install -P docs -q -U -DskipTests=true -Dmaven.test.redirectTestOutputToFile=true'''
+	String deployDocsWithoutSkippingTests() {
+		return '''./mvnw clean deploy -nsu -P docs,integration -U $MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random'''
 	}
 
 	String repoUserNameEnvVar() {
