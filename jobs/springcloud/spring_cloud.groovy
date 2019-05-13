@@ -88,7 +88,7 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForFinchley()
 	buildForGreenwich()
 	buildForHoxton()
-	[jdk9(), jdk10(), jdk11(), jdk12()].each {
+	[jdk11(), jdk12()].each {
 		buildForHoxtonWithJdk(it)
 		buildForGreenwichWithJdk(it)
 	}
