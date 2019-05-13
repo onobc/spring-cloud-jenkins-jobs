@@ -88,7 +88,7 @@ abstract class CompatibilityTasks implements Maven {
 		mkdir -p target
 		export MAVEN_PATH=${mavenBin()}
 		pushd target
-			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=http://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
+			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
 			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dproject.basedir=../
 			mv dependency/*.jar dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
 			echo "Cloning Spring Cloud Build"
