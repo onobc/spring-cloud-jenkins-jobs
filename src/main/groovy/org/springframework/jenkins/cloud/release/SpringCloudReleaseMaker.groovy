@@ -94,6 +94,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "\${tmpDir}"
 				pushd "\${tmpDir}"
 				rm -rf ~/.m2/repository/org/springframework/cloud
+				echo "Building the releaser. If the build fails after this then it means that the releaser failed to get built. Then please check the build's workspace under [.git/releaser.log] for logs"
 				./mvnw clean install > "\${currentDir}/.git/releaser.log"
 				popd
 				echo "Run the releaser against the project"
