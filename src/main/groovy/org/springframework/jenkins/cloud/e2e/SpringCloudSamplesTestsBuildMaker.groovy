@@ -80,6 +80,9 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 			}
 			steps {
 				shell("""#!/bin/bash
+						echo "Current java version"
+						java -version
+						echo "Running the build with cloud version [${cloudTrainVersion}]"
 						./mvnw --fail-at-end clean package -Dspring-cloud.version=${cloudTrainVersion} -U
 					""")
 			}
