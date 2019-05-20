@@ -87,7 +87,9 @@ class EndToEndBuildMaker implements TestPublisher,
 				shell(killAllApps())
 				shell("""#!/bin/bash
 					echo "Cleaning up .m2"
-					rm -rf ~/.m2/repository/org/springframework/cloud/launcher 
+					rm -rf ~/.m2/repository/org/springframework/cloud/launcher
+					echo "Clearing Gradle caches" 
+					rm -rf ~/.gradle/caches/modules-2/files-2.1/ 
 				""")
 				shell("""#!/bin/bash
 						./${scriptName}
