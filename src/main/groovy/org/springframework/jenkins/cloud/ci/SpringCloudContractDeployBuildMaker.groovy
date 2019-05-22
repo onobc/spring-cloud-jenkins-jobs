@@ -109,7 +109,10 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 				}
 			}
 			steps {
-				shell("rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/")
+				shell("""#!/bin/bash
+	rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/
+	rm -rf ~/.m2/repository/org/springframework/boot/spring-boot-loader-tools/
+""")
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')
