@@ -140,8 +140,10 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", masterBranch(), everyThreeHours())
+	buildWithMavenTests("sleuth-issues", "2.1.x", everyThreeHours())
 	buildWithMavenTests("sleuth-issues", "2.0.x", everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
+	buildWithGradleTests("sleuth-documentation-apps", "2.1.x", everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "2.0.x", everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "1.3.x", everyThreeHours())
 }
