@@ -35,7 +35,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForGreenwich() {
-		build("Greenwich.BUILD-SNAPSHOT", "tests", everySixHours(), masterBranch())
+		build("Greenwich.BUILD-SNAPSHOT", "tests", everySixHours(), "Greenwich")
 	}
 
 	void buildForHoxton() {
@@ -43,7 +43,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForGreenwichWithJdk(String jdk) {
-		build("Greenwich.BUILD-SNAPSHOT", "tests-greenwich-${jdk}", everySixHours(), masterBranch(), jdk)
+		build("Greenwich.BUILD-SNAPSHOT", "tests-greenwich-${jdk}", everySixHours(), "Greenwich", jdk)
 	}
 
 	void buildForHoxtonWithJdk(String jdk) {
