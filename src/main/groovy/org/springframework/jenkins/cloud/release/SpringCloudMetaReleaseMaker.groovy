@@ -116,6 +116,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Building the releaser. Please wait..."
 				./mvnw clean install > "target/releaser.log"
 				set +x
+				SPRING_CLOUD_RELEASE_REPO="https://github.com/spring-cloud/spring-cloud-release.git"
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
 				if [[ \${$START_FROM_PARAM} != "" ]]; then
 					START_FROM_OPTS="--start-from '\${$START_FROM_PARAM}'"
