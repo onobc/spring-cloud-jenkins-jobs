@@ -25,7 +25,8 @@ class AllCloudJobs {
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-security', 'spring-cloud-config',
 												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
-												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-gcp']
+												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-gcp',
+                                                                                                 'spring-cloud-kubernetes']
 	/**
 	 * List of all Spring Cloud Stream jobs for the releaser. This list will be used to create the boot compatibility builds
 	 * and will serve as basis for the default jobs
@@ -85,7 +86,8 @@ class AllCloudJobs {
 																		'spring-cloud-security'    : ['1.2.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-vault'       : ['1.1.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-openfeign'   : ['2.0.x', '2.1.x']]
+																		'spring-cloud-openfeign'   : ['2.0.x', '2.1.x'],
+									                                                                        'spring-cloud-kubernetes'  : ['1.0.x']]
 
 	/**
 	 * Mapping of a lowercase release train name to a given boot version
