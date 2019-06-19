@@ -71,10 +71,10 @@ class AllCloudJobs {
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
 	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-cli'         : ['1.0.x', '1.1.x', '2.0.x'],
+																		'spring-cloud-cli'         : ['1.1.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-gcp'         : ['1.0.x', '1.1.x'],
 																		'spring-cloud-commons'     : ['1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-contract'    : ['2.1.x', '2.0.x', '1.2.x'],
+																		'spring-cloud-contract'    : ['1.2.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-config'      : ['1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-netflix'     : ['1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-consul'      : ['1.3.x', '2.0.x', '2.1.x'],
@@ -87,7 +87,7 @@ class AllCloudJobs {
 																		'spring-cloud-vault'       : ['1.1.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-cloudfoundry': ['1.1.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-openfeign'   : ['2.0.x', '2.1.x'],
-									                                                                        'spring-cloud-kubernetes'  : ['1.0.x']]
+																		'spring-cloud-kubernetes'  : ['1.0.x']]
 
 	/**
 	 * Mapping of a lowercase release train name to a given boot version
