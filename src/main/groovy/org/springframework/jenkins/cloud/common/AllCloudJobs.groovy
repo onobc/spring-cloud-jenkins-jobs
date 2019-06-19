@@ -71,7 +71,7 @@ class AllCloudJobs {
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
 	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['1.3.x', '2.0.x', '2.1.x'],
-																		'spring-cloud-cli'         : ['1.1.x', '2.0.x', '2.1.x'],
+																		'spring-cloud-cli'         : ['1.4.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-gcp'         : ['1.0.x', '1.1.x'],
 																		'spring-cloud-commons'     : ['1.3.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-contract'    : ['1.2.x', '2.0.x', '2.1.x'],
