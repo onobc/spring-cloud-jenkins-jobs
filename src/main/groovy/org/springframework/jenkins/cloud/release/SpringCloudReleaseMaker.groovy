@@ -128,7 +128,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 					pattern("target/*.md")
 					pattern("target/*.adoc")
 				}
-				textFinder(".*BUILD UNSTABLE.*", "", true, false, true)
+				textFinder(".*BUILD UNSTABLE.*", "**/build_unstable,build_unstable", false, false, true)
 			}
 		}
 	}
