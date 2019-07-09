@@ -18,7 +18,6 @@ import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.JoshEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
@@ -213,7 +212,9 @@ new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
 	buildWithoutTests("eureka-release-train-interop", oncePerDay())
 }
+
 // Josh's CI APP
+/*
 new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
 	build('bootiful-microservices-edgware',
 			'scripts/scenario_edgware_tester.sh',
@@ -230,6 +231,8 @@ new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
 			everyThreeHours(),
 			'scripts/kill_all.sh')
 }
+ */
+
 // Pilo's apps
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	build("messaging-application", everyThreeHours())
