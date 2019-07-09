@@ -2,9 +2,6 @@ package org.springframework.jenkins.cloud.e2e
 
 import groovy.transform.CompileStatic
 import javaposse.jobdsl.dsl.DslFactory
-
-import org.springframework.jenkins.cloud.common.AllCloudConstants
-
 /**
  * @author Marcin Grzejszczak
  */
@@ -24,7 +21,6 @@ class EdgwareBreweryEndToEndBuildMaker extends BreweryEndToEndBuildMaker {
 	protected void buildWithSwitches(String prefix, String defaultSwitches) {
 		super.buildWithSwitches(prefix, defaultSwitches)
 		super.build("$prefix-sleuth-stream", repoName(), "runAcceptanceTests.sh -t SLEUTH_STREAM $defaultSwitches", oncePerDay())
-		super.build("$prefix-sleuth-stream-kafka", repoName(), "runAcceptanceTests.sh -t SLEUTH_STREAM -k $defaultSwitches", oncePerDay())
 	}
 
 	@Override
