@@ -2,6 +2,7 @@ job('spring-cloud-seed') {
     triggers {
         githubPush()
     }
+    jdk("jdk8")
     scm {
         git {
             remote {
