@@ -28,6 +28,9 @@ class SonarBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 			triggers {
 				cron cronExpr
 			}
+			environmentVariables {
+				env("CI", "jenkins")
+			}
 			scm {
 				git {
 					remote {
