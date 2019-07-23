@@ -37,12 +37,12 @@ class SpringCloudReleaseMasterMaker extends SpringCloudReleaseMaker {
 	protected String scriptPreconditions() {
 		return '''\
 echo "Running version check"
-VERSION=$( sed '\\!<parent!,\\!</parent!d' `dirname $0`/pom.xml | grep '<version' | head -1 | sed -e 's/.*<version>//' -e 's!</version>.*$!!' )
+VERSION=$( sed '\\!<parent!,\\!</parent!d' `pwd`/pom.xml | grep '<version' | head -1 | sed -e 's/.*<version>//' -e 's!</version>.*$!!' )
 echo "The found version is [${VERSION}]"
 
 if ! echo $VERSION | egrep -q 'SNAPSHOT'; then
     echo "Version is NOT SNAPSHOT, will not do anything. Something is wrong!"
-    return 1
+    exit 1
 else
 	echo "Version is a SNAPSHOT one, will continue with the build"
 fi
