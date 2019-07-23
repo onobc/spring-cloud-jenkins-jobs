@@ -26,6 +26,7 @@ import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import org.springframework.jenkins.cloud.release.ReleaserOptions
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
+import org.springframework.jenkins.cloud.release.SpringCloudReleaseMasterMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 
@@ -242,6 +243,7 @@ new ConsulSonarBuildMaker(dsl).buildSonar()
 
 // RELEASER
 ALL_RELEASER_JOBS.each {
+	new SpringCloudReleaseMasterMaker(dsl).release(it)
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
 def streamOptions = ReleaserOptions.builder()

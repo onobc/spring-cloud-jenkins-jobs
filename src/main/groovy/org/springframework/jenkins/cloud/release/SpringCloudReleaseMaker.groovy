@@ -1,9 +1,11 @@
 package org.springframework.jenkins.cloud.release
 
 import javaposse.jobdsl.dsl.DslFactory
+import javaposse.jobdsl.dsl.jobs.FreeStyleJob
 
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
+import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.TestPublisher
 
@@ -11,14 +13,14 @@ import org.springframework.jenkins.common.job.TestPublisher
  * @author Marcin Grzejszczak
  */
 class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
-		SpringCloudJobs {
-	private static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
-	private static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
-	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
-	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
-	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
-	private static final String RELEASER_POM_THIS_TRAIN_BOM_VAR = 'RELEASER_POM_THIS_TRAIN'
-	private static final String RELEASER_POST_RELEASE_ONLY_VAR= 'RELEASER_POST_RELEASE_ONLY'
+		SpringCloudJobs, Cron {
+	protected static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
+	protected static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
+	protected static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
+	protected static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
+	protected static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
+	protected static final String RELEASER_POM_THIS_TRAIN_BOM_VAR = 'RELEASER_POM_THIS_TRAIN'
+	protected static final String RELEASER_POST_RELEASE_ONLY_VAR= 'RELEASER_POST_RELEASE_ONLY'
 
 	private final DslFactory dsl
 	final String organization
@@ -34,7 +36,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	}
 
 	void release(String project, ReleaserOptions options = new ReleaserOptions()) {
-		dsl.job("$project-releaser") {
+		dsl.job(projectName(project)) {
 			parameters {
 				stringParam(branchVarName(), masterBranch(), "Your project's branch")
 				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), 'Spring Cloud Release branch')
@@ -58,7 +60,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 					}
 				}
 			}
-			label(releaserLabel())
+			configureLabels(delegate as FreeStyleJob)
 			wrappers {
 				timestamps()
 				colorizeOutput()
@@ -87,6 +89,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				// build the releaser
 				shell("""#!/bin/bash
 				set -o errexit
+				${scriptPreconditions()}
 				currentDir="\$(pwd)"
 				tmpDir="\$(mktemp -d)"
 				trap "{ rm -f \${tmpDir}; }" EXIT
@@ -99,7 +102,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				popd
 				echo "Run the releaser against the project"
 				echo "Checking out branch"
-				git checkout \$${branchVarName()}
+				git checkout ${branchToCheck()}
 				echo "Releasing the project"
 				${setupGitCredentials()}
 				set +x
@@ -130,7 +133,28 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				}
 				textFinder(".*BUILD UNSTABLE.*", "**/build_unstable,build_unstable", false, false, true)
 			}
+			additionalConfiguration(delegate as FreeStyleJob)
 		}
+	}
+
+	protected void additionalConfiguration(FreeStyleJob job) {
+
+	}
+
+	protected void configureLabels(FreeStyleJob job) {
+		job.label(releaserLabel())
+	}
+
+	protected String branchToCheck() {
+		return '$' + branchVarName()
+	}
+
+	protected String projectName(String project) {
+		return "$project-releaser"
+	}
+
+	protected String scriptPreconditions() {
+		return ""
 	}
 
 	protected String releaserOptions() {
