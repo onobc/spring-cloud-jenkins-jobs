@@ -54,6 +54,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.deploy(false).upload(false).build().deploy(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13())
+				.onGithubPush(false).cron(oncePerDay())
 				.deploy(false).upload(false).build().deploy(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
@@ -62,10 +63,10 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	JOBS_WITHOUT_TESTS.each {
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk13()).deploy(false)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13()).deploy(false)
+				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13()).onGithubPush(false).cron(oncePerDay()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
@@ -158,35 +159,35 @@ new SleuthEndToEndBuildMaker(dsl).with {
 ["master", "2.0.x", "1.2.x", "2.2.x"].each { String branch ->
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
-				.withBranchName(branch)
-				.withCronExpr(everyThreeHours())
-				// for postman <-> swagger
-				.withNodeJs(true)
-				.withMavenTests(false)
-				.withGradleTests(false)
+		  .withBranchName(branch)
+		  .withCronExpr(everyThreeHours())
+		// for postman <-> swagger
+		  .withNodeJs(true)
+		  .withMavenTests(false)
+		  .withGradleTests(false)
 	}.build(dsl)
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
-			.withBranchName("master")
-			.withCronExpr(everyThreeHours())
-			// for postman <-> swagger
-			.withNodeJs(true)
-			.withJdk(jdk11())
-			.withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
-			.withMavenTests(false)
-			.withGradleTests(false)
+	  .withBranchName("master")
+	  .withCronExpr(everyThreeHours())
+	// for postman <-> swagger
+	  .withNodeJs(true)
+	  .withJdk(jdk11())
+	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
+	  .withMavenTests(false)
+	  .withGradleTests(false)
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
-			.withBranchName("master")
-			.withCronExpr(everyThreeHours())
-			// for postman <-> swagger
-			.withNodeJs(true)
-			.withJdk(jdk13())
-			.withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
-			.withMavenTests(false)
-			.withGradleTests(false)
+	  .withBranchName("master")
+	  .withCronExpr(oncePerDay())
+	// for postman <-> swagger
+	  .withNodeJs(true)
+	  .withJdk(jdk13())
+	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
+	  .withMavenTests(false)
+	  .withGradleTests(false)
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), everyThreeHours())
@@ -198,13 +199,13 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
-			.withProjectName("pearson-contracts")
-			.withOrganization("marcingrzejszczak")
-			.withCronExpr(oncePerDay())
-			.withJdk(jdk8())
-			.withMavenTests(true)
-			.withGradleTests(true)
-			.withWipeOutWorkspace(false)
+	  .withProjectName("pearson-contracts")
+	  .withOrganization("marcingrzejszczak")
+	  .withCronExpr(oncePerDay())
+	  .withJdk(jdk8())
+	  .withMavenTests(true)
+	  .withGradleTests(true)
+	  .withWipeOutWorkspace(false)
 }.build(dsl)
 
 // BREWERY
@@ -267,22 +268,22 @@ ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it)
 }
 def streamOptions = ReleaserOptions.builder()
-		.releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
-		.releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
-		.releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-stream-starters")
-		.releaserConfigBranch("jenkins-releaser-config")
-		.projectsToSkip(AllCloudConstants.DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS)
-		.releaseTrainProjectName("spring-cloud-stream-starters")
-		.releaseTrainDependencyNames(["spring-cloud-stream-dependencies"])
-		.runUpdatedSamples(false)
-		.updateAllTestSamples(false)
-		.updateDocumentationRepos(false)
-		.updateReleaseTrainDocs(false)
-		.updateReleaseTrainWiki(false)
-		.updateSpringGuides(false)
-		.updateSpringProjects(false)
-		.updateSagan(true)
-		.build()
+								   .releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
+								   .releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
+								   .releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-stream-starters")
+								   .releaserConfigBranch("jenkins-releaser-config")
+								   .projectsToSkip(AllCloudConstants.DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS)
+								   .releaseTrainProjectName("spring-cloud-stream-starters")
+								   .releaseTrainDependencyNames(["spring-cloud-stream-dependencies"])
+								   .runUpdatedSamples(false)
+								   .updateAllTestSamples(false)
+								   .updateDocumentationRepos(false)
+								   .updateReleaseTrainDocs(false)
+								   .updateReleaseTrainWiki(false)
+								   .updateSpringGuides(false)
+								   .updateSpringProjects(false)
+								   .updateSagan(true)
+								   .build()
 ALL_STREAM_JOBS_FOR_RELEASER.each {
 	new SpringCloudReleaseMaker(dsl).release(it, streamOptions)
 }

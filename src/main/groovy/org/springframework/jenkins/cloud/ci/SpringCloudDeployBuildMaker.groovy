@@ -22,6 +22,8 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	boolean deploy = true
 	boolean upload = true
 	String jdkVersion = jdk8()
+	String cronValue = everyThreeHours()
+	boolean onGithubPush = true
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
 		this(dsl, 'spring-cloud', '')
@@ -57,8 +59,10 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 		String prefixedName = prefix(project) + project
 		dsl.job("${prefixedName}-${projectNameWithBranch}ci") {
 			triggers {
-				cron everyThreeHours()
-				githubPush()
+				cron cronValue
+				if (onGithubPush) {
+					githubPush()
+				}
 			}
 			parameters {
 				stringParam(branchVarName(), branchToBuild ?: masterBranch(), 'Which branch should be built')

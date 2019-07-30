@@ -23,6 +23,8 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	protected final String project
 	protected String jdkVersion = jdk8()
 	protected boolean deploy = true
+	String cronValue = everyThreeHours()
+	boolean onGithubPush = true
 
 	AbstractHashicorpDeployBuildMaker(DslFactory dsl, String organization, String project) {
 		this.dsl = dsl
@@ -34,8 +36,10 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	void deploy(String branchName = 'master') {
 		dsl.job("$project-$branchName-ci") {
 			triggers {
-				cron everyThreeHours()
-				githubPush()
+				cron cronValue
+				if (onGithubPush) {
+					githubPush()
+				}
 			}
 			jdk(jdkVersion(branchName))
 			label(openJdk7())

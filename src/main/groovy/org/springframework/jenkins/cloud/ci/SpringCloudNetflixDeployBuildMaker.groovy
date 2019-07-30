@@ -18,6 +18,8 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 	private final DslFactory dsl
 	final String organization
 	final String repoName
+	String cronValue = everyThreeHours()
+	boolean onGithubPush = true
 
 	SpringCloudNetflixDeployBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
@@ -58,8 +60,10 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 	private void doDeploy(String projectName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
 		dsl.job(projectName) {
 			triggers {
-				cron everyThreeHours()
-				githubPush()
+				cron cronValue
+				if (onGithubPush) {
+					githubPush()
+				}
 			}
 			parameters {
 				stringParam(branchVarName(), branchName, 'Which branch should be built')

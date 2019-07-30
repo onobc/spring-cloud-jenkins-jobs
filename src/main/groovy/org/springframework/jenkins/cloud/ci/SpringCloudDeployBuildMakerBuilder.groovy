@@ -21,6 +21,8 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cr
 	String jdkVersion = jdk8()
 	boolean deploy = true
 	boolean upload = true
+	String cronValue = everyThreeHours()
+	boolean onGithubPush = true
 
 	SpringCloudDeployBuildMakerBuilder(DslFactory dsl) {
 		this.dsl = dsl
@@ -51,11 +53,23 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cr
 		return this
 	}
 
+	SpringCloudDeployBuildMakerBuilder cron(String cron) {
+		this.cronValue = cron
+		return this
+	}
+
+	SpringCloudDeployBuildMakerBuilder onGithubPush(boolean onGithubPush) {
+		this.onGithubPush = onGithubPush
+		return this
+	}
+
 	SpringCloudDeployBuildMaker build() {
 		def maker = new SpringCloudDeployBuildMaker(this.dsl, this.organization, this.prefix)
 		if (this.jdkVersion) maker.jdkVersion = this.jdkVersion
 		if (this.upload) maker.upload = this.upload
 		maker.deploy = this.deploy
+		maker.cronValue = this.cronValue
+		maker.onGithubPush = this.onGithubPush
 		return maker
 	}
 }

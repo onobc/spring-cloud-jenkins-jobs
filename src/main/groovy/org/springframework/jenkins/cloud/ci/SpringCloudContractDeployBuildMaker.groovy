@@ -20,6 +20,8 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 	private final DslFactory dsl
 	final String organization
 	final String projectName
+	String cronValue = everyThreeHours()
+	boolean onGithubPush = true
 
 	SpringCloudContractDeployBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
@@ -66,8 +68,10 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 	private void doDeploy(String projectName, String repoName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
 		dsl.job(projectName) {
 			triggers {
-				cron everyThreeHours()
-				githubPush()
+				cron cronValue
+				if (onGithubPush) {
+					githubPush()
+				}
 			}
 			parameters {
 				stringParam(branchVarName(), branchName, 'Which branch should be built')

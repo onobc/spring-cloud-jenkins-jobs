@@ -4,13 +4,14 @@ import groovy.transform.CompileStatic
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.CustomJob
+import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 
 /**
  * @author Marcin Grzejszczak
  */
 @CompileStatic
-class CustomJobFactory implements JdkConfig {
+class CustomJobFactory implements JdkConfig, Cron {
 	private final Map<String, CustomJob> jobs = [:]
 	private final DslFactory dsl
 	private final String organization
@@ -20,11 +21,11 @@ class CustomJobFactory implements JdkConfig {
 		this.organization = "spring-cloud"
 		this.jobs.putAll(
 				[
-						(consul().projectName()) : consul(),
-						(build().projectName()) : build(),
-						(contract().projectName()) : contract(),
+						(consul().projectName())  : consul(),
+						(build().projectName())   : build(),
+						(contract().projectName()): contract(),
 						(netflix().projectName()) : netflix(),
-						(vault().projectName()) : vault()
+						(vault().projectName())   : vault()
 				]
 		)
 	}
@@ -33,7 +34,8 @@ class CustomJobFactory implements JdkConfig {
 		CustomJob job = jobOrException(projectName)
 		if (branch) {
 			job.deploy(branch)
-		} else {
+		}
+		else {
 			job.deploy()
 		}
 	}
@@ -56,12 +58,15 @@ class CustomJobFactory implements JdkConfig {
 	}
 
 	private CustomJob consul() {
-		return new ConsulSpringCloudDeployBuildMaker(dsl) {
+		ConsulSpringCloudDeployBuildMaker maker = new ConsulSpringCloudDeployBuildMaker(dsl) {
 			@Override
 			boolean checkTests() {
 				return false
 			}
 		}
+		maker.cronValue = oncePerDay()
+		maker.onGithubPush = false
+		return maker
 	}
 
 	private CustomJob build() {
@@ -84,29 +89,38 @@ class CustomJobFactory implements JdkConfig {
 	}
 
 	private CustomJob contract() {
-		return new SpringCloudContractDeployBuildMaker(dsl) {
+		SpringCloudContractDeployBuildMaker maker = new SpringCloudContractDeployBuildMaker(dsl) {
 			@Override
 			boolean checkTests() {
 				return false
 			}
 		}
+		maker.onGithubPush = false
+		maker.cronValue = oncePerDay()
+		return maker
 	}
 
 	private CustomJob netflix() {
-		return new SpringCloudNetflixDeployBuildMaker(dsl) {
+		SpringCloudNetflixDeployBuildMaker maker = new SpringCloudNetflixDeployBuildMaker(dsl) {
 			@Override
 			boolean checkTests() {
 				return false
 			}
 		}
+		maker.cronValue = oncePerDay()
+		maker.onGithubPush = false
+		return maker
 	}
 
 	private CustomJob vault() {
-		return new VaultSpringCloudDeployBuildMaker(dsl) {
+		VaultSpringCloudDeployBuildMaker maker = new VaultSpringCloudDeployBuildMaker(dsl) {
 			@Override
 			boolean checkTests() {
 				return false
 			}
 		}
+		maker.cronValue = oncePerDay()
+		maker.onGithubPush = false
+		return maker
 	}
 }

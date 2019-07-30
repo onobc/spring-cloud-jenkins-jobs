@@ -4,12 +4,10 @@ import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
-import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
-
 /**
  * @author Marcin Grzejszczak
  */
@@ -46,6 +44,8 @@ abstract class SpringCloudCustomJobDeployBuildMaker implements JdkConfig, TestPu
 		def maker = new SpringCloudDeployBuildMaker(dsl, this.organization, "spring-cloud-${jdkVersion}")
 		maker.jdkVersion = jdkVersion
 		maker.deploy = false
+		maker.onGithubPush = false
+		maker.cronValue = oncePerDay()
 		maker.deploy(projectName(), checkTests())
 	}
 }
