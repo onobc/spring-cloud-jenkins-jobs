@@ -2,10 +2,10 @@ package org.springframework.jenkins.cloud.ci
 
 import javaposse.jobdsl.dsl.DslFactory
 
+import org.springframework.jenkins.cloud.common.CloudCron
 import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
-import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
@@ -13,13 +13,11 @@ import org.springframework.jenkins.common.job.TestPublisher
 /**
  * @author Marcin Grzejszczak
  */
-class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
+class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron,
 		SpringCloudJobs, Maven, CustomJob {
 	private final DslFactory dsl
 	final String organization
 	final String repoName
-	String cronValue = everyThreeHours()
-	boolean onGithubPush = true
 
 	SpringCloudNetflixDeployBuildMaker(DslFactory dsl) {
 		this.dsl = dsl

@@ -42,6 +42,8 @@ class CustomJobFactory implements JdkConfig, Cron {
 
 	void jdkVersion(String projectName, String jdkVersion) {
 		CustomJob job = jobOrException(projectName)
+		job.onGithubPush = false
+		job.cronValue = oncePerDay()
 		job.jdkBuild(jdkVersion)
 	}
 

@@ -1,14 +1,14 @@
 package org.springframework.jenkins.cloud.ci
 
 import groovy.transform.PackageScope
+import javaposse.jobdsl.dsl.DslFactory
 
+import org.springframework.jenkins.cloud.common.CloudCron
 import org.springframework.jenkins.cloud.common.CustomJob
 import org.springframework.jenkins.cloud.common.HashicorpTrait
-import org.springframework.jenkins.common.job.JdkConfig
-import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
-import org.springframework.jenkins.common.job.Cron
+import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
 
@@ -17,14 +17,12 @@ import org.springframework.jenkins.common.job.TestPublisher
  */
 @PackageScope
 abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPublisher, HashicorpTrait,
-		Cron, SpringCloudJobs, Maven, CustomJob {
+		CloudCron, SpringCloudJobs, Maven, CustomJob {
 	protected final DslFactory dsl
 	protected final String organization
 	protected final String project
 	protected String jdkVersion = jdk8()
 	protected boolean deploy = true
-	String cronValue = everyThreeHours()
-	boolean onGithubPush = true
 
 	AbstractHashicorpDeployBuildMaker(DslFactory dsl, String organization, String project) {
 		this.dsl = dsl

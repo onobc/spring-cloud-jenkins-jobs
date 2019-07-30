@@ -3,7 +3,7 @@ package org.springframework.jenkins.cloud.common
 /**
  * @author Marcin Grzejszczak
  */
-interface CustomJob {
+interface CustomJob extends CloudCron {
 	void deploy()
 	void deploy(String branch)
 	String compileOnlyCommand()

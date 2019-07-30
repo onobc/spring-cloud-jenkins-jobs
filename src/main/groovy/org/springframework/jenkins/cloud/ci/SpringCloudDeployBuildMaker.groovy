@@ -1,12 +1,11 @@
 package org.springframework.jenkins.cloud.ci
 
-
 import javaposse.jobdsl.dsl.DslFactory
 
 import org.springframework.jenkins.cloud.common.AllCloudJobs
+import org.springframework.jenkins.cloud.common.CloudCron
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
-import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
 import org.springframework.jenkins.common.job.TestPublisher
@@ -14,7 +13,7 @@ import org.springframework.jenkins.common.job.TestPublisher
 /**
  * @author Marcin Grzejszczak
  */
-class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
+class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron,
 		SpringCloudJobs, Maven {
 	private final DslFactory dsl
 	final String organization
@@ -22,8 +21,6 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	boolean deploy = true
 	boolean upload = true
 	String jdkVersion = jdk8()
-	String cronValue = everyThreeHours()
-	boolean onGithubPush = true
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
 		this(dsl, 'spring-cloud', '')
