@@ -18,6 +18,7 @@ import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.LatestJdkBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
@@ -51,6 +52,9 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.deploy(false).upload(false).build().deploy(it)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13())
+				.deploy(false).upload(false).build().deploy(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deploy(it)
@@ -58,7 +62,10 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	JOBS_WITHOUT_TESTS.each {
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk13()).deploy(false)
+				.upload(false).build().deployWithoutTests(it)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
@@ -71,6 +78,7 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CustomJobFactory(dsl).with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
+		new CustomJobFactory(dsl).jdkVersion(projectName, jdk13())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
@@ -88,7 +96,7 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForFinchley()
 	buildForGreenwich()
 	buildForHoxton()
-	[jdk11(), jdk12()].each {
+	[jdk11(), jdk12(), jdk13()].each {
 		buildForHoxtonWithJdk(it)
 		buildForGreenwichWithJdk(it)
 	}
@@ -169,6 +177,17 @@ new SpringCloudSamplesEndToEndBuilder().with {
 			.withMavenTests(false)
 			.withGradleTests(false)
 }.build(dsl)
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
+			.withBranchName("master")
+			.withCronExpr(everyThreeHours())
+			// for postman <-> swagger
+			.withNodeJs(true)
+			.withJdk(jdk13())
+			.withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
+			.withMavenTests(false)
+			.withGradleTests(false)
+}.build(dsl)
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), everyThreeHours())
 	buildWithMavenTests("the-legacy-app", "2.1.x", everyThreeHours())
@@ -200,6 +219,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
+new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Finchley", "Greenwich", "Hoxton"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
