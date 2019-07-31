@@ -94,7 +94,7 @@ class AllCloudJobs {
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BREWERY_SWITCHES = [
 	        "hoxton" : "-b 2.2.0.BUILD-SNAPSHOT -v Hoxton.BUILD-SNAPSHOT", // boot version 2.2.x
-	        "greenwich" : "-b 2.1.3.RELEASE -v Greenwich.BUILD-SNAPSHOT" // boot version 2.1.x
+	        "greenwich" : "-b 2.1.6.RELEASE -v Greenwich.BUILD-SNAPSHOT" // boot version 2.1.x
 	]
 
 	/**
