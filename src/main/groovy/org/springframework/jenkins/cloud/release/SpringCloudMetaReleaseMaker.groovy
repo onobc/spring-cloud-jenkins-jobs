@@ -70,6 +70,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

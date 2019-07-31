@@ -50,6 +50,7 @@ class CloudFoundryBreweryTestExecutor implements TestPublisher, JdkConfig, Brewe
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

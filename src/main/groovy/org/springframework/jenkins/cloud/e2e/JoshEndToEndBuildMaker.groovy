@@ -51,6 +51,7 @@ class JoshEndToEndBuildMaker implements TestPublisher,
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

@@ -49,6 +49,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

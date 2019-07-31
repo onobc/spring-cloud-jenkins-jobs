@@ -76,6 +76,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 					branch "\$${branchVarName()}"
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

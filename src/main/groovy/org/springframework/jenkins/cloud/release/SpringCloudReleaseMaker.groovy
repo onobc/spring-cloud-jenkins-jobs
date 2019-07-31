@@ -57,6 +57,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

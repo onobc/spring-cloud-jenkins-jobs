@@ -75,6 +75,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

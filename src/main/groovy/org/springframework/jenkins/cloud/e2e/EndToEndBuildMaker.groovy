@@ -78,6 +78,7 @@ class EndToEndBuildMaker implements TestPublisher,
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

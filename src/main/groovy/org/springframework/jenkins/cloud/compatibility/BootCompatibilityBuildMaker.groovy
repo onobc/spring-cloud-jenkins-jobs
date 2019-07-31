@@ -44,6 +44,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 					}
 				}
 			}

@@ -39,6 +39,7 @@ class CloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 					}
 					extensions {
 						wipeOutWorkspace()
+						localBranch("**")
 						submoduleOptions {
 							recursive()
 						}
