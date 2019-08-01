@@ -11,6 +11,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMake
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.AllCloudConstants
+import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
@@ -76,7 +77,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 
 // Custom jobs builder
 CUSTOM_BUILD_JOBS.each { String projectName ->
-	new CustomJobFactory(dsl).with {
+	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk13())
