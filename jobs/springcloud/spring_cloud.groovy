@@ -19,7 +19,6 @@ import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.LatestJdkBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
@@ -221,7 +220,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
-new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
+// new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Finchley", "Greenwich", "Hoxton"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
