@@ -160,7 +160,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 		  .withBranchName(branch)
-		  .withCronExpr(everyThreeHours())
+		  .withCronExpr(oncePerDay())
 		// for postman <-> swagger
 		  .withNodeJs(true)
 		  .withMavenTests(false)
@@ -170,7 +170,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 	  .withBranchName("master")
-	  .withCronExpr(everyThreeHours())
+	  .withCronExpr(oncePerDay())
 	// for postman <-> swagger
 	  .withNodeJs(true)
 	  .withJdk(jdk11())
