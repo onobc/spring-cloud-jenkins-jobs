@@ -44,6 +44,10 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 						url "https://github.com/$githubOrg/$projectName"
 						branch 'master'
 					}
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			wrappers {

@@ -33,6 +33,10 @@ class SpringCloudPipelinesMavenBuildMaker implements TestPublisher, JdkConfig, C
 						url "https://github.com/$githubOrg/$projectName"
 						branch 'master'
 					}
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			steps {

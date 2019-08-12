@@ -35,6 +35,10 @@ class SpringCloudPipelinesGradleBuildMaker implements TestPublisher, JdkConfig, 
 						url "https://github.com/$githubOrg/$projectName"
 						branch 'master'
 					}
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			steps {

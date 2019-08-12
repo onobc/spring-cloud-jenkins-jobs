@@ -76,6 +76,10 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 						url "https://github.com/${organization}/${repoName}"
 						branch branchVar()
 					}
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			wrappers {

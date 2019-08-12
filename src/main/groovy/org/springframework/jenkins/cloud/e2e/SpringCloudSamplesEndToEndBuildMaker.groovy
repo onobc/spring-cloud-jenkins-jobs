@@ -93,9 +93,9 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 					}
 					extensions {
 						if (isWipeOutWorkspace) {
-						wipeOutWorkspace()
-						localBranch("**")
+							wipeOutWorkspace()
 						}
+						localBranch("**")
 					}
 				}
 			}

@@ -84,6 +84,10 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 						url "https://github.com/${organization}/${repoName}"
 					}
 					branch branchVar()
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			wrappers {

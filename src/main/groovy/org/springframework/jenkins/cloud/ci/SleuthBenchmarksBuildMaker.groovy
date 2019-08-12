@@ -31,6 +31,10 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 						url "https://github.com/spring-cloud/spring-cloud-sleuth"
 						branch 'master'
 					}
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			wrappers {

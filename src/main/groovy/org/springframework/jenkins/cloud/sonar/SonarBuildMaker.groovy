@@ -37,7 +37,10 @@ class SonarBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 						url "https://github.com/spring-cloud/$projectName"
 						branch 'master'
 					}
-
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			jdk jdk8()

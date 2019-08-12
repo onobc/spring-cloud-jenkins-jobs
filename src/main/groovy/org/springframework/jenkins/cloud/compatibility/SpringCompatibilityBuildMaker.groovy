@@ -44,6 +44,10 @@ class SpringCompatibilityBuildMaker extends CompatibilityBuildMaker {
 						url "https://github.com/${organization}/$repoName"
 						branch branchName
 					}
+					extensions {
+						wipeOutWorkspace()
+						localBranch("**")
+					}
 				}
 			}
 			steps checkTests ? defaultStepsWithTestsForSpring() : defaultStepsForSpring()
