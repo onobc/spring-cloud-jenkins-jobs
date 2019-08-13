@@ -27,6 +27,7 @@ class CloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 		dsl.job("cloudpipelines-${project}-${masterBranch()}-ci") {
 			triggers {
 				githubPush()
+				cron(everySunday())
 			}
 			parameters {
 				stringParam("tagName", "latest", 'Which tag to use')
@@ -65,6 +66,7 @@ class CloudPipelinesBaseDeployBuildMaker implements JdkConfig, TestPublisher, Cr
 			}
 			steps {
 				shell("""#!/bin/bash
+				set -o errexit
 				echo "Deploying image to DockerHub"
 				docker login -u \$${dockerhubUserNameEnvVar()} -p \$${dockerhubPasswordEnvVar()}
 				echo "Docker images"
