@@ -256,7 +256,7 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 }
 
 // SONAR
-(ALL_JOBS_WITH_TESTS - ["spring-cloud-consul", "spring-cloud-vault", "spring-cloud-aws", "spring-cloud-function"]).each {
+(ALL_JOBS_WITH_TESTS - ["spring-cloud-contract", "spring-cloud-consul", "spring-cloud-vault", "spring-cloud-aws", "spring-cloud-function"]).each {
 	new SonarBuildMaker(dsl).buildSonar(it)
 }
 new ConsulSonarBuildMaker(dsl).buildSonar()
