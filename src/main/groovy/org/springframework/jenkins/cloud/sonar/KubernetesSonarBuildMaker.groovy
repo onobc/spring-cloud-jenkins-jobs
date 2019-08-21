@@ -20,7 +20,7 @@ class KubernetesSonarBuildMaker extends SonarBuildMaker {
 			environmentVariables {
 				env("_SERVICE_OCCURENCE", "5")
 			}
-			shell('./mvnw -s .settings.xml clean install -Dservice.occurence=${_SERVICE_OCCURENCE} org.jacoco:jacoco-maven-plugin:prepare-agent install -U -P sonar -nsu --batch-mode -Dmaven.test.redirectTestOutputToFile=true -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn')
+			shell('./runSonar.sh')
 			shell("""\
 				echo "Running sonar please wait..."
 				set +x
