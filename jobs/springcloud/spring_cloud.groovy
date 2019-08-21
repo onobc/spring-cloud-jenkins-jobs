@@ -29,6 +29,7 @@ import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMasterMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
+import org.springframework.jenkins.cloud.sonar.KubernetesSonarBuildMaker
 import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
@@ -256,10 +257,11 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 }
 
 // SONAR
-(ALL_JOBS_WITH_TESTS - ["spring-cloud-contract", "spring-cloud-consul", "spring-cloud-vault", "spring-cloud-aws", "spring-cloud-function"]).each {
+(ALL_JOBS_WITH_TESTS - ["spring-cloud-contract", "spring-cloud-consul", "spring-cloud-vault", "spring-cloud-aws", "spring-cloud-function", "spring-cloud-kubernetes"]).each {
 	new SonarBuildMaker(dsl).buildSonar(it)
 }
 new ConsulSonarBuildMaker(dsl).buildSonar()
+new KubernetesSonarBuildMaker(dsl).buildSonar()
 
 
 // RELEASER
