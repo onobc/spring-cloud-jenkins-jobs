@@ -38,7 +38,7 @@ class AllCloudJobs {
 	/**
 	 * List of all single project jobs to be used by the releaser
 	 */
-	public static final List<String> ALL_RELEASER_JOBS = ALL_JOBS + "spring-cloud-schema-registry"
+	public static final List<String> ALL_RELEASER_JOBS = ALL_JOBS
 	/**
 	 * Some projects need to have the test report generation skipped (since they have no tests).
 	 */
