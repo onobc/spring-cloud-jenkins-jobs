@@ -134,7 +134,6 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy('1.1.x')
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
-	deploy("spring-cloud-circuitbreaker", masterBranch())
 	deploy("spring-cloud-contract-raml")
 }
 
