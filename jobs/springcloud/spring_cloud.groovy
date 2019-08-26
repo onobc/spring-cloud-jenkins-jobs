@@ -95,7 +95,6 @@ new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	// TODO: Remember to remove this
 	buildForEdgware()
-	buildForFinchley()
 	buildForGreenwich()
 	buildForHoxton()
 	[jdk11(), jdk12(), jdk13()].each {
@@ -119,8 +118,6 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 // Release branches for Spring Cloud Release
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Edgware', false)
-new SpringCloudDeployBuildMaker(dsl)
-		.deploy('spring-cloud-release', 'Finchley', false)
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Greenwich', false)
 
@@ -221,7 +218,7 @@ new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
-["Finchley", "Greenwich", "Hoxton"].each {
+["Greenwich", "Hoxton"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 
@@ -229,26 +226,6 @@ new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
 	buildWithoutTests("eureka-release-train-interop", oncePerDay())
 }
-
-// Josh's CI APP
-/*
-new JoshEndToEndBuildMaker(dsl, 'bootiful-microservices').with {
-	build('bootiful-microservices-edgware',
-			'scripts/scenario_edgware_tester.sh',
-			everyThreeHours(),
-			'scripts/kill_all.sh')
-}
-new JoshEndToEndBuildMaker(dsl, 'bootiful-reactive-microservices').with {
-	build('bootiful-reactive-microservices-finchley',
-			'scripts/scenario_finchley_tester.sh',
-			everyThreeHours(),
-			'scripts/kill_all.sh')
-	build('bootiful-reactive-microservices-greenwich',
-			'scripts/scenario_greenwich_tester.sh',
-			everyThreeHours(),
-			'scripts/kill_all.sh')
-}
- */
 
 // Pilo's apps
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
