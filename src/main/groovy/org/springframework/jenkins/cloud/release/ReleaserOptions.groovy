@@ -17,6 +17,7 @@ class ReleaserOptions {
 	boolean updateAllTestSamples = true
 	boolean updateReleaseTrainDocs = true
 	boolean updateSpringGuides = true
+	boolean updateStartSpringIo = true
 	String releaseTrainProjectName = "spring-cloud-release"
 	String releaserConfigUrl = "https://raw.githubusercontent.com/spring-cloud/spring-cloud-release"
 	String releaserConfigBranch = "jenkins-releaser-config"

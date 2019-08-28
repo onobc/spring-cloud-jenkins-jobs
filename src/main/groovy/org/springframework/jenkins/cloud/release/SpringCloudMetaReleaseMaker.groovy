@@ -26,6 +26,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR = 'RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES'
 	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS'
 	private static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
+	private static final String RELEASER_GIT_UPDATE_START_SPRING_IO_VAR = 'RELEASER_GIT_UPDATE_START_SPRING_IO'
 	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
 	private static final String RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_DEPENDENCY_NAMES'
 	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
@@ -54,6 +55,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				booleanParam(RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR, options.updateAllTestSamples, ' If true then will update samples with bumped snapshots after release')
 				booleanParam(RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR, options.updateReleaseTrainDocs, ' If true then will update the release train documentation project and run the generation')
 				booleanParam(RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR, options.updateSpringGuides, ' If true then will update the release train documentation project and run the generation')
+				booleanParam(RELEASER_GIT_UPDATE_START_SPRING_IO_VAR, options.updateStartSpringIo, ' If true then will update start.spring.io')
 				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, false, 'If set to true will run only post release tasks')
 				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
 				stringParam(RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR, options.releaseTrainDependencyNames.join(","), 'All the names of dependencies that should be updated with the release train project version')
