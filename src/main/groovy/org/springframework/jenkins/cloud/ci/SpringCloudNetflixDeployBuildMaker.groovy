@@ -118,6 +118,6 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 	}
 
 	protected String firstBuildContractModule() {
-		return """if [ -d "spring-cloud-netflix-hystrix-contract" ]; then cd spring-cloud-netflix-hystrix-contract && ../mvnw clean install && cd ..; fi"""
+		return """if [ -d "spring-cloud-netflix-hystrix-contract" ]; then cd spring-cloud-netflix-hystrix-contract && ../mvnw clean install deploy && cd ..; fi"""
 	}
 }
