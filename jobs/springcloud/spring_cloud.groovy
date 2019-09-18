@@ -145,15 +145,13 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", "2.1.x", everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
 	buildWithGradleTests("sleuth-documentation-apps", "2.1.x", everyThreeHours())
-	buildWithGradleTests("sleuth-documentation-apps", "2.0.x", everyThreeHours())
-	buildWithGradleTests("sleuth-documentation-apps", "1.3.x", everyThreeHours())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
 }
 
 // CONTRACT
-["master", "2.0.x", "1.2.x", "2.2.x"].each { String branch ->
+["master", "2.2.x"].each { String branch ->
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 		  .withBranchName(branch)
@@ -189,10 +187,8 @@ new SpringCloudSamplesEndToEndBuilder().with {
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), everyThreeHours())
 	buildWithMavenTests("the-legacy-app", "2.1.x", everyThreeHours())
-	buildWithMavenTests("the-legacy-app", "2.0.x", everyThreeHours())
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
 	buildWithMavenTests("sc-contract-car-rental", "2.1.x", everyThreeHours())
-	buildWithMavenTests("sc-contract-car-rental", "2.0.x", everyThreeHours())
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
