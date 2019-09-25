@@ -143,8 +143,8 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", masterBranch(), everyThreeHours())
 	buildWithMavenTests("sleuth-issues", "2.1.x", everyThreeHours())
-	buildWithGradleTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
-	buildWithGradleTests("sleuth-documentation-apps", "2.1.x", everyThreeHours())
+	buildWithMavenTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
+	buildWithMavenTests("sleuth-documentation-apps", "2.1.x", everyThreeHours())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
@@ -204,8 +204,10 @@ new SpringCloudSamplesEndToEndBuilder().with {
 // BREWERY
 new CloudFoundryEndToEndBuildMaker(dsl).with {
 	buildBreweryForDocs()
-	buildSleuthDocApps()
 	buildSpringCloudStream()
+}
+new CloudFoundryEndToEndBuildMaker(dsl).with {
+	buildSleuthDocApps()
 }
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())

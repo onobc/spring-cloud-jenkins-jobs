@@ -15,6 +15,7 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 		BashCloudFoundry, Cron, SpringCloudJobs {
 
 	private final DslFactory dsl
+	boolean gradleJunitReport = true
 
 	CloudFoundryEndToEndBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
@@ -29,6 +30,7 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 	}
 
 	void buildSleuthDocApps() {
+		gradleJunitReport = false
 		build('spring-cloud-sleuth-doc-apps', 'spring-cloud-samples', 'sleuth-documentation-apps', "runAcceptanceTests.sh", everySunday())
 	}
 
@@ -74,7 +76,11 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 				SpringCloudNotification.cloudSlack(it as Node)
 			}
 			publishers {
-				archiveJunit gradleJUnitResults()
+				if (gradleJunitReport) {
+					archiveJunit gradleJUnitResults()
+				} else {
+					archiveJunit mavenJUnitResults()
+				}
 				archiveArtifacts acceptanceTestReports()
 				archiveArtifacts {
 					pattern acceptanceTestSpockReports()
