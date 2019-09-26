@@ -101,6 +101,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 			}
 			steps {
 				shell("""#!/bin/bash
+						rm -rf ~/.gradle/caches/modules-2/files-2.1/
 						./${scriptName}
 					""")
 				if (postBuildScripts) {
