@@ -132,6 +132,7 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-contract-raml")
+	deploy("spring-cloud-rsocket")
 }
 
 // SLEUTH
