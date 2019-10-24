@@ -31,6 +31,9 @@ class SpringCloudReleaseMasterMaker extends SpringCloudReleaseMaker {
 		job.triggers {
 			cron oncePerDay()
 		}
+		job.parameters {
+			booleanParam(RELEASER_SAGAN_UPDATE_VAR, false, 'If true then will update documentation repository with the current URL')
+		}
 	}
 
 	@Override
