@@ -17,6 +17,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
 	private static final String START_FROM_PARAM = "START_FROM"
 	private static final String TASK_NAMES_PARAM = "TASK_NAMES"
+	private static final String DRY_RUN_PARAM = "DRY_RUN"
 	private static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
 	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
 	private static final String RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR = 'RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS'
@@ -47,6 +48,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
 				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
 				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
+				booleanParam(DRY_RUN_PARAM, options.dryRun, 'If true then will run meta-release in a dry run mode')
 				booleanParam(RELEASER_SAGAN_UPDATE_VAR, options.updateSagan, 'If true then will update documentation repository with the current URL')
 				booleanParam(RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR, options.updateDocumentationRepos, 'If true then will update documentation repository with the current URL')
 				booleanParam(RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR, options.updateSpringProjects, 'If true then will update Project Sagan with the current release train values')
@@ -173,6 +175,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 --releaser.maven.system-properties="\${SYSTEM_PROPS}"
 --interactive=false
 --meta-release=true
+--dry-run=\${$DRY_RUN_PARAM}
 --releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR}
 --releaser.git.update-documentation-repo=\${$RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR}
 --releaser.git.update-spring-project=\${$RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR}

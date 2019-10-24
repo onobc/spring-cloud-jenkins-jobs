@@ -9,6 +9,7 @@ import org.springframework.jenkins.cloud.common.AllCloudConstants
  */
 @Builder
 class ReleaserOptions {
+	boolean dryRun = false
 	boolean updateSagan = true
 	boolean updateDocumentationRepos = true
 	boolean updateSpringProjects = true

@@ -26,6 +26,7 @@ import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import org.springframework.jenkins.cloud.release.ReleaserOptions
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
+import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMasterMaker
 import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
@@ -267,6 +268,7 @@ ALL_STREAM_JOBS_FOR_RELEASER.each {
 }
 new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-meta-releaser")
 new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-stream-meta-releaser", streamOptions)
+new SpringCloudMetaReleaseRepoPurger(dsl).build()
 
 // Compatibility builds
 new ManualBootCompatibilityBuildMaker(dsl).build()
