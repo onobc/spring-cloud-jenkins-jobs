@@ -19,7 +19,7 @@ class SpringCloudMetaReleaseRepoPurger implements SpringCloudJobs {
 	}
 
 	void build() {
-		dsl.job(projectSuffix() + "-releaser-purge-worker-artifacts") {
+		dsl.job(projectSuffix() + "-purge-worker-artifacts-releaser") {
 			label(releaserLabel())
 			wrappers {
 				timestamps()
