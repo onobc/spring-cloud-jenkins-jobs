@@ -1,30 +1,61 @@
 package org.springframework.jenkins.cloud.release
 
-import groovy.transform.builder.Builder
-
-import org.springframework.jenkins.cloud.common.AllCloudConstants
+import groovy.transform.CompileStatic
 
 /**
  * @author Marcin Grzejszczak
  */
-@Builder
+@CompileStatic
 class ReleaserOptions {
-	boolean dryRun = false
-	boolean updateSagan = true
-	boolean updateDocumentationRepos = true
-	boolean updateSpringProjects = true
-	boolean updateReleaseTrainWiki = true
-	boolean runUpdatedSamples = true
-	boolean updateAllTestSamples = true
-	boolean updateReleaseTrainDocs = true
-	boolean updateSpringGuides = true
-	boolean updateStartSpringIo = true
-	boolean postReleaseOnly = false
-	String releaseTrainProjectName = "spring-cloud-release"
-	String releaserConfigUrl = "https://raw.githubusercontent.com/spring-cloud/spring-cloud-release"
-	String releaserConfigBranch = "jenkins-releaser-config"
-	List<String> releaseTrainDependencyNames = ["spring-cloud", "spring-cloud-dependencies", "spring-cloud-starter"]
-	String releaseTrainBomUrl = "https://github.com/spring-cloud/spring-cloud-release"
-	String releaseThisTrainBom = "spring-cloud-dependencies/pom.xml"
-	String projectsToSkip = AllCloudConstants.DEFAULT_RELEASER_SKIPPED_PROJECTS
+	final boolean dryRun
+	final boolean updateSagan
+	final boolean updateDocumentationRepos
+	final boolean updateSpringProjects
+	final boolean updateReleaseTrainWiki
+	final boolean runUpdatedSamples
+	final boolean updateAllTestSamples
+	final boolean updateReleaseTrainDocs
+	final boolean updateSpringGuides
+	final boolean updateStartSpringIo
+	final boolean updateGithubMilestones
+	final boolean postReleaseOnly
+	final String releaseTrainProjectName
+	final String releaserConfigUrl
+	final String releaserConfigBranch
+	final List<String> releaseTrainDependencyNames
+	final String releaseTrainBomUrl
+	final String releaseThisTrainBom
+	final String projectsToSkip
+
+	protected ReleaserOptions(boolean dryRun, boolean updateSagan, boolean updateDocumentationRepos, boolean updateSpringProjects, boolean updateReleaseTrainWiki, boolean runUpdatedSamples, boolean updateAllTestSamples, boolean updateReleaseTrainDocs, boolean updateSpringGuides, boolean updateStartSpringIo, boolean updateGithubMilestones, boolean postReleaseOnly, String releaseTrainProjectName, String releaserConfigUrl, String releaserConfigBranch, List<String> releaseTrainDependencyNames, String releaseTrainBomUrl, String releaseThisTrainBom, String projectsToSkip) {
+		this.dryRun = dryRun
+		this.updateSagan = updateSagan
+		this.updateDocumentationRepos = updateDocumentationRepos
+		this.updateSpringProjects = updateSpringProjects
+		this.updateReleaseTrainWiki = updateReleaseTrainWiki
+		this.runUpdatedSamples = runUpdatedSamples
+		this.updateAllTestSamples = updateAllTestSamples
+		this.updateReleaseTrainDocs = updateReleaseTrainDocs
+		this.updateSpringGuides = updateSpringGuides
+		this.updateStartSpringIo = updateStartSpringIo
+		this.updateGithubMilestones = updateGithubMilestones
+		this.postReleaseOnly = postReleaseOnly
+		this.releaseTrainProjectName = releaseTrainProjectName
+		this.releaserConfigUrl = releaserConfigUrl
+		this.releaserConfigBranch = releaserConfigBranch
+		this.releaseTrainDependencyNames = releaseTrainDependencyNames
+		this.releaseTrainBomUrl = releaseTrainBomUrl
+		this.releaseThisTrainBom = releaseThisTrainBom
+		this.projectsToSkip = projectsToSkip
+		assert releaseTrainProjectName != null
+		assert releaserConfigUrl != null
+		assert releaserConfigBranch != null
+		assert releaseTrainDependencyNames != null
+		assert releaseTrainBomUrl != null
+		assert releaseThisTrainBom != null
+	}
+
+	static ReleaserOptionsBuilder builder() {
+		return new ReleaserOptionsBuilder()
+	}
 }
