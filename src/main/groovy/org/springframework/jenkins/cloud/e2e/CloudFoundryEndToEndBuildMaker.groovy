@@ -81,10 +81,12 @@ class CloudFoundryEndToEndBuildMaker implements TestPublisher, JdkConfig, Brewer
 				} else {
 					archiveJunit mavenJUnitResults()
 				}
-				archiveArtifacts acceptanceTestReports()
-				archiveArtifacts {
-					pattern acceptanceTestSpockReports()
-					allowEmpty()
+				if (gradleJunitReport) {
+					archiveArtifacts acceptanceTestReports()
+					archiveArtifacts {
+						pattern acceptanceTestSpockReports()
+						allowEmpty()
+					}
 				}
 			}
 		}
