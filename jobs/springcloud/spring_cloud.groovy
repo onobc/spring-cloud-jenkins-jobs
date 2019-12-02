@@ -154,7 +154,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 
 // CONTRACT
-["master", "2.2.x"].each { String branch ->
+["master", "2.1.x"].each { String branch ->
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 		  .withBranchName(branch)
