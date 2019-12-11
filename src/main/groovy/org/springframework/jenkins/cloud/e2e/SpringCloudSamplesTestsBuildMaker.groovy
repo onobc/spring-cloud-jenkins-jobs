@@ -26,14 +26,6 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 		this.organization = organization
 	}
 
-	void buildForEdgware() {
-		build("Edgware.BUILD-SNAPSHOT", "tests", everySixHours(), "Edgware")
-	}
-
-	void buildForFinchley() {
-		build("Finchley.BUILD-SNAPSHOT", "tests", everySixHours(), "Finchley")
-	}
-
 	void buildForGreenwich() {
 		build("Greenwich.BUILD-SNAPSHOT", "tests", everySixHours(), "Greenwich")
 	}

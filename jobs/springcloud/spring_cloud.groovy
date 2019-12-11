@@ -16,7 +16,6 @@ import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBu
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
 import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.EdgwareBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
@@ -96,7 +95,6 @@ new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	// TODO: Remember to remove this
-	buildForEdgware()
 	buildForGreenwich()
 	buildForHoxton()
 	[jdk11(), jdk12(), jdk13()].each {
@@ -119,8 +117,6 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 }
 // Release branches for Spring Cloud Release
 new SpringCloudDeployBuildMaker(dsl)
-		.deploy('spring-cloud-release', 'Edgware', false)
-new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Greenwich', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
@@ -129,8 +125,6 @@ new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
-	deploy('1.0.x')
-	deploy('1.1.x')
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-contract-raml")
@@ -216,7 +210,6 @@ new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
-new EdgwareBreweryEndToEndBuildMaker(dsl).build()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Greenwich", "Hoxton"].each {
