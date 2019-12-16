@@ -94,12 +94,9 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
-	// TODO: Remember to remove this
-	buildForGreenwich()
 	buildForHoxton()
 	[jdk11(), jdk12(), jdk13()].each {
 		buildForHoxtonWithJdk(it)
-		buildForGreenwichWithJdk(it)
 	}
 }
 
@@ -212,7 +209,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
-["Greenwich", "Hoxton"].each {
+["Hoxton"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 
