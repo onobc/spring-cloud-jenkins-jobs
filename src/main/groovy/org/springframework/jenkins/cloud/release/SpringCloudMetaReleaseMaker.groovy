@@ -119,7 +119,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				${setupGitCredentials()}
 				${fetchConfigurationFile("config")}
 				mkdir -p target
-				ROOT_VIEW="Spring Cloud"
+				ROOT_VIEW="Spring%20Cloud"
 				CURRENT_VIEW="Releaser"
 				echo "Building the releaser, please wait... If the build fails after this then it means that the releaser failed to get built. Then please check the build's workspace under [.git/releaser.log] for logs. You can click here to see it [\${JENKINS_URL}/view/\${ROOT_VIEW}/view/\${CURRENT_VIEW}/job/\${JOB_NAME}/ws/target/releaser.log]"
 				./mvnw clean install > "target/releaser.log"

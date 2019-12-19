@@ -16,6 +16,7 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs, Cron, Releaser {
 	protected static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
+	protected static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
 	protected static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
 	protected static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
 	protected static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
@@ -43,6 +44,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 			parameters {
 				stringParam(branchVarName(), masterBranch(), "Your project's branch")
 				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties) in the branch with releaser properties")
+				stringParam(RELEASER_CONFIG_URL_PARAM, options.releaserConfigUrl, "Root of the URL where the RAW version of the configuration file is present")
 				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
 				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), "Spring Cloud Release branch. If [${RELEASE_VERSION_PARAM}] was passed, then this will be ignored")
 				stringParam(RELEASER_ADDITIONAL_PROPS_VAR, '', 'Additional system properties')
