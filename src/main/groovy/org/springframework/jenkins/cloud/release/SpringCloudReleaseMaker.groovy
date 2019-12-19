@@ -3,6 +3,7 @@ package org.springframework.jenkins.cloud.release
 import javaposse.jobdsl.dsl.DslFactory
 import javaposse.jobdsl.dsl.jobs.FreeStyleJob
 
+import org.springframework.jenkins.cloud.common.Releaser
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.Cron
@@ -13,7 +14,9 @@ import org.springframework.jenkins.common.job.TestPublisher
  * @author Marcin Grzejszczak
  */
 class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
-		SpringCloudJobs, Cron {
+		SpringCloudJobs, Cron, Releaser {
+	protected static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
+	protected static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
 	protected static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
 	protected static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
 	protected static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
@@ -39,7 +42,9 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 		dsl.job(projectName(project)) {
 			parameters {
 				stringParam(branchVarName(), masterBranch(), "Your project's branch")
-				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), 'Spring Cloud Release branch')
+				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties) in the branch with releaser properties")
+				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
+				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), "Spring Cloud Release branch. If [${RELEASE_VERSION_PARAM}] was passed, then this will be ignored")
 				stringParam(RELEASER_ADDITIONAL_PROPS_VAR, '', 'Additional system properties')
 				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
 				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')
@@ -91,16 +96,14 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				shell("""#!/bin/bash
 				set -o errexit
 				${scriptPreconditions()}
-				currentDir="\$(pwd)"
-				tmpDir="\$(mktemp -d)"
-				trap "{ rm -f \${tmpDir}; }" EXIT
-				echo "Cloning to [\${tmpDir}] and building the releaser"
-				git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "\${tmpDir}"
-				pushd "\${tmpDir}"
-				rm -rf ~/.m2/repository/org/springframework/cloud
-				echo "Building the releaser. If the build fails after this then it means that the releaser failed to get built. Then please check the build's workspace under [.git/releaser.log] for logs"
-				./mvnw clean install > "\${currentDir}/.git/releaser.log"
-				popd
+				${buildReleaserForSingleProject()}
+				releaserJarLocation="\${tmpDir}/spring-cloud-release-tools-spring/target/"
+				additionalParams=""
+				if [[ \$${RELEASE_VERSION_PARAM} != "" ]]; then
+					echo "Found the release version parameter. Will use the properties file to set the versions"
+					${fetchConfigurationFile("\${releaserJarLocation}")}
+					additionalParams="--releaser.git.fetch-versions-from-git=false"
+				fi
 				echo "Run the releaser against the project"
 				echo "Checking out branch"
 				git checkout ${branchToCheck()}
@@ -109,7 +112,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				set +x
 				SPRING_CLOUD_RELEASE_REPO="https://github.com/spring-cloud/spring-cloud-release.git"
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${tmpDir}/spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} || exit 1
+				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${releaserJarLocation}/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} \$additionalParams || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
@@ -128,6 +131,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				}
 				archiveArtifacts {
 					allowEmpty()
+					pattern(".git/*.log")
 					pattern("target/*.txt")
 					pattern("target/*.md")
 					pattern("target/*.adoc")
@@ -165,6 +169,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 --releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}
 --releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM_VAR}
 --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR}
+--spring.config.name=releaser
 --releaser.maven.wait-time-in-minutes=180
 --spring.config.name=releaser
 --releaser.maven.system-properties="\${SYSTEM_PROPS}"

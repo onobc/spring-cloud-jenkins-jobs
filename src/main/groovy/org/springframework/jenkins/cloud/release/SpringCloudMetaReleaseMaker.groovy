@@ -3,6 +3,7 @@ package org.springframework.jenkins.cloud.release
 
 import javaposse.jobdsl.dsl.DslFactory
 
+import org.springframework.jenkins.cloud.common.Releaser
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.JdkConfig
@@ -11,7 +12,7 @@ import org.springframework.jenkins.common.job.TestPublisher
  * @author Marcin Grzejszczak
  */
 class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
-		SpringCloudJobs {
+		SpringCloudJobs, Releaser {
 	private static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
 	private static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
 	private static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
@@ -116,13 +117,11 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				fi
 				echo "\n\n\nRUNNING THE [\${$RELEASE_VERSION_PARAM}] META-RELEASE!!!\n\n\n" 
 				${setupGitCredentials()}
-				version=\$( echo "\$$RELEASE_VERSION_PARAM" | tr '[:upper:]' '[:lower:]' | tr '.' '_' )
-				configFile="\${version}.properties"
-				configUrl="\${$RELEASER_CONFIG_URL_PARAM}/\${$RELEASER_CONFIG_BRANCH_PARAM}/\${configFile}"
-				echo "Downloading the configuration properties file from [\${configUrl}]"
-				rm -rf config && mkdir -p config && curl --fail "\${configUrl}" -o config/releaser.properties
+				${fetchConfigurationFile("config")}
 				mkdir -p target
-				echo "Building the releaser. Please wait..."
+				ROOT_VIEW="Spring Cloud"
+				CURRENT_VIEW="Releaser"
+				echo "Building the releaser, please wait... If the build fails after this then it means that the releaser failed to get built. Then please check the build's workspace under [.git/releaser.log] for logs. You can click here to see it [\${JENKINS_URL}/view/\${ROOT_VIEW}/view/\${CURRENT_VIEW}/job/\${JOB_NAME}/ws/target/releaser.log]"
 				./mvnw clean install > "target/releaser.log"
 				set +x
 				export SPRING_CLOUD_STATIC_REPO_DESTINATION="\$( dirname "\$(mktemp)" )/"
@@ -155,6 +154,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				archiveJunit mavenJUnitResults()
 				archiveArtifacts {
 					allowEmpty()
+					pattern(".git/*.log")
 					pattern("target/*.txt")
 					pattern("target/*.md")
 					pattern("target/*.adoc")
