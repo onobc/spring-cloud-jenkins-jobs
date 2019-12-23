@@ -7,6 +7,7 @@ import groovy.transform.CompileStatic
  */
 @CompileStatic
 class ReleaserOptionsBuilder {
+	String projectName
 	boolean dryRun = false
 	boolean updateSagan = false
 	boolean updateDocumentationRepos = false
@@ -26,6 +27,11 @@ class ReleaserOptionsBuilder {
 	String releaseTrainBomUrl
 	String releaseThisTrainBom
 	String projectsToSkip
+
+	ReleaserOptionsBuilder projectName(String projectName) {
+		this.projectName = projectName
+		return this
+	}
 
 	ReleaserOptionsBuilder dryRun(boolean dryRun) {
 		this.dryRun = dryRun
@@ -123,7 +129,8 @@ class ReleaserOptionsBuilder {
 	}
 
 	ReleaserOptions build() {
-		return new ReleaserOptions(dryRun,
+		return new ReleaserOptions(projectName,
+				dryRun,
 				updateSagan,
 				updateDocumentationRepos,
 				updateSpringProjects,

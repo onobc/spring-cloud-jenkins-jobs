@@ -14,6 +14,7 @@ class SpringCloudReleaserOptions {
 
 	private static ReleaserOptionsBuilder springCloudBuilder() {
 		return ReleaserOptions.builder()
+						.projectName("spring-cloud")
 					   .releaseThisTrainBom("spring-cloud-dependencies/pom.xml")
 					   .releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-release")
 					   .releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-release")
@@ -43,6 +44,7 @@ class SpringCloudReleaserOptions {
 
 	static ReleaserOptions springCloudStream() {
 		return ReleaserOptions.builder()
+							  .projectName("spring-cloud-stream")
 							  .releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
 							  .releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
 							  .releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-stream-starters")

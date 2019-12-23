@@ -123,7 +123,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				CURRENT_VIEW="Releaser"
 				LOGS_FILE=".git/releaser.log"
 				echo "Building the releaser, please wait... If the build fails after this then it means that the releaser failed to get built. Then please check the build's workspace under [.git/releaser.log] for logs. You can click here to see it [\${JENKINS_URL}/view/\${ROOT_VIEW}/view/\${CURRENT_VIEW}/job/\${JOB_NAME}/ws/\${LOGS_FILE}]"
-				./mvnw clean install > "\${LOGS_FILE}"
+				./mvnw clean install -am -pl :${options.projectName} > "\${LOGS_FILE}"
 				set +x
 				export SPRING_CLOUD_STATIC_REPO_DESTINATION="\$( dirname "\$(mktemp)" )/"
 				SPRING_CLOUD_RELEASE_REPO="https://github.com/spring-cloud/spring-cloud-release.git"
@@ -138,7 +138,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Run the meta-releaser!"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
-						-jar spring-cloud-release-tools-spring/target/spring-cloud-release-tools-spring-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} || exit 1
+						-jar projects/${options.projectName}/target/${options.projectName}-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} || exit 1
 				${cleanGitCredentials()}
 				""")
 			}

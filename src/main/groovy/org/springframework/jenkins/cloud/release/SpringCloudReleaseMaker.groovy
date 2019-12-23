@@ -98,7 +98,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				shell("""#!/bin/bash
 				set -o errexit
 				${scriptPreconditions()}
-				${buildReleaserForSingleProject()}
+				${buildReleaserForSingleProject(options)}
 				releaserJarLocation="\${tmpDir}/spring-cloud-release-tools-spring/target/"
 				additionalParams=""
 				if [[ \$${RELEASE_VERSION_PARAM} != "" ]]; then
