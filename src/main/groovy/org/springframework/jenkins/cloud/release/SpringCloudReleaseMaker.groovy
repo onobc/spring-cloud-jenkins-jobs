@@ -171,9 +171,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 --releaser.git.release-train-bom-url=\${$RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR}
 --releaser.pom.this-train-bom=\${$RELEASER_POM_THIS_TRAIN_BOM_VAR}
 --releaser.pom.branch=\${$RELEASER_POM_BRANCH_VAR}
---spring.config.name=releaser
 --releaser.maven.wait-time-in-minutes=180
---spring.config.name=releaser
 --releaser.maven.system-properties="\${SYSTEM_PROPS}"
 --full-release
 --releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR}
