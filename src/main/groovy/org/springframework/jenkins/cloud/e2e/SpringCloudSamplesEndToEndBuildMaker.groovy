@@ -101,6 +101,9 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 			}
 			steps {
 				shell("""#!/bin/bash
+						echo "Cleaning up .m2"
+						rm -rf ~/.m2/repository/org/springframework/cloud/
+						echo "Clearing up the gradle cache"
 						rm -rf ~/.gradle/caches/modules-2/files-2.1/
 						./${scriptName}
 					""")

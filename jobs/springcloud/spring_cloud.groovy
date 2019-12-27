@@ -10,7 +10,6 @@ import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
-import org.springframework.jenkins.cloud.common.AllCloudConstants
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
@@ -23,7 +22,6 @@ import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
-import org.springframework.jenkins.cloud.release.ReleaserOptions
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
@@ -131,14 +129,14 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
 new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
-	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", masterBranch(), everyThreeHours())
-	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", "rabbitmq-sender", everyThreeHours())
+	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", masterBranch(), oncePerDay())
+	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", "rabbitmq-sender", oncePerDay())
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithMavenTests("sleuth-issues", masterBranch(), everyThreeHours())
-	buildWithMavenTests("sleuth-issues", "2.1.x", everyThreeHours())
-	buildWithMavenTests("sleuth-documentation-apps", masterBranch(), everyThreeHours())
-	buildWithMavenTests("sleuth-documentation-apps", "2.1.x", everyThreeHours())
+	buildWithMavenTests("sleuth-issues", masterBranch(), oncePerDay())
+	buildWithMavenTests("sleuth-issues", "2.1.x", oncePerDay())
+	buildWithMavenTests("sleuth-documentation-apps", masterBranch(), oncePerDay())
+	buildWithMavenTests("sleuth-documentation-apps", "2.1.x", oncePerDay())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
@@ -179,10 +177,10 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withGradleTests(false)
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithMavenTests("the-legacy-app", masterBranch(), everyThreeHours())
-	buildWithMavenTests("the-legacy-app", "2.1.x", everyThreeHours())
-	buildWithMavenTests("sc-contract-car-rental", masterBranch(), everyThreeHours())
-	buildWithMavenTests("sc-contract-car-rental", "2.1.x", everyThreeHours())
+	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
+	buildWithMavenTests("the-legacy-app", "2.1.x", oncePerDay())
+	buildWithMavenTests("sc-contract-car-rental", masterBranch(), oncePerDay())
+	buildWithMavenTests("sc-contract-car-rental", "2.1.x", oncePerDay())
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
@@ -220,7 +218,7 @@ new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
 
 // Pilo's apps
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	build("messaging-application", everyThreeHours())
+	build("messaging-application", oncePerDay())
 }
 
 // SONAR
