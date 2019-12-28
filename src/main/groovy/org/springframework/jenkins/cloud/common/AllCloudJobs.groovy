@@ -92,9 +92,9 @@ class AllCloudJobs {
 	/**
 	 * Mapping of a lowercase release train name to a given boot version
 	 */
-	public static final Map<String, String> RELEASE_TRAIN_TO_BREWERY_SWITCHES = [
-	        "hoxton" : "-b 2.2.0.BUILD-SNAPSHOT -v Hoxton.BUILD-SNAPSHOT", // boot version 2.2.x
-	        "greenwich" : "-b 2.1.6.RELEASE -v Greenwich.BUILD-SNAPSHOT" // boot version 2.1.x
+	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
+	        "hoxton" : "2.2", // boot version 2.2.x
+	        "greenwich" : "2.1" // boot version 2.1.x
 	]
 
 	/**

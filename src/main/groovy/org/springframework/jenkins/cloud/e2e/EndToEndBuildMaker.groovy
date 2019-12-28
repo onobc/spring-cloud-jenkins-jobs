@@ -93,6 +93,12 @@ class EndToEndBuildMaker implements TestPublisher,
 					rm -rf ~/.gradle/caches/modules-2/files-2.1/ 
 				""")
 				shell("""#!/bin/bash
+						function bootVersion() {
+							local minor="\${1}"
+							# FOR LATEST
+							#BOOT_VERSION="\\\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
+							curl --silent https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>\${minor}." | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp' | xargs
+						}
 						./${scriptName}
 					""")
 				if (postBuildScripts) {

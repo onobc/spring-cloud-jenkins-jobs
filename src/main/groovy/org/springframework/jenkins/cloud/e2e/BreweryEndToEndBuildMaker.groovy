@@ -36,9 +36,10 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	}
 
 	protected String defaultSwitches(String releaseTrainName) {
-		String additionalSwitches = AllCloudJobs.RELEASE_TRAIN_TO_BREWERY_SWITCHES.get(releaseTrainName.toLowerCase()) ?: ''
-		println "Found additional switches [${additionalSwitches}]"
+		String bootMinor = AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(releaseTrainName)
 		String releaseTrain = releaseTrainName.capitalize()
-		return "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT --branch ${branchName()} -r ${additionalSwitches}"
+		String additionalSwitches = "--killattheend -v ${releaseTrain}.BUILD-SNAPSHOT --branch ${branchName()} -r -b \"\$( bootVersion \"${bootMinor}\" )\""
+		println "Found additional switches [${additionalSwitches}]"
+		return additionalSwitches
 	}
 }
