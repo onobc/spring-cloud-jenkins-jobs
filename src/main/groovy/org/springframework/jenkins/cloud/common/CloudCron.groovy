@@ -9,6 +9,6 @@ import org.springframework.jenkins.common.job.Cron
  */
 @CompileStatic
 trait CloudCron extends Cron {
-	String cronValue = everyThreeHours()
+	String cronValue = oncePerDay()
 	boolean onGithubPush = true
 }

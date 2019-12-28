@@ -27,7 +27,7 @@ class CloudPipelinesDeployBuildMaker implements JdkConfig, TestPublisher, Cron,
 	void deploy() {
 		dsl.job("cloudpipelines-${this.project}-${masterBranch()}-ci") {
 			triggers {
-				cron everyThreeHours()
+				cron oncePerDay()
 				githubPush()
 			}
 			jdk jdk8()
