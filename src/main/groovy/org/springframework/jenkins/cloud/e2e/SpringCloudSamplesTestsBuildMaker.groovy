@@ -1,5 +1,6 @@
 package org.springframework.jenkins.cloud.e2e
 
+import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.common.job.JdkConfig
 import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -72,11 +73,19 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
+				String bootMinor = AllCloudJobs.bootForReleaseTrain(cloudTrainVersion)
 				shell("""#!/bin/bash
+						set -o errexit
+						set -o errtrace
+						set -o nounset
+						set -o pipefail
+						
 						echo "Current java version"
 						java -version
-						echo "Running the build with cloud version [${cloudTrainVersion}]"
-						./mvnw --fail-at-end clean package -Dspring-cloud.version=${cloudTrainVersion} -U
+						echo "Running the build with cloud version [${cloudTrainVersion}] and Boot minor version [${bootMinor}]"
+						export BOOT_MINOR="${bootMinor}"
+						export CURRENT_CLOUD_VERSION="${cloudTrainVersion}"
+						./scripts/runAcceptanceTests.sh
 					""")
 			}
 			configure {

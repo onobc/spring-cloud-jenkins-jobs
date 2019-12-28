@@ -97,6 +97,10 @@ class AllCloudJobs {
 	        "greenwich" : "2.1" // boot version 2.1.x
 	]
 
+	static String bootForReleaseTrain(String releaseTrain) {
+		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(releaseTrain.split(".")[0].toLowerCase())
+	}
+
 	/**
 	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
 	 * and `./mvwn clean install -Pdocs` + `gh-pages.sh` script will be executed to publish new docs.
