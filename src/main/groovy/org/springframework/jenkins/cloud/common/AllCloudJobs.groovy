@@ -98,7 +98,12 @@ class AllCloudJobs {
 	]
 
 	static String bootForReleaseTrain(String releaseTrain) {
-		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(releaseTrain.split(".")[0].toLowerCase())
+		if (!releaseTrain) {
+			return "2.2"
+		}
+		String[] split = releaseTrain.split("\\.")
+		String train = split[0].toLowerCase()
+		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(train)
 	}
 
 	/**

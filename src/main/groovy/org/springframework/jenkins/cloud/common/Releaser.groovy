@@ -15,7 +15,7 @@ trait Releaser {
 		return '''\
 			currentDir="$(pwd)"
 			tmpDir="$(mktemp -d)"
-			trap "{ rm -f ${tmpDir}; }" EXIT
+			trap "{ rm -rf ${tmpDir}; }" EXIT
 			echo "Cloning to [${tmpDir}] and building the releaser"
 			git clone -b master --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "${tmpDir}"
 			pushd "${tmpDir}"
