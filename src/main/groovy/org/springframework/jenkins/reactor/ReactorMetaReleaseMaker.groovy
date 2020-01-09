@@ -20,6 +20,13 @@ class ReactorMetaReleaseMaker extends SpringCloudMetaReleaseMaker implements Rea
 			stringParam(contextUrlEnvVar(), "https://repo.spring.io", "Artifactory Publish Context Url")
 			choiceParam(repoKeyEnvVar(), ["libs-snapshot-local", "libs-milestone-local", "libs-release-local"], "Artifactory Publish Repo Key")
 		}
+		job.wrappers {
+			credentialsBinding {
+				usernamePassword(repoUserNameEnvVar(),
+						repoPasswordEnvVar(),
+						repoSpringIoUserCredentialId())
+			}
+		}
 	}
 
 	@Override
