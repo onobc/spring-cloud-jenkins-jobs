@@ -19,6 +19,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	protected static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
 	protected static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
 	protected static final String RELEASER_POM_BRANCH_VAR = "RELEASER_POM_BRANCH"
+	protected static final String DRY_RUN_PARAM = "DRY_RUN"
 	protected static final String RELEASER_META_RELEASE_GIT_ORG_URL_VAR = "RELEASER_META_RELEASE_GIT_ORG_URL"
 	protected static final String RELEASER_ADDITIONAL_PROPS_VAR = "RELEASER_ADDITIONAL_PROPS"
 	protected static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
@@ -42,6 +43,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 
 	void release(String project, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(projectName(project)) {
+			additionalConfiguration(delegate as FreeStyleJob)
 			parameters {
 				stringParam(branchVarName(), masterBranch(), "Your project's branch")
 				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties) in the branch with releaser properties")
@@ -55,6 +57,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASER_POM_THIS_TRAIN_BOM_VAR, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 				booleanParam(RELEASER_SAGAN_UPDATE_VAR, options.updateSagan, 'If true then will update documentation repository with the current URL')
 				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, options.postReleaseOnly, 'If set to true will run only post release tasks')
+				booleanParam(DRY_RUN_PARAM, options.dryRun, 'If true then will run meta-release in a dry run mode')
 			}
 			jdk jdk8()
 			scm {
@@ -113,6 +116,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				git checkout ${branchToCheck()}
 				echo "Releasing the project"
 				${setupGitCredentials()}
+				${additionalEnvVars()}
 				set +x
 				SPRING_CLOUD_RELEASE_REPO="https://github.com/spring-cloud/spring-cloud-release.git"
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
@@ -121,13 +125,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				""")
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node) {
-					notifyFailure()
-					notifySuccess()
-					notifyUnstable()
-					includeFailedTests(false)
-					includeTestSummary(false)
-				}
+				slackNotification(it as Node)
 			}
 			publishers {
 				archiveJunit(mavenJUnitResults()) {
@@ -142,8 +140,11 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				}
 				textFinder(".*BUILD UNSTABLE.*", "**/build_status,build_status", false, false, true)
 			}
-			additionalConfiguration(delegate as FreeStyleJob)
 		}
+	}
+
+	protected String additionalEnvVars() {
+		return ""
 	}
 
 	protected void additionalConfiguration(FreeStyleJob job) {
@@ -176,6 +177,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 --releaser.maven.wait-time-in-minutes=180
 --releaser.maven.system-properties="\${SYSTEM_PROPS}"
 --full-release
+--dry-run=\${$DRY_RUN_PARAM}
 --releaser.sagan.update-sagan=\${$RELEASER_SAGAN_UPDATE_VAR}
 --interactive=false""".split("\n").join(" ")
 	}

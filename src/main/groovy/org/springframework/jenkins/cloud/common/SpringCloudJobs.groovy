@@ -183,4 +183,11 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return '7b3ebbea-7001-479b-8578-b8c464dab973'
 	}
 
+	void slackNotification(Node node) {
+		SpringCloudNotification.cloudSlack(node) {
+			notifyFailure()
+			notifySuccess()
+			notifyUnstable()
+		}
+	}
 }

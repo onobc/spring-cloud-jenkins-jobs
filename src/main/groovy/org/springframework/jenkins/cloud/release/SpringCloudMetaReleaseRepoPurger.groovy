@@ -40,11 +40,7 @@ class SpringCloudMetaReleaseRepoPurger implements SpringCloudJobs {
 				''')
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node) {
-					notifyFailure()
-					notifySuccess()
-					notifyUnstable()
-				}
+				slackNotification(it as Node)
 			}
 		}
 	}

@@ -6,19 +6,17 @@ import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaserOptions
+import org.springframework.jenkins.reactor.ReactorMetaReleaseMaker
+import org.springframework.jenkins.reactor.ReactorMetaReleaseRepoPurger
+import org.springframework.jenkins.reactor.ReactorReleaseMaker
 
 DslFactory dsl = this
 
 // RELEASER
 ["reactor-core", "reactor-addons", "reactor-pool", "reactor-netty", "reactor-kafka", "reactor-kotlin-extensions"].each {
 //	new SpringCloudReleaseMasterMaker(dsl).release(it, SpringCloudReleaserOptions.reactorMaster())
-	new SpringCloudReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.reactor())
+	new ReactorReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.reactor())
 }
 
-new SpringCloudMetaReleaseMaker(dsl).release("reactor-meta-releaser", SpringCloudReleaserOptions.reactor())
-new SpringCloudMetaReleaseRepoPurger(dsl) {
-	@Override
-	String prefixJob(String s) {
-		return "reactor"
-	}
-}.build()
+new ReactorMetaReleaseMaker(dsl).release("reactor-meta-releaser", SpringCloudReleaserOptions.reactor())
+new ReactorMetaReleaseRepoPurger(dsl).build()

@@ -2,6 +2,7 @@ package org.springframework.jenkins.cloud.release
 
 
 import javaposse.jobdsl.dsl.DslFactory
+import javaposse.jobdsl.dsl.jobs.FreeStyleJob
 
 import org.springframework.jenkins.cloud.common.Releaser
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
@@ -13,29 +14,29 @@ import org.springframework.jenkins.common.job.TestPublisher
  */
 class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs, Releaser {
-	private static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
-	private static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
-	private static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
-	private static final String START_FROM_PARAM = "START_FROM"
-	private static final String TASK_NAMES_PARAM = "TASK_NAMES"
-	private static final String DRY_RUN_PARAM = "DRY_RUN"
-	private static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
-	private static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
-	private static final String RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR = 'RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS'
-	private static final String RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR = 'RELEASER_GIT_UPDATE_SPRING_PROJECTS'
-	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI'
-	private static final String RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR = 'RELEASER_GIT_RUN_UPDATED_SAMPLES'
-	private static final String RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR = 'RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES'
-	private static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS'
-	private static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
-	private static final String RELEASER_GIT_UPDATE_START_SPRING_IO_VAR = 'RELEASER_GIT_UPDATE_START_SPRING_IO'
-	private static final String RELEASER_GIT_UPDATE_GITHUB_MILESTONES_VAR = 'RELEASER_GIT_UPDATE_GITHUB_MILESTONES'
-	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
-	private static final String RELEASER_META_RELEASE_GIT_ORG_URL_VAR = "RELEASER_META_RELEASE_GIT_ORG_URL"
-	private static final String RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_DEPENDENCY_NAMES'
-	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
-	private static final String RELEASER_PROJECTS_TO_SKIP_VAR= 'RELEASER_PROJECTS_TO_SKIP'
-	private static final String RELEASER_POST_RELEASE_ONLY_VAR= 'RELEASER_POST_RELEASE_ONLY'
+	protected static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
+	protected static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
+	protected static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
+	protected static final String START_FROM_PARAM = "START_FROM"
+	protected static final String TASK_NAMES_PARAM = "TASK_NAMES"
+	protected static final String DRY_RUN_PARAM = "DRY_RUN"
+	protected static final String RELEASER_POM_THIS_TRAIN_BOM= 'RELEASER_POM_THIS_TRAIN'
+	protected static final String RELEASER_SAGAN_UPDATE_VAR= 'RELEASER_SAGAN_UPDATE'
+	protected static final String RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS_VAR = 'RELEASER_GIT_UPDATE_DOCUMENTATION_REPOS'
+	protected static final String RELEASER_GIT_UPDATE_SPRING_PROJECTS_VAR = 'RELEASER_GIT_UPDATE_SPRING_PROJECTS'
+	protected static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_WIKI'
+	protected static final String RELEASER_GIT_RUN_UPDATED_SAMPLES_VAR = 'RELEASER_GIT_RUN_UPDATED_SAMPLES'
+	protected static final String RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES_VAR = 'RELEASER_GIT_UPDATE_ALL_TEST_SAMPLES'
+	protected static final String RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS_VAR = 'RELEASER_GIT_UPDATE_RELEASE_TRAIN_DOCS'
+	protected static final String RELEASER_GIT_UPDATE_SPRING_GUIDES_VAR = 'RELEASER_GIT_UPDATE_SPRING_GUIDES'
+	protected static final String RELEASER_GIT_UPDATE_START_SPRING_IO_VAR = 'RELEASER_GIT_UPDATE_START_SPRING_IO'
+	protected static final String RELEASER_GIT_UPDATE_GITHUB_MILESTONES_VAR = 'RELEASER_GIT_UPDATE_GITHUB_MILESTONES'
+	protected static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
+	protected static final String RELEASER_META_RELEASE_GIT_ORG_URL_VAR = "RELEASER_META_RELEASE_GIT_ORG_URL"
+	protected static final String RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_DEPENDENCY_NAMES'
+	protected static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
+	protected static final String RELEASER_PROJECTS_TO_SKIP_VAR = 'RELEASER_PROJECTS_TO_SKIP'
+	protected static final String RELEASER_POST_RELEASE_ONLY_VAR = 'RELEASER_POST_RELEASE_ONLY'
 
 	private final DslFactory dsl
 
@@ -45,6 +46,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 
 	void release(String jobName, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(jobName) {
+			additionalConfiguration(delegate as FreeStyleJob)
 			parameters {
 				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties)")
 				stringParam(RELEASER_CONFIG_URL_PARAM, options.releaserConfigUrl, "Root of the URL where the RAW version of the configuration file is present")
@@ -136,6 +138,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				if [[ \${$TASK_NAMES_PARAM} != "" ]]; then
 					TASK_NAMES_OPTS="--task-names '\${$TASK_NAMES_PARAM}'"
 				fi
+				${additionalEnvVars()}
 				echo "Start from opts [\${START_FROM_OPTS}], task names [\${TASK_NAMES_OPTS}]"
 				echo "Run the meta-releaser!"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
@@ -145,13 +148,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				""")
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node) {
-					notifyFailure()
-					notifySuccess()
-					notifyUnstable()
-					includeFailedTests(false)
-					includeTestSummary(false)
-				}
+				slackNotification(it as Node)
 			}
 			publishers {
 				archiveJunit mavenJUnitResults()
@@ -165,6 +162,14 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				textFinder(".*BUILD UNSTABLE.*", "**/build_unstable,build_unstable", false, false, true)
 			}
 		}
+	}
+
+	protected String additionalEnvVars() {
+		return ""
+	}
+
+	protected void additionalConfiguration(FreeStyleJob job) {
+
 	}
 
 	protected String releaserOptions() {
