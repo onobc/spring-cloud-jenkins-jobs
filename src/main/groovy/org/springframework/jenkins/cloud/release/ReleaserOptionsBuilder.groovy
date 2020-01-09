@@ -24,6 +24,7 @@ class ReleaserOptionsBuilder {
 	String releaserConfigUrl
 	String releaserConfigBranch
 	List<String> releaseTrainDependencyNames
+	String gitOrgUrl
 	String releaseTrainBomUrl
 	String releaseThisTrainBom
 	String projectsToSkip
@@ -113,6 +114,11 @@ class ReleaserOptionsBuilder {
 		return this
 	}
 
+	ReleaserOptionsBuilder gitOrgUrl(String gitOrgUrl) {
+		this.gitOrgUrl = gitOrgUrl
+		return this
+	}
+
 	ReleaserOptionsBuilder releaseTrainBomUrl(String releaseTrainBomUrl) {
 		this.releaseTrainBomUrl = releaseTrainBomUrl
 		return this
@@ -148,6 +154,7 @@ class ReleaserOptionsBuilder {
 				releaseTrainDependencyNames,
 				releaseTrainBomUrl,
 				releaseThisTrainBom,
-				projectsToSkip)
+				projectsToSkip,
+				gitOrgUrl)
 	}
 }

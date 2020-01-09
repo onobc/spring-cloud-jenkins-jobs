@@ -31,6 +31,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	private static final String RELEASER_GIT_UPDATE_START_SPRING_IO_VAR = 'RELEASER_GIT_UPDATE_START_SPRING_IO'
 	private static final String RELEASER_GIT_UPDATE_GITHUB_MILESTONES_VAR = 'RELEASER_GIT_UPDATE_GITHUB_MILESTONES'
 	private static final String RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_PROJECT_NAME'
+	private static final String RELEASER_META_RELEASE_GIT_ORG_URL_VAR = "RELEASER_META_RELEASE_GIT_ORG_URL"
 	private static final String RELEASER_RELEASE_TRAIN_DEPENDENCY_NAMES_VAR = 'RELEASER_META_RELEASE_RELEASE_TRAIN_DEPENDENCY_NAMES'
 	private static final String RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR= 'RELEASER_GIT_RELEASE_TRAIN_BOM'
 	private static final String RELEASER_PROJECTS_TO_SKIP_VAR= 'RELEASER_PROJECTS_TO_SKIP'
@@ -48,6 +49,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties)")
 				stringParam(RELEASER_CONFIG_URL_PARAM, options.releaserConfigUrl, "Root of the URL where the RAW version of the configuration file is present")
 				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
+				stringParam(RELEASER_META_RELEASE_GIT_ORG_URL_VAR, options.gitOrgUrl, 'URL of the organization from which projects can be cloned')
 				stringParam(START_FROM_PARAM, "", "Project name from which you'd like to start the meta-release process. E.g. spring-cloud-sleuth")
 				stringParam(TASK_NAMES_PARAM, "", "Comma separated list of project names. E.g. spring-cloud-sleuth,spring-cloud-contract")
 				booleanParam(DRY_RUN_PARAM, options.dryRun, 'If true then will run meta-release in a dry run mode')

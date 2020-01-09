@@ -27,8 +27,9 @@ class ReleaserOptions {
 	String releaseTrainBomUrl
 	String releaseThisTrainBom
 	String projectsToSkip
+	String gitOrgUrl
 
-	protected ReleaserOptions(String projectName, boolean dryRun, boolean updateSagan, boolean updateDocumentationRepos, boolean updateSpringProjects, boolean updateReleaseTrainWiki, boolean runUpdatedSamples, boolean updateAllTestSamples, boolean updateReleaseTrainDocs, boolean updateSpringGuides, boolean updateStartSpringIo, boolean updateGithubMilestones, boolean postReleaseOnly, String releaseTrainProjectName, String releaserConfigUrl, String releaserConfigBranch, List<String> releaseTrainDependencyNames, String releaseTrainBomUrl, String releaseThisTrainBom, String projectsToSkip) {
+	protected ReleaserOptions(String projectName, boolean dryRun, boolean updateSagan, boolean updateDocumentationRepos, boolean updateSpringProjects, boolean updateReleaseTrainWiki, boolean runUpdatedSamples, boolean updateAllTestSamples, boolean updateReleaseTrainDocs, boolean updateSpringGuides, boolean updateStartSpringIo, boolean updateGithubMilestones, boolean postReleaseOnly, String releaseTrainProjectName, String releaserConfigUrl, String releaserConfigBranch, List<String> releaseTrainDependencyNames, String releaseTrainBomUrl, String releaseThisTrainBom, String projectsToSkip, String gitOrgUrl) {
 		this.projectName = projectName;
 		this.dryRun = dryRun
 		this.updateSagan = updateSagan
@@ -49,6 +50,7 @@ class ReleaserOptions {
 		this.releaseTrainBomUrl = releaseTrainBomUrl
 		this.releaseThisTrainBom = releaseThisTrainBom
 		this.projectsToSkip = projectsToSkip
+		this.gitOrgUrl = gitOrgUrl
 		assert projectName != null
 		assert releaseTrainProjectName != null
 		assert releaserConfigUrl != null
@@ -56,6 +58,7 @@ class ReleaserOptions {
 		assert releaseTrainDependencyNames != null
 		assert releaseTrainBomUrl != null
 		assert releaseThisTrainBom != null
+		assert gitOrgUrl != null
 	}
 
 	static ReleaserOptionsBuilder builder() {

@@ -22,6 +22,7 @@ class SpringCloudReleaserOptions {
 					   .projectsToSkip(AllCloudConstants.DEFAULT_RELEASER_SKIPPED_PROJECTS)
 					   .releaseTrainProjectName("spring-cloud-release")
 					   .releaseTrainDependencyNames(["spring-cloud", "spring-cloud-dependencies", "spring-cloud-starter"])
+					   .gitOrgUrl("https://github.com/spring-cloud")
 					   .runUpdatedSamples(true)
 					   .updateAllTestSamples(true)
 					   .updateDocumentationRepos(true)
@@ -52,6 +53,7 @@ class SpringCloudReleaserOptions {
 							  .projectsToSkip(AllCloudConstants.DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS)
 							  .releaseTrainProjectName("spring-cloud-stream-starters")
 							  .releaseTrainDependencyNames(["spring-cloud-stream-dependencies"])
+							  .gitOrgUrl("https://github.com/spring-cloud")
 							  .runUpdatedSamples(false)
 							  .updateAllTestSamples(false)
 							  .updateDocumentationRepos(false)
@@ -65,5 +67,39 @@ class SpringCloudReleaserOptions {
 							  .dryRun(false)
 							  .postReleaseOnly(false)
 							  .build()
+	}
+
+	static ReleaserOptions reactor() {
+		return reactorBuilder()
+							  .build()
+	}
+
+	private static ReleaserOptionsBuilder reactorBuilder() {
+		return ReleaserOptions.builder()
+					   .projectName("reactor")
+					   .releaseTrainBomUrl("https://github.com/reactor/reactor")
+					   .releaserConfigUrl("https://raw.githubusercontent.com/reactor/reactor")
+					   .releaserConfigBranch("releases")
+					   .releaseTrainProjectName("reactor")
+					   .releaseTrainDependencyNames(["reactor"])
+					   .gitOrgUrl("https://github.com/reactor")
+					   .runUpdatedSamples(false)
+					   .updateAllTestSamples(false)
+					   .updateDocumentationRepos(false)
+					   .updateReleaseTrainDocs(false)
+					   .updateReleaseTrainWiki(false)
+					   .updateSpringGuides(false)
+					   .updateGithubMilestones(false)
+					   .updateStartSpringIo(false)
+					   .updateSpringProjects(false)
+					   .updateSagan(false)
+					   .dryRun(false)
+					   .postReleaseOnly(false)
+	}
+
+	static ReleaserOptions reactorMaster() {
+		return reactorBuilder()
+				.updateSagan(false)
+				.build()
 	}
 }
