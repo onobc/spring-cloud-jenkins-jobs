@@ -18,7 +18,7 @@ class ReactorMetaReleaseMaker extends SpringCloudMetaReleaseMaker implements Rea
 	protected void additionalConfiguration(FreeStyleJob job) {
 		job.parameters {
 			stringParam(contextUrlEnvVar(), "https://repo.spring.io", "Artifactory Publish Context Url")
-			choiceParam(repoKeyEnvVar(), ["libs-snapshot-local", "libs-milestone-local", "libs-release-local", "Artifactory Publish Repo Key"])
+			choiceParam(repoKeyEnvVar(), ["libs-snapshot-local", "libs-milestone-local", "libs-release-local"], "Artifactory Publish Repo Key")
 		}
 	}
 
