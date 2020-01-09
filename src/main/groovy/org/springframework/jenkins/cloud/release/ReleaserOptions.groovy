@@ -56,7 +56,7 @@ class ReleaserOptions {
 		assert releaserConfigUrl != null
 		assert releaserConfigBranch != null
 		assert releaseTrainDependencyNames != null
-		assert releaseThisTrainBom != null
+		assert releaseTrainBomUrl != null
 		assert gitOrgUrl != null
 	}
 
