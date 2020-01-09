@@ -1,11 +1,11 @@
 package org.springframework.jenkins.cloud.release
 
 import javaposse.jobdsl.dsl.DslFactory
+import javaposse.jobdsl.dsl.helpers.wrapper.CredentialsBindingContext
 import javaposse.jobdsl.dsl.jobs.FreeStyleJob
 
 import org.springframework.jenkins.cloud.common.Releaser
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
-import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.Cron
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.TestPublisher
@@ -91,6 +91,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 					string(githubToken(), githubTokenCredId())
 					usernamePassword(sonatypeUser(), sonatypePassword(),
 							"oss-token")
+					additionalCredentials(delegate as CredentialsBindingContext)
 				}
 				timeout {
 					noActivity(300)
@@ -148,6 +149,10 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	}
 
 	protected void additionalConfiguration(FreeStyleJob job) {
+
+	}
+
+	protected void additionalCredentials(CredentialsBindingContext context) {
 
 	}
 

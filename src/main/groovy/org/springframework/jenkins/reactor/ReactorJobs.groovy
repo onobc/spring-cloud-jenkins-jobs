@@ -34,10 +34,4 @@ trait ReactorJobs extends SpringCloudJobs {
 	String repoPasswordEnvVar() {
 		return 'ORG_GRADLE_PROJECT_artifactory_publish_password'
 	}
-
-	String defaultEnvVars() {
-		return '''\
-export ORG_GRADLE_PROJECT_artifactory_publish_contextUrl="https://repo.spring.io"
-'''
-	}
 }

@@ -2,6 +2,7 @@ package org.springframework.jenkins.cloud.release
 
 
 import javaposse.jobdsl.dsl.DslFactory
+import javaposse.jobdsl.dsl.helpers.wrapper.CredentialsBindingContext
 import javaposse.jobdsl.dsl.jobs.FreeStyleJob
 
 import org.springframework.jenkins.cloud.common.Releaser
@@ -105,6 +106,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					string(gradlePublishSecretEnvVar(), gradlePublishSecretSecretId())
 					usernamePassword(sonatypeUser(), sonatypePassword(),
 							"oss-token")
+					additionalCredentials(delegate as CredentialsBindingContext)
 				}
 				timeout {
 					noActivity(300)
@@ -169,6 +171,10 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	}
 
 	protected void additionalConfiguration(FreeStyleJob job) {
+
+	}
+
+	protected void additionalCredentials(CredentialsBindingContext context) {
 
 	}
 
