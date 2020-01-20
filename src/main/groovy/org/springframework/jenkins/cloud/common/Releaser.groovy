@@ -33,7 +33,7 @@ trait Releaser {
 			configFile="\${version}.properties"
 			configUrl="\${$RELEASER_CONFIG_URL_PARAM}/\${$RELEASER_CONFIG_BRANCH_PARAM}/\${configFile}"
 			echo "Downloading the configuration properties file from [\${configUrl}]"
-			rm -rf config && mkdir -p ${folder} && curl --fail "\${configUrl}" -o ${folder}/releaser.properties
+			rm -rf config && mkdir -p ${folder} && curl --fail "\${configUrl}" -o ${folder}/application.properties
 		"""
 	}
 
