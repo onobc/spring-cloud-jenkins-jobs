@@ -207,7 +207,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
-["Hoxton"].each {
+["Hoxton", "Ilford"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 

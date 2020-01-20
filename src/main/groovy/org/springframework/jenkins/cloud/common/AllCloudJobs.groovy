@@ -70,36 +70,37 @@ class AllCloudJobs {
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.1.x'],
-																		'spring-cloud-cli'         : ['2.1.x'],
-																		'spring-cloud-gcp'         : ['1.1.x', '1.2.x'],
-																		'spring-cloud-commons'     : ['2.1.x'],
-																		'spring-cloud-contract'    : ['2.1.x'],
-																		'spring-cloud-config'      : ['2.1.x'],
-																		'spring-cloud-netflix'     : ['2.1.x'],
-																		'spring-cloud-consul'      : ['2.1.x'],
-																		'spring-cloud-zookeeper'   : ['2.1.x'],
-																		'spring-cloud-bus'         : ['2.1.x'],
-																		'spring-cloud-build'       : ['2.1.x'],
-																		'spring-cloud-aws'         : ['2.1.x'],
-																		'spring-cloud-gateway'     : ['2.1.x'],
-																		'spring-cloud-security'    : ['2.1.x'],
-																		'spring-cloud-vault'       : ['2.1.x'],
-																		'spring-cloud-cloudfoundry': ['2.1.x'],
-																		'spring-cloud-openfeign'   : ['2.1.x'],
-																		'spring-cloud-kubernetes'  : ['1.0.x']]
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.2.x', '2.1.x'],
+																		'spring-cloud-cli'         : ['2.2.x', '2.1.x'],
+																		'spring-cloud-gcp'         : ['1.2.x', '1.1.x'],
+																		'spring-cloud-commons'     : ['2.2.x', '2.1.x'],
+																		'spring-cloud-contract'    : ['2.2.x', '2.1.x'],
+																		'spring-cloud-config'      : ['2.2.x', '2.1.x'],
+																		'spring-cloud-netflix'     : ['2.2.x', '2.1.x'],
+																		'spring-cloud-consul'      : ['2.2.x', '2.1.x'],
+																		'spring-cloud-zookeeper'   : ['2.2.x', '2.1.x'],
+																		'spring-cloud-bus'         : ['2.2.x', '2.1.x'],
+																		'spring-cloud-build'       : ['2.2.x', '2.1.x'],
+																		'spring-cloud-aws'         : ['2.2.x', '2.1.x'],
+																		'spring-cloud-gateway'     : ['2.2.x', '2.1.x'],
+																		'spring-cloud-security'    : ['2.2.x', '2.1.x'],
+																		'spring-cloud-vault'       : ['2.2.x', '2.1.x'],
+																		'spring-cloud-cloudfoundry': ['2.2.x', '2.1.x'],
+																		'spring-cloud-openfeign'   : ['2.2.x', '2.1.x'],
+																		'spring-cloud-kubernetes'  : ['1.1.x', '1.0.x']]
 
 	/**
 	 * Mapping of a lowercase release train name to a given boot version
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
+	        "ilford" : "2.3", // boot version 2.3.x
 	        "hoxton" : "2.2", // boot version 2.2.x
 	        "greenwich" : "2.1" // boot version 2.1.x
 	]
 
 	static String bootForReleaseTrain(String releaseTrain) {
 		if (!releaseTrain) {
-			return "2.2"
+			return "2.3"
 		}
 		String[] split = releaseTrain.split("\\.")
 		String train = split[0].toLowerCase()
