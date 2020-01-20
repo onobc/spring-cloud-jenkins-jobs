@@ -21,7 +21,7 @@ class SpringCloudReleaserOptions {
 					   .releaserConfigBranch("jenkins-releaser-config")
 					   .projectsToSkip(AllCloudConstants.DEFAULT_RELEASER_SKIPPED_PROJECTS)
 					   .releaseTrainProjectName("spring-cloud-release")
-					   .releaseTrainDependencyNames(["spring-cloud", "spring-cloud-dependencies", "spring-cloud-starter"])
+					   .releaseTrainDependencyNames(["spring-cloud", "spring-cloud-dependencies", "spring-cloud-starter", "spring-cloud-starter-build"])
 					   .gitOrgUrl("https://github.com/spring-cloud")
 					   .runUpdatedSamples(true)
 					   .updateAllTestSamples(true)
