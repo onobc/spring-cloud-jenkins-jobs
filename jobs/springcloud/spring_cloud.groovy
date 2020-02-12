@@ -178,9 +178,9 @@ new SpringCloudSamplesEndToEndBuilder().with {
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
-	buildWithMavenTests("the-legacy-app", "3.0.x", oncePerDay())
+	buildWithMavenTests("the-legacy-app", "2.2.x", oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), oncePerDay())
-	buildWithMavenTests("sc-contract-car-rental", "3.0.x", oncePerDay())
+	buildWithMavenTests("sc-contract-car-rental", "2.2.x", oncePerDay())
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
