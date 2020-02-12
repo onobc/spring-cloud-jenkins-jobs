@@ -134,16 +134,16 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
 }
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", masterBranch(), oncePerDay())
-	buildWithMavenTests("sleuth-issues", "2.1.x", oncePerDay())
+	buildWithMavenTests("sleuth-issues", "2.2.x", oncePerDay())
 	buildWithMavenTests("sleuth-documentation-apps", masterBranch(), oncePerDay())
-	buildWithMavenTests("sleuth-documentation-apps", "2.1.x", oncePerDay())
+	buildWithMavenTests("sleuth-documentation-apps", "2.2.x", oncePerDay())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
 }
 
 // CONTRACT
-["master", "2.1.x"].each { String branch ->
+["master", "3.0.x"].each { String branch ->
 	new SpringCloudSamplesEndToEndBuilder().with {
 		it.withProjectAndRepoName("spring-cloud-contract-samples")
 		  .withBranchName(branch)
@@ -178,9 +178,9 @@ new SpringCloudSamplesEndToEndBuilder().with {
 }.build(dsl)
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
-	buildWithMavenTests("the-legacy-app", "2.1.x", oncePerDay())
+	buildWithMavenTests("the-legacy-app", "3.0.x", oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), oncePerDay())
-	buildWithMavenTests("sc-contract-car-rental", "2.1.x", oncePerDay())
+	buildWithMavenTests("sc-contract-car-rental", "3.0.x", oncePerDay())
 }
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
