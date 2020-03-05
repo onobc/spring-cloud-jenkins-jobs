@@ -72,7 +72,7 @@ class AllCloudJobs {
 	 */
 	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.2.x', '2.1.x'],
 																		'spring-cloud-cli'         : ['2.2.x', '2.1.x'],
-																		'spring-cloud-gcp'         : ['1.2.x', '1.1.x'],
+																		'spring-cloud-gcp'         : ['1.1.x'],
 																		'spring-cloud-circuitbreaker' : ['1.0.x'],
 																		'spring-cloud-commons'     : ['2.2.x', '2.1.x'],
 																		'spring-cloud-contract'    : ['2.2.x', '2.1.x'],
