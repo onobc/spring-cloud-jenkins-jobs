@@ -141,7 +141,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 						deployDocs()
 					}
 					else {
-						"./mvnw clean install -U -Pintegration -Ddockerfile.buildArgs=SDKMAN_JAVA_INSTALLATION=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())}"
+						"./mvnw clean install -U -Pintegration -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())}"
 					}
 				}
 					${cleanGitCredentials()}
