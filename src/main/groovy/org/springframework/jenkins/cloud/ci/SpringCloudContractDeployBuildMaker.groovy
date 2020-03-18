@@ -20,7 +20,8 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 	private static final Map<String, String> JDKS = [
 			"jdk8" : "8.0.242.hs-adpt",
 			"jdk11" : "11.0.6.hs-adpt",
-			"jdk13" : "13.0.2.hs-adpt",
+			"openjdk11" : "11.0.6.hs-adpt",
+			"openjdk13" : "13.0.2.hs-adpt",
 	]
 	private final DslFactory dsl
 	final String organization
