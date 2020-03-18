@@ -17,6 +17,11 @@ import org.springframework.jenkins.common.job.TestPublisher
 @CompileStatic
 class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron,
 		SpringCloudJobs, Maven, CustomJob {
+	private static final Map<String, String> JDKS = [
+			"jdk8" : "8.0.242.hs-adpt",
+			"jdk11" : "11.0.6.hs-adpt",
+			"jdk13" : "13.0.2.hs-adpt",
+	]
 	private final DslFactory dsl
 	final String organization
 	final String projectName
@@ -136,7 +141,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 						deployDocs()
 					}
 					else {
-						cleanInstall()
+						"./mvnw clean install -U -Pintegration -Ddockerfile.buildArgs=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())}"
 					}
 				}
 					${cleanGitCredentials()}
