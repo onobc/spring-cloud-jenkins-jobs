@@ -21,7 +21,7 @@ abstract class CompatibilityTasks implements Maven {
 
 	Closure defaultStepsForBoot(String branch = "master") {
 		return buildStep {
-			shell compileProductionForBoot()
+			shell compileProductionForBoot(branch)
 		}
 	}
 
@@ -34,16 +34,16 @@ abstract class CompatibilityTasks implements Maven {
 
 	Closure defaultStepsWithTestsForBoot(String branch = "master") {
 		return buildStep {
-			shell runTestsForBoot()
+			shell runTestsForBoot(branch)
 		}
 	}
 
 	protected String compileProductionForBoot(String branch = "master") {
 		return """#!/bin/bash -x
 					set -o errexit
+					git checkout ${branch}
 					${fetchLatestBootVersion()}
 					${bumpBoot()}
-					git checkout ${branch}
 					echo -e "Checking if prod code compiles against latest boot"
 					${buildCommand()}
 					${printDepsForBoot()}
@@ -68,8 +68,8 @@ abstract class CompatibilityTasks implements Maven {
 		return """#!/bin/bash -x
 					set -o errexit
 					${fetchLatestBootVersion()}
-					${bumpBoot()}
 					git checkout ${branch}
+					${bumpBoot()}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae
 					${printDepsForBoot()}
