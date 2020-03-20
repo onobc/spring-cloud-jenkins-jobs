@@ -29,7 +29,7 @@ abstract class CompatibilityTasks implements Maven {
 	protected String printDepsForBoot() {
 		return """
 					echo -e "Printing the list of dependencies"
-					./mvnw dependency:tree -U -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR}
+					./mvnw dependency:tree -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR}
 			"""
 	}
 
