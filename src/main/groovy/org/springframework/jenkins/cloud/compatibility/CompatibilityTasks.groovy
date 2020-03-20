@@ -95,9 +95,9 @@ abstract class CompatibilityTasks implements Maven {
 			mv dependency/*.jar dependency/spring-cloud-1.0.0-BUILD-SNAPSHOT.jar
 			echo "Cloning Spring Cloud Build"
 			git clone https://github.com/spring-cloud/spring-cloud-build.git
-			${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
-			git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 			pushd spring-cloud-build
+				${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
+				git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 				echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 				java -jar ../dependency/spring-cloud-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
 				./mvnw clean install -fae -U
