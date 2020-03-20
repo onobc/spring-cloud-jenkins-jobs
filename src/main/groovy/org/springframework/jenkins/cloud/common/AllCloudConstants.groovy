@@ -23,7 +23,7 @@ class AllCloudConstants {
 	/**
 	 * Spring Cloud Build branch used for compatibility builds.
 	 */
-	public static final String SPRING_CLOUD_BUILD_BRANCH_FOR_COMPATIBILITY_BUILD = '2.2.x'
+	public static final String SPRING_CLOUD_BUILD_BRANCH_FOR_COMPATIBILITY_BUILD = '2.3.x'
 
 	/**
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)
