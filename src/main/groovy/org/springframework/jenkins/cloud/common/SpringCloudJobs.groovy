@@ -1,11 +1,13 @@
 package org.springframework.jenkins.cloud.common
 
 import org.springframework.jenkins.common.job.BuildAndDeploy
+import org.springframework.jenkins.common.job.JdkConfig
+import org.springframework.jenkins.common.job.Label
 
 /**
  * @author Marcin Grzejszczak
  */
-trait SpringCloudJobs extends BuildAndDeploy {
+trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 
 	@Override
 	String projectSuffix() {
@@ -14,14 +16,6 @@ trait SpringCloudJobs extends BuildAndDeploy {
 
 	String releaserLabel() {
 		return "releaser"
-	}
-
-	String ubuntu18_04() {
-		return "ubuntu1804"
-	}
-
-	String openJdk7() {
-		return "linux&&jdk7"
 	}
 
 	String setupGitCredentials() {

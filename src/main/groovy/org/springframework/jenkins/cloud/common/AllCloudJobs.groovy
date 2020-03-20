@@ -88,7 +88,7 @@ class AllCloudJobs {
 																		'spring-cloud-vault'       : ['2.2.x'],
 																		'spring-cloud-cloudfoundry': ['2.2.x'],
 																		'spring-cloud-openfeign'   : ['2.2.x'],
-																		'spring-cloud-kubernetes'  : ['1.1.x', '1.0.x']]
+																		'spring-cloud-kubernetes'  : ['1.1.x']]
 
 	/**
 	 * Mapping of a lowercase release train name to a given boot version

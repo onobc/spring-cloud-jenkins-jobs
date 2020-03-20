@@ -11,6 +11,8 @@ import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMake
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
+import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
+import org.springframework.jenkins.cloud.compatibility.CompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
@@ -56,6 +58,10 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13())
 				.onGithubPush(false).cron(oncePerDay())
 				.deploy(false).upload(false).build().deploy(it)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.prefix("spring-cloud-${jdk14()}").jdkVersion(jdk14())
+				.onGithubPush(false).cron(oncePerDay())
+				.deploy(false).upload(false).build().deploy(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deploy(it)
@@ -67,6 +73,9 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13()).onGithubPush(false).cron(oncePerDay()).deploy(false)
+				.upload(false).build().deployWithoutTests(it)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.prefix("spring-cloud-${jdk14()}").jdkVersion(jdk14()).onGithubPush(false).cron(oncePerDay()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
@@ -108,6 +117,9 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
+		new BootCompatibilityBuildMaker(dsl).with {
+			it.buildWithTests(project, project, branch, oncePerDay(), true)
+		}
 	}
 }
 // Release branches for Spring Cloud Release

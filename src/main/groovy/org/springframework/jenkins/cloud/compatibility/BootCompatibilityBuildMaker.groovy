@@ -23,7 +23,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 	protected void buildWithTests(String projectName, String repoName, String branchName, String cronExpr, boolean checkTests,
 								  boolean parametrizedBoot = true) {
 		String prefixedProjectName = prefixJob(projectName)
-		dsl.job("${prefixedProjectName}-${suffix}") {
+		dsl.job("${prefixedProjectName}-boot-${suffix}") {
 			concurrentBuild()
 			if (parametrizedBoot) {
 				parameters {
@@ -39,7 +39,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 			scm {
 				git {
 					remote {
-						url "https://github.com/${organization}/$repoName"
+						url "https://github.com/${organization}/${repoName}"
 						branch branchName
 					}
 					extensions {

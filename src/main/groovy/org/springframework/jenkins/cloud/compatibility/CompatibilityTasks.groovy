@@ -13,7 +13,7 @@ import org.springframework.jenkins.common.job.Maven
 @CompileStatic
 abstract class CompatibilityTasks implements Maven {
 
-	protected static final String DEFAULT_BOOT_VERSION = AllCloudConstants.LATEST_BOOT_VERSION
+	protected static final String DEFAULT_BOOT_VERSION = AllCloudConstants.LATEST_2_2_BOOT_VERSION
 	protected static final String SPRING_BOOT_VERSION_VAR = 'SPRING_BOOT_VERSION'
 	protected static final String SPRING_BOOT_MINOR = AllCloudConstants.BOOT_MINOR_FOR_API_COMPATIBILITY
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
@@ -88,16 +88,16 @@ abstract class CompatibilityTasks implements Maven {
 		mkdir -p target
 		export MAVEN_PATH=${mavenBin()}
 		pushd target
-			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
-			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud-release-tools-spring:1.0.0.BUILD-SNAPSHOT -Dproject.basedir=../
-			mv dependency/*.jar dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar
+			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
+			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud:1.0.0.BUILD-SNAPSHOT -Dproject.basedir=../
+			mv dependency/*.jar dependency/spring-cloud-1.0.0-BUILD-SNAPSHOT.jar
 			echo "Cloning Spring Cloud Build"
 			git clone https://github.com/spring-cloud/spring-cloud-build.git
 			${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
 			git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 			pushd spring-cloud-build
 				echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-				java -jar ../dependency/spring-cloud-release-tools-spring-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
+				java -jar ../dependency/spring-cloud-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
 				./mvnw clean install -fae -U
 			popd
 		popd
