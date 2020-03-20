@@ -95,7 +95,7 @@ class AllCloudJobs {
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
 	        "ilford" : "2.3", // boot version 2.3.x
-	        "hoxton" : "2.2", // boot version 2.2.x
+	        "hoxton" : "2.3", // boot version 2.2.x
 	        "greenwich" : "2.1" // boot version 2.1.x
 	]
 
