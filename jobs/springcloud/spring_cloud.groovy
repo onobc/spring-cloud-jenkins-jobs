@@ -118,7 +118,7 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
 		new BootCompatibilityBuildMaker(dsl).with {
-			it.buildWithTests(project, project, branch, oncePerDay(), true)
+			it.buildWithTests("${project}-${branch}", project, branch, oncePerDay(), true)
 		}
 	}
 }
