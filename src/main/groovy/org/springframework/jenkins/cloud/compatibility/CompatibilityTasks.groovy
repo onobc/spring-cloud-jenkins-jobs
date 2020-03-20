@@ -19,7 +19,7 @@ abstract class CompatibilityTasks implements Maven {
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
 	protected static final String SPRING_CLOUD_BUILD_BRANCH = 'SPRING_CLOUD_BUILD_BRANCH'
 
-	Closure defaultStepsForBoot() {
+	Closure defaultStepsForBoot(String branch = "master") {
 		return buildStep {
 			shell compileProductionForBoot()
 		}
@@ -32,17 +32,18 @@ abstract class CompatibilityTasks implements Maven {
 			"""
 	}
 
-	Closure defaultStepsWithTestsForBoot() {
+	Closure defaultStepsWithTestsForBoot(String branch = "master") {
 		return buildStep {
 			shell runTestsForBoot()
 		}
 	}
 
-	protected String compileProductionForBoot() {
+	protected String compileProductionForBoot(String branch = "master") {
 		return """#!/bin/bash -x
 					set -o errexit
 					${fetchLatestBootVersion()}
 					${bumpBoot()}
+					git checkout ${branch}
 					echo -e "Checking if prod code compiles against latest boot"
 					${buildCommand()}
 					${printDepsForBoot()}
@@ -63,11 +64,12 @@ abstract class CompatibilityTasks implements Maven {
 """
 	}
 
-	protected String runTestsForBoot() {
+	protected String runTestsForBoot(String branch = "master") {
 		return """#!/bin/bash -x
 					set -o errexit
 					${fetchLatestBootVersion()}
 					${bumpBoot()}
+					git checkout ${branch}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae
 					${printDepsForBoot()}
