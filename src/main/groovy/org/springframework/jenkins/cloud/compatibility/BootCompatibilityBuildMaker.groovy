@@ -23,7 +23,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 	protected void buildWithTests(String projectName, String repoName, String branchName, String cronExpr, boolean checkTests,
 								  boolean parametrizedBoot = true) {
 		String prefixedProjectName = prefixJob(projectName)
-		dsl.job("${prefixedProjectName}-boot-${suffix}") {
+		dsl.job("${prefixedProjectName}-${suffix}") {
 			concurrentBuild()
 			if (parametrizedBoot) {
 				parameters {
