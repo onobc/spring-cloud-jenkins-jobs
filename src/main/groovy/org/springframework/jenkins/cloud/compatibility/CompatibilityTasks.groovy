@@ -33,9 +33,9 @@ abstract class CompatibilityTasks implements Maven {
 			"""
 	}
 
-	Closure defaultStepsWithTestsForBoot(String branch = "master") {
+	Closure defaultStepsWithTestsForBoot() {
 		return buildStep {
-			shell runTestsForBoot(branch)
+			shell runTestsForBoot()
 		}
 	}
 
@@ -64,11 +64,10 @@ abstract class CompatibilityTasks implements Maven {
 """
 	}
 
-	protected String runTestsForBoot(String branch = "master") {
+	protected String runTestsForBoot() {
 		return """#!/bin/bash -x
 					set -o errexit
 					${fetchLatestBootVersion()}
-					git checkout ${branch}
 					${bumpBoot()}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae
