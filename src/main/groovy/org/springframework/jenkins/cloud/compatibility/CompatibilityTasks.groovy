@@ -18,10 +18,11 @@ abstract class CompatibilityTasks implements Maven {
 	protected static final String SPRING_BOOT_MINOR = AllCloudConstants.BOOT_MINOR_FOR_API_COMPATIBILITY
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
 	protected static final String SPRING_CLOUD_BUILD_BRANCH = 'SPRING_CLOUD_BUILD_BRANCH'
+	protected static final String DEFAULT_BUILD_BRANCH = AllCloudConstants.SPRING_CLOUD_BUILD_BRANCH_FOR_COMPATIBILITY_BUILD
 
-	Closure defaultStepsForBoot(String branch = "master") {
+	Closure defaultStepsForBoot() {
 		return buildStep {
-			shell compileProductionForBoot(branch)
+			shell compileProductionForBoot()
 		}
 	}
 
@@ -38,10 +39,9 @@ abstract class CompatibilityTasks implements Maven {
 		}
 	}
 
-	protected String compileProductionForBoot(String branch = "master") {
+	protected String compileProductionForBoot() {
 		return """#!/bin/bash -x
 					set -o errexit
-					git checkout ${branch}
 					${fetchLatestBootVersion()}
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"

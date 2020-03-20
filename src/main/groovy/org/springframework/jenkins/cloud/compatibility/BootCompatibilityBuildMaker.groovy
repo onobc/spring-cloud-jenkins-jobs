@@ -28,6 +28,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 			if (parametrizedBoot) {
 				parameters {
 					stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_VERSION, 'Which version of Spring Boot should be used for the build')
+					stringParam(SPRING_CLOUD_BUILD_BRANCH, DEFAULT_BUILD_BRANCH, 'Which branch of Spring Cloud Build should be checked out')
 				}
 			}
 			triggers {
@@ -54,7 +55,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 					goals('--version')
 				}
 			}
-			steps checkTests ? defaultStepsWithTestsForBoot(branchName) : defaultStepsForBoot(branchName)
+			steps checkTests ? defaultStepsWithTestsForBoot() : defaultStepsForBoot()
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
 			}
