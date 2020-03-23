@@ -59,7 +59,7 @@ abstract class CompatibilityTasks implements Maven {
 		echo -e "Getting latest version of Spring Boot"
 		# Uncomment this to get latest version at all (not necessarily 2.0.x)
 		#${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
-		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>${SPRING_BOOT_MINOR}." | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp')"
+		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>${SPRING_BOOT_MINOR}." | grep "BUILD-SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp')"
 		echo -e "Latest version of boot is [\$${SPRING_BOOT_VERSION_VAR}]"
 """
 	}
