@@ -94,7 +94,7 @@ class AllCloudJobs {
 	 * Mapping of a lowercase release train name to a given boot version
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
-	        "ilford" : "2.3", // boot version 2.3.x
+	        "2020-1" : "2.3", // boot version 2.3.x
 	        "hoxton" : "2.3", // boot version 2.2.x
 	        "greenwich" : "2.1" // boot version 2.1.x
 	]
