@@ -23,7 +23,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 	}
 
 	void build(String projectName) {
-		build(projectName, oncePerDay())
+		build(projectName, everySunday())
 	}
 
 	void build(String projectName, String cronExpr) {
