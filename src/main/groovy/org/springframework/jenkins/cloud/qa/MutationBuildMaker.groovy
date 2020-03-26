@@ -53,7 +53,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
-				PitestPublisher.cloudMutation(it as Node)
+				// PitestPublisher.cloudMutation(it as Node)
 			}
 		}
 	}
