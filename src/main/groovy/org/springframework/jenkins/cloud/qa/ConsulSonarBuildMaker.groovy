@@ -1,4 +1,4 @@
-package org.springframework.jenkins.cloud.sonar
+package org.springframework.jenkins.cloud.qa
 
 import org.springframework.jenkins.cloud.common.HashicorpTrait
 import javaposse.jobdsl.dsl.DslFactory

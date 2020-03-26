@@ -76,6 +76,12 @@ dsl.nestedView('Spring Cloud') {
 			}
 			columns defaultColumns()
 		}
+		listView('QA') {
+			jobs {
+				regex('spring-cloud.*-qa-.*')
+			}
+			columns defaultColumns()
+		}
 		nestedView('CD-pipelines') {
 			def nested = delegate
 			['github-analytics', 'github-webhook', 'app-monolith'].each {

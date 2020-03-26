@@ -24,14 +24,16 @@ import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
+import org.springframework.jenkins.cloud.qa.ConsulMutationBuildMaker
+import org.springframework.jenkins.cloud.qa.MutationBuildMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMasterMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaserOptions
-import org.springframework.jenkins.cloud.sonar.ConsulSonarBuildMaker
-import org.springframework.jenkins.cloud.sonar.KubernetesSonarBuildMaker
-import org.springframework.jenkins.cloud.sonar.SonarBuildMaker
+import org.springframework.jenkins.cloud.qa.ConsulSonarBuildMaker
+import org.springframework.jenkins.cloud.qa.KubernetesSonarBuildMaker
+import org.springframework.jenkins.cloud.qa.SonarBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
@@ -233,11 +235,13 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	build("messaging-application", oncePerDay())
 }
 
-// SONAR
+// QA
 (ALL_JOBS_WITH_TESTS - ["spring-cloud-contract", "spring-cloud-consul", "spring-cloud-vault", "spring-cloud-aws", "spring-cloud-function", "spring-cloud-kubernetes"]).each {
 	new SonarBuildMaker(dsl).buildSonar(it)
+	new MutationBuildMaker(dsl).build(it)
 }
 new ConsulSonarBuildMaker(dsl).buildSonar()
+new ConsulMutationBuildMaker(dsl).build()
 new KubernetesSonarBuildMaker(dsl).buildSonar()
 
 // RELEASER
