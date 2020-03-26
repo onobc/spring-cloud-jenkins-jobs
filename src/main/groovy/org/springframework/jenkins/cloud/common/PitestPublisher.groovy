@@ -30,12 +30,12 @@ class PitestPublisher {
 	}
 
 	void mustImproveCondition() {
-		(buildConditions / 'org.jenkinsci.plugins.pitmutation.PitPublisher_-MustImproveCondition' / 'outer-class')
+		(buildConditions / 'org.jenkinsci.plugins.pitmutation.PitPublisher_-MustImproveCondition').appendNode('outer-class', reference: "../../..")
 	}
 
 	void percentageThresholdCondition() {
 		def condition = (buildConditions / 'org.jenkinsci.plugins.pitmutation.PitPublisher_-PercentageThresholdCondition')
-		(condition / 'outer-class')
+		condition.appendNode('outer-class', reference: "../../..")
 		(condition / 'percentage').setValue(0.0)
 	}
 
