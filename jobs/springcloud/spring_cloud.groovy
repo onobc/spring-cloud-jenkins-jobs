@@ -243,6 +243,7 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 new ConsulSonarBuildMaker(dsl).buildSonar()
 new ConsulMutationBuildMaker(dsl).build()
 new KubernetesSonarBuildMaker(dsl).buildSonar()
+new MutationBuildMaker(dsl).build("spring-cloud-contract")
 
 // RELEASER
 ALL_RELEASER_JOBS.each {
