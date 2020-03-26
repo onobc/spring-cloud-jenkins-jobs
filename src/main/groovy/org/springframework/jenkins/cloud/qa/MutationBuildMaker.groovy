@@ -65,7 +65,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 ROOT_VIEW="Spring%20Cloud"
 CURRENT_VIEW="QA"
 INDEX_HTML="target/pit-reports/index.html"
-echo "You can click here to see the PIT report [${JENKINS_URL}/view/${ROOT_VIEW}/view/${CURRENT_VIEW}/job/${JOB_NAME}/ws/${INDEX_HTML}]
+echo "You can click here to see the PIT report [${JENKINS_URL}/view/${ROOT_VIEW}/view/${CURRENT_VIEW}/job/${JOB_NAME}/ws/${INDEX_HTML}]"
 ''')
 		}
 	}
