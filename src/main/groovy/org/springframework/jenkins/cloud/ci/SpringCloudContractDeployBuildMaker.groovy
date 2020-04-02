@@ -132,6 +132,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 				if (deploy) {
 					shell(removeStubAndDeploy())
 				}
+				boolean jdkIs8 = jdkVersion == jdk8()
 				shell("""#!/bin/bash -x
 					export MAVEN_PATH=${mavenBin()}
 					${setupGitCredentials()}
@@ -142,7 +143,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 						deployDocs()
 					}
 					else {
-						"./mvnw clean install -U -Pintegration -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())}"
+						"./mvnw clean install -U -Pintegration -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
 					}
 				}
 					${cleanGitCredentials()}
