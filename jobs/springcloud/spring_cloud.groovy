@@ -12,7 +12,6 @@ import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.CompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
@@ -91,6 +90,7 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk13())
+		new CustomJobFactory(dsl).jdkVersion(projectName, jdk14())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
