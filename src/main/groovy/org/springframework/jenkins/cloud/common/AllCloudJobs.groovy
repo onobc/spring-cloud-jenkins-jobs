@@ -88,6 +88,7 @@ class AllCloudJobs {
 																		'spring-cloud-vault'       : ['2.2.x'],
 																		'spring-cloud-cloudfoundry': ['2.2.x'],
 																		'spring-cloud-openfeign'   : ['2.2.x'],
+																		'spring-cloud-function'   : ['3.0.x'],
 																		'spring-cloud-kubernetes'  : ['1.1.x']]
 
 	/**
