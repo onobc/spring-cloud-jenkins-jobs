@@ -21,7 +21,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 			"jdk8" : "8.0.242.hs-adpt",
 			"jdk11" : "11.0.6.hs-adpt",
 			"openjdk11" : "11.0.6.hs-adpt",
-			"openjdk13" : "13.0.2.hs-adpt",
+			"openjdk14" : "14.0.1.hs-adpt",
 	]
 	private final DslFactory dsl
 	final String organization

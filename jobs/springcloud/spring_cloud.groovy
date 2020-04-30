@@ -56,10 +56,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.deploy(false).upload(false).build().deploy(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13())
-				.onGithubPush(false).cron(oncePerDay())
-				.deploy(false).upload(false).build().deploy(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk14()}").jdkVersion(jdk14())
 				.onGithubPush(false).cron(oncePerDay())
 				.deploy(false).upload(false).build().deploy(it)
@@ -71,9 +67,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
-				.upload(false).build().deployWithoutTests(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk13()}").jdkVersion(jdk13()).onGithubPush(false).cron(oncePerDay()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk14()}").jdkVersion(jdk14()).onGithubPush(false).cron(oncePerDay()).deploy(false)
@@ -89,7 +82,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk13())
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk14())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
@@ -104,7 +96,7 @@ new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForHoxton()
-	[jdk11(), jdk12(), jdk13()].each {
+	[jdk11(), jdk14()].each {
 		buildForHoxtonWithJdk(it)
 	}
 }
@@ -185,7 +177,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withCronExpr(oncePerDay())
 	// for postman <-> swagger
 	  .withNodeJs(true)
-	  .withJdk(jdk13())
+	  .withJdk(jdk14())
 	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
 	  .withMavenTests(false)
 	  .withGradleTests(false)
