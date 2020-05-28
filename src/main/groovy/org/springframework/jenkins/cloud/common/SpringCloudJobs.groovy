@@ -184,4 +184,8 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 			notifyUnstable()
 		}
 	}
+
+	String windows() {
+		return "windows"
+	}
 }
