@@ -228,7 +228,7 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 }
 
 // QA
-(ALL_JOBS_WITH_TESTS - ["spring-cloud-contract", "spring-cloud-consul", "spring-cloud-vault", "spring-cloud-aws", "spring-cloud-function", "spring-cloud-kubernetes"]).each {
+(ALL_JOBS_WITH_TESTS - ["spring-cloud-contract", "spring-cloud-consul", "spring-cloud-vault", "spring-cloud-function", "spring-cloud-kubernetes"]).each {
 	new SonarBuildMaker(dsl).buildSonar(it)
 	new MutationBuildMaker(dsl).build(it)
 }

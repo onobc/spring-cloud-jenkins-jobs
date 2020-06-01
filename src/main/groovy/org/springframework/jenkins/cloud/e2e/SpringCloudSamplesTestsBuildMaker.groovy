@@ -27,16 +27,8 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 		this.organization = organization
 	}
 
-	void buildForGreenwich() {
-		build("Greenwich.BUILD-SNAPSHOT", "tests", everySixHours(), "Greenwich")
-	}
-
 	void buildForHoxton() {
 		build("Hoxton.BUILD-SNAPSHOT", "tests", everySixHours(), masterBranch())
-	}
-
-	void buildForGreenwichWithJdk(String jdk) {
-		build("Greenwich.BUILD-SNAPSHOT", "tests-greenwich-${jdk}", everySixHours(), "Greenwich", jdk)
 	}
 
 	void buildForHoxtonWithJdk(String jdk) {

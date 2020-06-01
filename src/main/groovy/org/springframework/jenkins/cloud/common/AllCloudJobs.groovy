@@ -23,7 +23,7 @@ class AllCloudJobs {
 	 */
 	public static final List<String> ALL_JOBS = ['spring-cloud-sleuth', 'spring-cloud-netflix', 'spring-cloud-zookeeper', 'spring-cloud-consul',
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-security', 'spring-cloud-config',
-												 'spring-cloud-cloudfoundry', 'spring-cloud-aws', 'spring-cloud-build',
+												 'spring-cloud-cloudfoundry', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
 												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-gcp', 'spring-cloud-kubernetes',
 	                                             'spring-cloud-circuitbreaker']
