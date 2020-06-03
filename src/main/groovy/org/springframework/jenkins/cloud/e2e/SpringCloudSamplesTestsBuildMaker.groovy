@@ -27,12 +27,12 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 		this.organization = organization
 	}
 
-	void buildForHoxton() {
-		build("Hoxton.BUILD-SNAPSHOT", "tests", everySixHours(), masterBranch())
+	void buildForIlford() {
+		build("2020.0.0-SNAPSHOT", "tests", everySixHours(), masterBranch())
 	}
 
-	void buildForHoxtonWithJdk(String jdk) {
-		build("Hoxton.BUILD-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
+	void buildForIlfordWithJdk(String jdk) {
+		build("2020.0.0-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
 	}
 
 	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),

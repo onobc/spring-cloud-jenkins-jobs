@@ -95,9 +95,9 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
-	buildForHoxton()
+	buildForIlford()
 	[jdk11(), jdk14()].each {
-		buildForHoxtonWithJdk(it)
+		buildForIlfordWithJdk(it)
 	}
 }
 
