@@ -14,8 +14,6 @@ import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.CloudFoundryBreweryTestExecutor
-import org.springframework.jenkins.cloud.e2e.CloudFoundryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
@@ -24,15 +22,15 @@ import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMake
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import org.springframework.jenkins.cloud.qa.ConsulMutationBuildMaker
+import org.springframework.jenkins.cloud.qa.ConsulSonarBuildMaker
+import org.springframework.jenkins.cloud.qa.KubernetesSonarBuildMaker
 import org.springframework.jenkins.cloud.qa.MutationBuildMaker
+import org.springframework.jenkins.cloud.qa.SonarBuildMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMasterMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaserOptions
-import org.springframework.jenkins.cloud.qa.ConsulSonarBuildMaker
-import org.springframework.jenkins.cloud.qa.KubernetesSonarBuildMaker
-import org.springframework.jenkins.cloud.qa.SonarBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
@@ -92,7 +90,10 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	}
 }
 
-new SpringCloudReleaseToolsBuildMaker(dsl).deploy()
+new SpringCloudReleaseToolsBuildMaker(dsl).with {
+	deploy()
+	deploy("1.0.x")
+}
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
@@ -199,18 +200,9 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withWipeOutWorkspace(false)
 }.build(dsl)
 
-// BREWERY
-new CloudFoundryEndToEndBuildMaker(dsl).with {
-	buildBreweryForDocs()
-	buildSpringCloudStream()
-}
-new CloudFoundryEndToEndBuildMaker(dsl).with {
-	buildSleuthDocApps()
-}
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
-new CloudFoundryBreweryTestExecutor(dsl).buildBreweryForDocsTests()
 new Jdk11BreweryEndToEndBuildMaker(dsl).build()
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Hoxton", "2020.0.0"].each {
@@ -242,12 +234,13 @@ ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMasterMaker(dsl).release(it, SpringCloudReleaserOptions.springCloudMaster())
 	new SpringCloudReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.springCloud())
 }
-
 ALL_STREAM_JOBS_FOR_RELEASER.each {
 	new SpringCloudReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.springCloudStream())
 }
-new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-meta-releaser", SpringCloudReleaserOptions.springCloud())
-new SpringCloudMetaReleaseMaker(dsl).release("spring-cloud-stream-meta-releaser", SpringCloudReleaserOptions.springCloudStream())
+new SpringCloudMetaReleaseMaker(dsl)
+		.release("spring-cloud-meta-releaser", SpringCloudReleaserOptions.springCloud())
+new SpringCloudMetaReleaseMaker(dsl)
+		.release("spring-cloud-stream-meta-releaser", SpringCloudReleaserOptions.springCloudStream())
 new SpringCloudMetaReleaseRepoPurger(dsl).build()
 
 // Compatibility builds

@@ -16,6 +16,7 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 		SpringCloudJobs, Releaser {
 	protected static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
+	protected static final String RELEASER_BRANCH_PARAM = "RELEASER_BRANCH"
 	protected static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
 	protected static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
 	protected static final String START_FROM_PARAM = "START_FROM"
@@ -50,6 +51,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 			additionalConfiguration(delegate as FreeStyleJob)
 			parameters {
 				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties)")
+				stringParam(RELEASER_BRANCH_PARAM, options.releaserBranch, "Branch for the releaser code")
 				stringParam(RELEASER_CONFIG_URL_PARAM, options.releaserConfigUrl, "Root of the URL where the RAW version of the configuration file is present")
 				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
 				stringParam(RELEASER_META_RELEASE_GIT_ORG_URL_VAR, options.gitOrgUrl, 'URL of the organization from which projects can be cloned')
@@ -78,7 +80,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				git {
 					remote {
 						url "https://github.com/spring-cloud/spring-cloud-release-tools"
-						branch masterBranch()
+						branch('${RELEASER_BRANCH_PARAM}')
 					}
 					extensions {
 						wipeOutWorkspace()
@@ -145,7 +147,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Run the meta-releaser!"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
-						-jar projects/${options.projectName}/target/${options.projectName}-1.0.0.BUILD-SNAPSHOT.jar ${releaserOptions()} || exit 1
+						-jar projects/${options.projectName}/target/${options.projectName}-*.jar ${releaserOptions()} || exit 1
 				${cleanGitCredentials()}
 				""")
 			}

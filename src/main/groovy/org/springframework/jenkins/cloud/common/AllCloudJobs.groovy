@@ -33,7 +33,8 @@ class AllCloudJobs {
 	 */
 	public static final List<String> ALL_STREAM_JOBS_FOR_RELEASER = ["spring-cloud-stream",
 																	 "spring-cloud-stream-binder-rabbit",
-																	 "spring-cloud-stream-binder-kafka"]
+																	 "spring-cloud-stream-binder-kafka",
+																	 "spring-cloud-schema-registry"]
 
 	/**
 	 * List of all single project jobs to be used by the releaser
