@@ -22,6 +22,7 @@ class ReleaserOptionsBuilder {
 	boolean postReleaseOnly = false
 	String releaseTrainProjectName
 	String releaserConfigUrl
+	String releaserBranch = "master"
 	String releaserConfigBranch
 	List<String> releaseTrainDependencyNames
 	String gitOrgUrl
@@ -104,6 +105,11 @@ class ReleaserOptionsBuilder {
 		return this
 	}
 
+	ReleaserOptionsBuilder releaserBranch(String releaserBranch) {
+		this.releaserBranch = releaserBranch
+		return this
+	}
+
 	ReleaserOptionsBuilder releaserConfigBranch(String releaserConfigBranch) {
 		this.releaserConfigBranch = releaserConfigBranch
 		return this
@@ -150,6 +156,7 @@ class ReleaserOptionsBuilder {
 				postReleaseOnly,
 				releaseTrainProjectName,
 				releaserConfigUrl,
+				releaserBranch,
 				releaserConfigBranch,
 				releaseTrainDependencyNames,
 				releaseTrainBomUrl,

@@ -22,6 +22,7 @@ class ReleaserOptions {
 	boolean postReleaseOnly
 	String releaseTrainProjectName
 	String releaserConfigUrl
+	String releaserBranch = "master"
 	String releaserConfigBranch
 	List<String> releaseTrainDependencyNames
 	String releaseTrainBomUrl
@@ -29,7 +30,7 @@ class ReleaserOptions {
 	String projectsToSkip
 	String gitOrgUrl
 
-	protected ReleaserOptions(String projectName, boolean dryRun, boolean updateSagan, boolean updateDocumentationRepos, boolean updateSpringProjects, boolean updateReleaseTrainWiki, boolean runUpdatedSamples, boolean updateAllTestSamples, boolean updateReleaseTrainDocs, boolean updateSpringGuides, boolean updateStartSpringIo, boolean updateGithubMilestones, boolean postReleaseOnly, String releaseTrainProjectName, String releaserConfigUrl, String releaserConfigBranch, List<String> releaseTrainDependencyNames, String releaseTrainBomUrl, String releaseThisTrainBom, String projectsToSkip, String gitOrgUrl) {
+	protected ReleaserOptions(String projectName, boolean dryRun, boolean updateSagan, boolean updateDocumentationRepos, boolean updateSpringProjects, boolean updateReleaseTrainWiki, boolean runUpdatedSamples, boolean updateAllTestSamples, boolean updateReleaseTrainDocs, boolean updateSpringGuides, boolean updateStartSpringIo, boolean updateGithubMilestones, boolean postReleaseOnly, String releaseTrainProjectName, String releaserConfigUrl, String releaserConfigBranch, String releaserBranch, List<String> releaseTrainDependencyNames, String releaseTrainBomUrl, String releaseThisTrainBom, String projectsToSkip, String gitOrgUrl) {
 		this.projectName = projectName;
 		this.dryRun = dryRun
 		this.updateSagan = updateSagan
@@ -46,6 +47,7 @@ class ReleaserOptions {
 		this.releaseTrainProjectName = releaseTrainProjectName
 		this.releaserConfigUrl = releaserConfigUrl
 		this.releaserConfigBranch = releaserConfigBranch
+		this.releaserBranch = releaserBranch
 		this.releaseTrainDependencyNames = releaseTrainDependencyNames
 		this.releaseTrainBomUrl = releaseTrainBomUrl
 		this.releaseThisTrainBom = releaseThisTrainBom
@@ -54,6 +56,7 @@ class ReleaserOptions {
 		assert projectName != null
 		assert releaseTrainProjectName != null
 		assert releaserConfigUrl != null
+		assert releaserBranch != null
 		assert releaserConfigBranch != null
 		assert releaseTrainDependencyNames != null
 		assert releaseTrainBomUrl != null
