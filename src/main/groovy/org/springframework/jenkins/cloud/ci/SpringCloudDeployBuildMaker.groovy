@@ -53,7 +53,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 
 	void deploy(String project, String branchToBuild, boolean checkTests = true) {
 		String projectNameWithBranch = branchToBuild ? "$branchToBuild-" : ''
-		String prefixedName = prefix(project) + project
+		String prefixedName = prefixedName(project)
 		dsl.job("${prefixedName}-${projectNameWithBranch}ci") {
 			triggers {
 				cron cronValue
@@ -120,6 +120,10 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 				}
 			}
 		}
+	}
+
+	String prefixedName(String project) {
+		return prefix(project) + project
 	}
 
 	String buildCommand() {
