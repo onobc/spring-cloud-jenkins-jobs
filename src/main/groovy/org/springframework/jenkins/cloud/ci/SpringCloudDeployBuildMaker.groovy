@@ -103,7 +103,6 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				if (upload) shell(buildDocsWithGhPages())
 				shell(buildCommand())
 			}
 			configure {
@@ -124,7 +123,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	}
 
 	String buildCommand() {
-		return this.deploy ? cleanAndDeploy() : cleanInstall()
+		return this.deploy ? cleanDeployWithDocs() : cleanInstallWithDocs()
 	}
 
 	void deployWithoutTests(String project) {

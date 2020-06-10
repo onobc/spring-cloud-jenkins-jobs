@@ -29,33 +29,18 @@ trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 					trap "{ rm -f /tmp/gitcredentials; }" EXIT
 					set -x
 				"""
-	} 
-
-	String buildDocsWithGhPages(String additionalCommand = "") {
-		return doBuildDocsWithGhPages(buildDocs(), additionalCommand)
-	}
-
-	String deployWithGhPages(String additionalCommand = "") {
-		return doBuildDocsWithGhPages(deployDocsWithoutSkippingTests(), additionalCommand)
-	}
-
-	private String doBuildDocsWithGhPages(String buildingDocs, String additionalCommand) {
-		return """#!/bin/bash -x
-					git checkout \$${branchVarName()} && git pull
-					export MAVEN_PATH=${mavenBin()}
-					${setupGitCredentials()}
-					${(additionalCommand ? "${additionalCommand}\n" : "") + buildingDocs}
-					echo "Downloading ghpages script from Spring Cloud Build"
-					mkdir -p target
-					rm -rf target/ghpages.sh
-					curl https://raw.githubusercontent.com/spring-cloud/spring-cloud-build/master/docs/src/main/asciidoc/ghpages.sh -o target/ghpages.sh
-					chmod +x target/ghpages.sh
-					. ./target/ghpages.sh && ${cleanGitCredentials()} || ${cleanGitCredentials()}
-					"""
 	}
 
 	String removeMavenInstallation() {
 		return "rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/"
+	}
+
+	String cleanDeployWithDocs() {
+		return "./mvnw clean deploy -Pdocs,deploy -B"
+	}
+
+	String cleanInstallWithDocs() {
+		return "./mvnw clean install -Pdocs,deploy -B"
 	}
 
 	String stopRunningDocker() {

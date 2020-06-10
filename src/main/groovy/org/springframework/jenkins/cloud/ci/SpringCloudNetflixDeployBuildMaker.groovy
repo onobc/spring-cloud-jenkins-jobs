@@ -105,8 +105,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(buildDocsWithGhPages(firstBuildContractModule()))
-				shell(deploy ? cleanAndDeploy() : cleanInstall())
+				shell(deploy ? cleanDeployWithDocs() : cleanInstallWithDocs())
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)

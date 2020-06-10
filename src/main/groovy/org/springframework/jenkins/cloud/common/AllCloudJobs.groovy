@@ -91,7 +91,7 @@ class AllCloudJobs {
 																		'spring-cloud-consul'      : ['2.2.x'],
 																		'spring-cloud-zookeeper'   : ['2.2.x'],
 																		'spring-cloud-bus'         : ['2.2.x'],
-																		'spring-cloud-build'       : ['2.3.x', '2.2.x'],
+																		'spring-cloud-build'       : ['2.3.x'],
 																		'spring-cloud-aws'         : ['2.2.x'],
 																		'spring-cloud-gateway'     : ['2.2.x'],
 																		'spring-cloud-security'    : ['2.2.x'],
@@ -120,9 +120,7 @@ class AllCloudJobs {
 	}
 
 	/**
-	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts
-	 * and `./mvwn clean install -Pdocs` + `gh-pages.sh` script will be executed to publish new docs.
-	 * The docs will get published only for master.
+	 * List of default jobs. Default means that `./mvnw clean deploy` will be executed to publish artifacts.
 	 */
 	public static final List<String> ALL_DEFAULT_JOBS = ALL_JOBS - CUSTOM_BUILD_JOBS
 

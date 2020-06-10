@@ -79,12 +79,12 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(antiPermgenAndJava7TlsHack() + "\n" + buildDocsWithGhPages())
+				shell(antiPermgenAndJava7TlsHack())
 				shell("""\
 						${antiPermgenAndJava7TlsHack()}
 						${preStep()}
 						trap "{ ${postStep()} }" EXIT
-						${deploy ? cleanAndDeploy() : cleanInstall()}
+						${deploy ? cleanDeployWithDocs() : cleanInstallWithDocs()}
 					""")
 			}
 			configure {

@@ -9,8 +9,8 @@ import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
 import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
+import org.springframework.jenkins.cloud.ci.SpringCloudReleaseTrainDocsMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
-import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
@@ -102,6 +102,11 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	[jdk11(), jdk14()].each {
 		buildForIlfordWithJdk(it)
 	}
+}
+
+new SpringCloudReleaseTrainDocsMaker(dsl).with {
+	deploy(masterBranch())
+	deploy("Hoxton")
 }
 
 // BRANCHES BUILD - spring-cloud organization
