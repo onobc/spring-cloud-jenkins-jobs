@@ -69,6 +69,10 @@ class EndToEndBuildMaker implements TestPublisher,
 					failBuild()
 					writeDescription('Build failed due to timeout after {0} minutes of inactivity')
 				}
+				maskPasswords()
+				credentialsBinding {
+					string("WAVEFRONT_API_TOKEN", "brewery-wavefront-token")
+				}
 			}
 			scm {
 				git {
