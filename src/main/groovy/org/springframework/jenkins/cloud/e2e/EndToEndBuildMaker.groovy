@@ -62,7 +62,8 @@ class EndToEndBuildMaker implements TestPublisher,
 				colorizeOutput()
 				environmentVariables([
 						TERM: 'dumb',
-						RETRIES: 70
+						RETRIES: 70,
+						WAVEFRONT_URI: "https://longboard.wavefront.com"
 				])
 				timeout {
 					noActivity(defaultInactivity())
