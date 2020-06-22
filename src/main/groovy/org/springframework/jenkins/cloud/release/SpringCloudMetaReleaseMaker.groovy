@@ -80,7 +80,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				git {
 					remote {
 						url "https://github.com/spring-cloud/spring-cloud-release-tools"
-						branch('${RELEASER_BRANCH_PARAM}')
+						branch('${' + RELEASER_BRANCH_PARAM + '}')
 					}
 					extensions {
 						wipeOutWorkspace()
