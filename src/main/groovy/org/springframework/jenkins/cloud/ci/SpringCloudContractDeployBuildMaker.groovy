@@ -125,17 +125,14 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 	rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/
 	rm -rf ~/.m2/repository/org/springframework/boot/spring-boot-loader-tools/
 """)
-				maven {
-					mavenInstallation(maven33())
-					goals('--version')
-				}
 				if (deploy) {
-					shell(removeStubAndDeploy())
+					shell("""#!/bin/bash -x
+echo "Removes old installed stubs and deploys all projects (except for docs)"
+rm -rf ~/.m2/repository/com/example && rm -rf ~/.m2/repository/org/springframework/cloud/contract/verifier/stubs/ && ./mvnw clean deploy -nsu -P integration -U \$MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random
+""")
 				}
 				boolean jdkIs8 = jdkVersion == jdk8()
 				shell("""#!/bin/bash -x
-					export MAVEN_PATH=${mavenBin()}
-					${setupGitCredentials()}
 					echo "Building Spring Cloud Contract docs"
 					./scripts/generateDocs.sh
 					${
@@ -146,7 +143,6 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 						"./mvnw clean install -U -Pintegration -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
 					}
 				}
-					${cleanGitCredentials()}
 					""")
 			}
 			configure {
