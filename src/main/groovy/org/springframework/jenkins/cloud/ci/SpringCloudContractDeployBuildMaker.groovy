@@ -140,7 +140,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 					./scripts/generateDocs.sh
 					${
 					if (deploy) {
-						deployDocs()
+						"./mvnw deploy -Pdocs -pl docs -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
 					}
 					else {
 						"./mvnw clean install -U -Pintegration -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"

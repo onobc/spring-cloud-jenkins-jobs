@@ -12,13 +12,13 @@ class AllCloudConstants {
 	/**
 	 * The minor against which the compatibility builds should be checked
 	 */
-	public static final String BOOT_MINOR_FOR_API_COMPATIBILITY = '2.2'
+	public static final String BOOT_MINOR_FOR_API_COMPATIBILITY = '2.3'
 
 	/**
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)
 	 * and in compatibility builds
 	 */
-	public static final String LATEST_2_2_BOOT_VERSION = '2.2.6.BUILD-SNAPSHOT'
+	public static final String LATEST_2_2_BOOT_VERSION = '2.3.2.BUILD-SNAPSHOT'
 
 	/**
 	 * Spring Cloud Build branch used for compatibility builds.
