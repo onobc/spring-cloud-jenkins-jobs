@@ -157,17 +157,27 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 
 // CONTRACT
-["master", "3.0.x"].each { String branch ->
-	new SpringCloudSamplesEndToEndBuilder().with {
-		it.withProjectAndRepoName("spring-cloud-contract-samples")
-		  .withBranchName(branch)
-		  .withCronExpr(oncePerDay())
-		// for postman <-> swagger
-		  .withNodeJs(true)
-		  .withMavenTests(false)
-		  .withGradleTests(false)
-	}.build(dsl)
-}
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
+	  .withBranchName("3.0.x")
+	  .withCronExpr(oncePerDay())
+	// for postman <-> swagger
+	  .withNodeJs(true)
+	  .withMavenTests(false)
+	  .withGradleTests(false)
+}.build(dsl)
+
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
+	  .withBranchName("master")
+	  .withCronExpr(oncePerDay())
+	// for postman <-> swagger
+	  .withEnvs(["SKIP_COMPATIBILITY": "true"])
+	  .withNodeJs(true)
+	  .withMavenTests(false)
+	  .withGradleTests(false)
+}.build(dsl)
+
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 	  .withBranchName("master")
@@ -179,6 +189,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withMavenTests(false)
 	  .withGradleTests(false)
 }.build(dsl)
+
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 	  .withBranchName("master")
@@ -186,16 +197,19 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	// for postman <-> swagger
 	  .withNodeJs(true)
 	  .withJdk(jdk14())
+	// don't want to check compatibility against Greenwich
 	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
 	  .withMavenTests(false)
 	  .withGradleTests(false)
 }.build(dsl)
+
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
 	buildWithMavenTests("the-legacy-app", "2.2.x", oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", "2.2.x", oncePerDay())
 }
+
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("Pearson-Contracts")
 	  .withProjectName("pearson-contracts")
