@@ -18,9 +18,9 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron,
 		SpringCloudJobs, Maven, CustomJob {
 	private static final Map<String, String> JDKS = [
-			"jdk8" : "8.0.242.hs-adpt",
-			"jdk11" : "11.0.6.hs-adpt",
-			"openjdk11" : "11.0.6.hs-adpt",
+			"jdk8" : "8.0.252.hs-adpt",
+			"jdk11" : "11.0.7.hs-adpt",
+			"openjdk11" : "11.0.7.hs-adpt",
 			"openjdk14" : "14.0.1.hs-adpt",
 	]
 	private final DslFactory dsl
