@@ -127,7 +127,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	}
 
 	String buildCommand() {
-		return this.deploy ? cleanDeployWithDocs() : cleanInstallWithDocs()
+		return this.deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs()
 	}
 
 	void deployWithoutTests(String project) {

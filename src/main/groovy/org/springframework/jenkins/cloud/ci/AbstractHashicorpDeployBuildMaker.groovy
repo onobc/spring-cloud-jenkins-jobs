@@ -84,7 +84,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 						${antiPermgenAndJava7TlsHack()}
 						${preStep()}
 						trap "{ ${postStep()} }" EXIT
-						${deploy ? cleanDeployWithDocs() : cleanInstallWithDocs()}
+						${deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs()}
 					""")
 			}
 			configure {

@@ -39,8 +39,8 @@ trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 		return "./mvnw clean deploy -Pdocs,deploy -B"
 	}
 
-	String cleanInstallWithDocs() {
-		return "./mvnw clean install -Pdocs,deploy -B"
+	String cleanInstallWithoutDocs() {
+		return "./mvnw clean install -Pdeploy -B"
 	}
 
 	String stopRunningDocker() {
