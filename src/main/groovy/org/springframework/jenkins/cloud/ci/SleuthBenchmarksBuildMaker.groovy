@@ -1,9 +1,10 @@
 package org.springframework.jenkins.cloud.ci
 
-import org.springframework.jenkins.common.job.JdkConfig
 import javaposse.jobdsl.dsl.DslFactory
+
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.Cron
+import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.JmhPerformance
 
 /**
@@ -50,15 +51,6 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 			jdk jdk8()
 			steps {
 				shell('''
-				echo "Running JMeter benchmarks"
-				./scripts/runJmeterBenchmarks.sh
-				''')
-				shell('''
-				echo "Copying JMeter results"
-				mkdir -p results/benchmarks
-				cp -avr benchmarks/target/ results/benchmarks/
-				''')
-				shell('''
 				echo "Running JMH benchmark tests"
 				./scripts/runJmhBenchmarks.sh
 				''')
@@ -68,52 +60,11 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 				cp -avr target/ results/jmh/
 				''')
 			}
-			publishers {
-				archiveArtifacts {
-					pattern('results/benchmarks/target/jmeter/results/*.png')
-					allowEmpty(true)
-				}
-				archiveArtifacts {
-					pattern('results/benchmarks/target/jmeter/results/analysis/*.*')
-					allowEmpty(true)
-				}
-				archiveArtifacts('results/jmh/target/benchmarks.log')
-
-			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
-					JmhPerformance.benchmarkPublisher(it as Node) {
+				JmhPerformance.benchmarkPublisher(it as Node) {
 				}
 			}
 		}
-	}
-
-	private void appendPerformancePlugin(Node rootNode, String jmeterPath) {
-		Node propertiesNode = rootNode / 'publishers'
-		def perf = propertiesNode / 'hudson.plugins.performance.PerformancePublisher'
-		(perf / 'errorFailedThreshold').setValue(0)
-		(perf / 'errorUnstableThreshold').setValue(0)
-		(perf / 'errorUnstableResponseTimeThreshold').setValue(0)
-		(perf / 'relativeFailedThresholdPositive').setValue(20)
-		(perf / 'relativeFailedThresholdNegative').setValue(0)
-		(perf / 'relativeUnstableThresholdPositive').setValue(10)
-		(perf / 'relativeUnstableThresholdNegative').setValue(0)
-		(perf / 'nthBuildNumber').setValue(0)
-		(perf / 'modeRelativeThresholds').setValue(false)
-		// Average Response Time (ART), Percentile Response Time (PRT)
-		(perf / 'configType').setValue('ART')
-		(perf / 'modeOfThreshold').setValue(false)
-		(perf / 'failBuildIfNoResultFile').setValue(true)
-		(perf / 'compareBuildPrevious').setValue(false)
-		(perf / 'xml').setValue('')
-		(perf / 'modePerformancePerTestCase').setValue(true)
-		(perf / 'modeThroughput').setValue(false)
-		def parsers = perf / 'parsers'
-		if (jmeterPath) {
-			(parsers / 'hudson.plugins.performance.JMeterParser' / 'glob').setValue(jmeterPath)
-		}
-		/*if (junitPath) {
-			(parsers / 'hudson.plugins.performance.JUnitParser' / 'glob').setValue(junitPath)
-		}*/
 	}
 }
