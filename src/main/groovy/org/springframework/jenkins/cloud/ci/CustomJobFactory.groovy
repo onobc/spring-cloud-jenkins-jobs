@@ -25,7 +25,8 @@ class CustomJobFactory implements JdkConfig, Cron {
 						(build().projectName())   : build(),
 						(contract().projectName()): contract(),
 						(netflix().projectName()) : netflix(),
-						(vault().projectName())   : vault()
+						(vault().projectName())   : vault(),
+						(kubernetes().projectName()) : kubernetes()
 				]
 		)
 	}
@@ -106,6 +107,18 @@ class CustomJobFactory implements JdkConfig, Cron {
 
 	private CustomJob netflix() {
 		SpringCloudNetflixDeployBuildMaker maker = new SpringCloudNetflixDeployBuildMaker(dsl) {
+			@Override
+			boolean checkTests() {
+				return false
+			}
+		}
+		maker.cronValue = oncePerDay()
+		maker.onGithubPush = false
+		return maker
+	}
+
+	private CustomJob kubernetes() {
+		SpringCloudKubernetesDeployBuildMaker maker = new SpringCloudKubernetesDeployBuildMaker(dsl) {
 			@Override
 			boolean checkTests() {
 				return false
