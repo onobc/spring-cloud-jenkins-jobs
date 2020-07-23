@@ -169,6 +169,18 @@ new SpringCloudSamplesEndToEndBuilder().with {
 
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
+	  .withBranchName("3.0.x")
+	  .withEnvs(["SKIP_COMPATIBILITY": "true"])
+	  .withCronExpr(oncePerDay())
+	  .withJdk(jdk14())
+	// for postman <-> swagger
+	  .withNodeJs(true)
+	  .withMavenTests(false)
+	  .withGradleTests(false)
+}.build(dsl)
+
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withProjectAndRepoName("spring-cloud-contract-samples")
 	  .withBranchName("master")
 	  .withCronExpr(oncePerDay())
 	// for postman <-> swagger
