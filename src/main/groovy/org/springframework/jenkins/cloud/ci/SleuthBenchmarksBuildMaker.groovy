@@ -54,16 +54,12 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 				echo "Running JMH benchmark tests"
 				./scripts/runJmhBenchmarks.sh
 				''')
-				shell('''
-				echo "Copying Benchmarks results"
-				mkdir -p results/jmh
-				cp -avr target/ results/jmh/
-				''')
+			}
+			publishers {
+				archiveArtifacts("**/jmh-result.csv")
 			}
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
-				JmhPerformance.benchmarkPublisher(it as Node) {
-				}
 			}
 		}
 	}
