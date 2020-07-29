@@ -158,11 +158,31 @@ new SleuthEndToEndBuildMaker(dsl).with {
 
 // CONTRACT
 new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
+	it.withRepoName("spring-cloud-contract-samples")
+	  .withProjectName("spring-cloud-contract-samples-build-only")
 	  .withBranchName("3.0.x")
+	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
 	  .withCronExpr(oncePerDay())
-	// for postman <-> swagger
-	  .withNodeJs(true)
+	  .withMavenTests(false)
+	  .withGradleTests(false)
+}.build(dsl)
+
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withRepoName("spring-cloud-contract-samples")
+	  .withProjectName("spring-cloud-contract-samples-compatibility-only")
+	  .withBranchName("3.0.x")
+	  .withEnvs(["SKIP_BUILD": "true", "SKIP_DOCS" : "true"])
+	  .withCronExpr(oncePerDay())
+	  .withMavenTests(false)
+	  .withGradleTests(false)
+}.build(dsl)
+
+new SpringCloudSamplesEndToEndBuilder().with {
+	it.withRepoName("spring-cloud-contract-samples")
+	  .withProjectName("spring-cloud-contract-samples-docs-only")
+	  .withBranchName("3.0.x")
+	  .withEnvs(["SKIP_BUILD": "true", "SKIP_COMPATIBILITY" : "true"])
+	  .withCronExpr(oncePerDay())
 	  .withMavenTests(false)
 	  .withGradleTests(false)
 }.build(dsl)
@@ -170,7 +190,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 	  .withBranchName("3.0.x")
-	  .withEnvs(["SKIP_COMPATIBILITY": "true"])
+	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
 	  .withCronExpr(oncePerDay())
 	  .withJdk(jdk14())
 	// for postman <-> swagger
