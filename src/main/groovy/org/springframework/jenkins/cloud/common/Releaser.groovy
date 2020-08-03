@@ -10,6 +10,7 @@ trait Releaser {
 	public static final String RELEASE_VERSION_PARAM = "RELEASE_VERSION"
 	public static final String RELEASER_CONFIG_URL_PARAM = "RELEASER_CONFIG_URL"
 	public static final String RELEASER_CONFIG_BRANCH_PARAM = "RELEASER_CONFIG_BRANCH"
+	public static final String RELEASER_BRANCH_PARAM = "RELEASER_BRANCH"
 
 	String buildReleaserForSingleProject(ReleaserOptions options) {
 		return '''\
@@ -34,7 +35,13 @@ trait Releaser {
 			configUrl="\${$RELEASER_CONFIG_URL_PARAM}/\${$RELEASER_CONFIG_BRANCH_PARAM}/\${configFile}"
 			echo "Downloading the configuration properties file from [\${configUrl}]"
 			rm -rf config && mkdir -p ${folder} && curl --fail "\${configUrl}" -o ${folder}/application.properties
+			echo "Cause nobody remembers to set the releaser branch properly, I'll do it for you"
+			if [[ \$version == *"hoxton"* ]]; then
+				echo "You're using the Hoxton release train, I'm switching the releaser branch [\$${RELEASER_BRANCH_PARAM}] to [1.0.x] !"
+				${RELEASER_BRANCH_PARAM}="1.0.x"
+			fi
 		"""
 	}
+
 
 }
