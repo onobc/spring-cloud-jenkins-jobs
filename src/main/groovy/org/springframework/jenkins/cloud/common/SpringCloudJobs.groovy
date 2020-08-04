@@ -36,11 +36,11 @@ trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 	}
 
 	String cleanDeployWithDocs() {
-		return "./mvnw clean deploy -Pdocs,deploy -B"
+		return "./mvnw clean deploy -Pdocs,deploy -B -U"
 	}
 
 	String cleanInstallWithoutDocs() {
-		return "./mvnw clean install -Pdeploy -B"
+		return "./mvnw clean install -Pdeploy -B -U"
 	}
 
 	String stopRunningDocker() {
