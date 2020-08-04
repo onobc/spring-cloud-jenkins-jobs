@@ -57,11 +57,11 @@ class SonarBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 
 	Closure defaultSteps() {
 		return buildStep {
-			shell('./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Psonar -U')
+			shell('./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Psonar,spring -U')
 			shell("""\
 				echo "Running sonar please wait..."
 				set +x
-				./mvnw \$SONAR_MAVEN_GOAL -Psonar -Dsonar.host.url=\$SONAR_HOST_URL -Dsonar.login=\$SONAR_AUTH_TOKEN || ${postAction()}
+				./mvnw \$SONAR_MAVEN_GOAL -Psonar,spring -Dsonar.host.url=\$SONAR_HOST_URL -Dsonar.login=\$SONAR_AUTH_TOKEN || ${postAction()}
 				set -x
 				""")
 		}

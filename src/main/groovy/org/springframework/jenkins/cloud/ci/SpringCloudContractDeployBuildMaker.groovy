@@ -128,7 +128,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 				if (deploy) {
 					shell("""#!/bin/bash -x
 echo "Removes old installed stubs and deploys all projects (except for docs)"
-rm -rf ~/.m2/repository/com/example && rm -rf ~/.m2/repository/org/springframework/cloud/contract/verifier/stubs/ && ./mvnw clean deploy -nsu -P integration -U \$MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random
+rm -rf ~/.m2/repository/com/example && rm -rf ~/.m2/repository/org/springframework/cloud/contract/verifier/stubs/ && ./mvnw clean deploy -nsu -P integration,spring -U \$MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random
 """)
 				}
 				boolean jdkIs8 = jdkVersion == jdk8()
@@ -137,10 +137,10 @@ rm -rf ~/.m2/repository/com/example && rm -rf ~/.m2/repository/org/springframewo
 					./scripts/generateDocs.sh
 					${
 					if (deploy) {
-						"./mvnw deploy -Pdocs -pl docs -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
+						"./mvnw deploy -Pdocs,spring -pl docs -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
 					}
 					else {
-						"./mvnw clean install -U -Pintegration -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
+						"./mvnw clean install -U -Pintegration,spring -Dsdkman-java-installation.version=${JDKS.get(jdkVersion) ?: JDKS.get(jdk8())} ${!jdkIs8 ? '-Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false' : ''}"
 					}
 				}
 					""")

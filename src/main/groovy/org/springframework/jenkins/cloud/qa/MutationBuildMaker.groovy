@@ -60,7 +60,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 
 	Closure defaultSteps() {
 		return buildStep {
-			shell("./mvnw clean verify -Pmutation org.pitest:pitest-maven:report-aggregate-module -U || ${postAction()}")
+			shell("./mvnw clean verify -Pmutation,spring org.pitest:pitest-maven:report-aggregate-module -U || ${postAction()}")
 			shell('''\
 ROOT_VIEW="Spring%20Cloud"
 CURRENT_VIEW="QA"

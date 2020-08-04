@@ -22,6 +22,6 @@ class SpringCloudReleaseTrainDocsMaker extends SpringCloudDeployBuildMaker {
 
 	@Override
 	String buildCommand() {
-		return this.deploy ? "./mvnw clean deploy -Pdocs,deploy,train-docs -B -pl train-docs" : "./mvnw clean install -Pdocs,deploy,train-docs -B -pl train-docs"
+		return this.deploy ? "./mvnw clean deploy -Pdocs,deploy,train-docs,spring -B -pl train-docs" : "./mvnw clean install -Pdocs,deploy,train-docs,spring -B -pl train-docs"
 	}
 }

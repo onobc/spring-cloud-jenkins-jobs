@@ -36,11 +36,11 @@ trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 	}
 
 	String cleanDeployWithDocs() {
-		return "./mvnw clean deploy -Pdocs,deploy -B -U"
+		return "./mvnw clean deploy -Pdocs,deploy,spring -B -U"
 	}
 
 	String cleanInstallWithoutDocs() {
-		return "./mvnw clean install -Pdeploy -B -U"
+		return "./mvnw clean install -Pdeploy,spring -B -U"
 	}
 
 	String stopRunningDocker() {
@@ -63,15 +63,15 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 	}
 
 	String cleanInstall() {
-		return "./mvnw clean install -U -Pintegration -Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false"
+		return "./mvnw clean install -U -Pintegration,spring -Djavadoc.failOnError=false -Djavadoc.failOnWarnings=false"
 	}
 
 	String buildDocs() {
-		return '''./mvnw clean install -P docs -q -U -DskipTests=true -Dmaven.test.redirectTestOutputToFile=true'''
+		return '''./mvnw clean install -P docs,spring -q -U -DskipTests=true -Dmaven.test.redirectTestOutputToFile=true'''
 	}
 
 	String deployDocsWithoutSkippingTests() {
-		return '''./mvnw clean deploy -nsu -P docs,integration -U $MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random'''
+		return '''./mvnw clean deploy -nsu -P docs,integration,spring -U $MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random'''
 	}
 
 	String repoUserNameEnvVar() {
