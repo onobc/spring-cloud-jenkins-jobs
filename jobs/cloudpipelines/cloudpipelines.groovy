@@ -8,9 +8,11 @@ import org.springframework.jenkins.cloudpipelines.ci.CloudPipelinesDeployBuildMa
 
 DslFactory dsl = this
 
-["scripts", "jenkins", "concourse"].each { String project ->
-	new CloudPipelinesDeployBuildMaker(dsl, project).deploy()
-}
+//["scripts", "jenkins", "concourse"].each { String project ->
+//	new CloudPipelinesDeployBuildMaker(dsl, project).deploy()
+//}
 
-new CloudPipelinesBaseDeployBuildMaker(dsl).deploy()
-SpringCloudDeployBuildMaker.cloudPipelines(dsl).deploy("project-crawler")
+//new CloudPipelinesBaseDeployBuildMaker(dsl).deploy()
+//SpringCloudDeployBuildMaker.cloudPipelines(dsl).deploy("project-crawler")
+
+println "Cloud Pipelines project is no longer maintained. Leaving this for some time, then will remove it."

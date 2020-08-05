@@ -6,6 +6,7 @@ import javaposse.jobdsl.dsl.DslFactory
 DslFactory dsl = this
 
 new DashboardViewBuilder(this).buildDashboard()
+/*
 
 dsl.nestedView('CloudPipelines') {
 	views {
@@ -33,4 +34,5 @@ private Closure defaultColumns() {
 		lastBuildConsole()
 		buildButton()
 	}
-}
+}*/
+println "Cloud Pipelines project is no longer maintained. Leaving this for some time, then will remove it."
