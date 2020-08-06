@@ -7,7 +7,7 @@ DslFactory dsl = this
 
 new DashboardViewBuilder(this).buildDashboard()
 /*
-
+m
 dsl.nestedView('CloudPipelines') {
 	views {
 		listView('CI') {
