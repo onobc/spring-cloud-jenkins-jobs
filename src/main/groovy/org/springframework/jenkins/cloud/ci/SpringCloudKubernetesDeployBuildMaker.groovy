@@ -87,6 +87,9 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
@@ -109,6 +112,9 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 				shell("""#!/bin/bash
 	cd spring-cloud-kubernetes-integration-tests/spring-cloud-kubernetes-configuration-watcher-it
     ./run.sh
+""")
+				shell("""
+				 ./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configuration-watcher -Pdockerpush
 """)
 			}
 			configure {
