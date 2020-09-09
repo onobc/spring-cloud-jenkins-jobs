@@ -75,7 +75,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 						echo "Current java version"
 						java -version
 						echo "Running the build with cloud version [${cloudTrainVersion}] and Boot minor version [${bootMinor}]"
-						export BOOT_MINOR="${bootMinor}"
+						export CURRENT_BOOT_VERSION="${bootMinor}"
 						export CURRENT_CLOUD_VERSION="${cloudTrainVersion}"
 						./scripts/runAcceptanceTests.sh
 					""")
