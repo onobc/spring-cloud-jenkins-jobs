@@ -17,12 +17,12 @@ class ConsulSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMake
 
 	@Override
 	protected String preStep() {
-		return preConsulShell()
+		return ""
 	}
 
 	@Override
 	protected String postStep() {
-		return postConsulShell()
+		return ""
 	}
 
 	@Override
