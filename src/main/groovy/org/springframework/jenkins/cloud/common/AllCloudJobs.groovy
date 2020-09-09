@@ -105,8 +105,10 @@ class AllCloudJobs {
 	 * Mapping of a lowercase release train name to a given boot version
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
+			// TODO: 2020.0 is the train, 2020.0.0 is like Hoxton.RELEASE not Hoxton
 	        "2020.0.0" : "2.4", // boot version 2.4.x
-	        "hoxton" : "2.3", // boot version 2.2.x
+			"2020.0" : "2.4", // boot version 2.4.x
+			"hoxton" : "2.3", // boot version 2.2.x
 	        "greenwich" : "2.1" // boot version 2.1.x
 	]
 
@@ -114,9 +116,10 @@ class AllCloudJobs {
 		if (!releaseTrain) {
 			return "2.3"
 		}
-		String[] split = releaseTrain.split("\\.")
-		String train = split[0].toLowerCase()
-		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(train)
+		// release trains can now have dots so splitting won't work
+		def lastDot = releaseTrain.lastIndexOf(".")
+		String train = releaseTrain.substring(0, lastDot);
+		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(train.toLowerCase())
 	}
 
 	/**

@@ -28,14 +28,14 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForIlford() {
-		build("2020.0.0", "2020.0.0-SNAPSHOT", "tests", everySixHours(), masterBranch())
+		build("2020.0.0-SNAPSHOT", "tests", everySixHours(), masterBranch())
 	}
 
 	void buildForIlfordWithJdk(String jdk) {
-		build("2020.0.0", "2020.0.0-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
+		build("2020.0.0-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
 	}
 
-	private void build(String releaseTrain, String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),
+	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),
 					   String branchName = masterBranch(), String jdkVersion = jdk8()) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
@@ -65,7 +65,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
-				String bootMinor = AllCloudJobs.bootForReleaseTrain(releaseTrain)
+				String bootMinor = AllCloudJobs.bootForReleaseTrain(cloudTrainVersion)
 				shell("""#!/bin/bash
 						set -o errexit
 						set -o errtrace
