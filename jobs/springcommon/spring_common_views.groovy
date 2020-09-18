@@ -1,11 +1,8 @@
 package springcommon
 
 import javaposse.jobdsl.dsl.DslFactory
-import org.springframework.jenkins.common.view.DashboardViewBuilder
 
 DslFactory dsl = this
-
-new DashboardViewBuilder(this as DslFactory).buildDashboard()
 
 dsl.listView('Seeds') {
 	jobs {
