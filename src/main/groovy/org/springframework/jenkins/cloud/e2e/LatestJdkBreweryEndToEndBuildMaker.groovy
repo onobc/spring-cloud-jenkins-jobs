@@ -20,6 +20,6 @@ class LatestJdkBreweryEndToEndBuildMaker extends BreweryEndToEndBuildMaker {
 
 	@Override
 	protected String jdkVersion() {
-		return jdk14()
+		return jdk15()
 	}
 }

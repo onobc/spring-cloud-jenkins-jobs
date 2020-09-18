@@ -56,7 +56,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.deploy(false).upload(false).build().deploy(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk14()}").jdkVersion(jdk14())
+				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
 				.onGithubPush(false).cron(oncePerDay())
 				.deploy(false).upload(false).build().deploy(it)
 		// Normal CI build
@@ -69,7 +69,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk14()}").jdkVersion(jdk14()).onGithubPush(false).cron(oncePerDay()).deploy(false)
+				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15()).onGithubPush(false).cron(oncePerDay()).deploy(false)
 				.upload(false).build().deployWithoutTests(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
@@ -82,7 +82,7 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk14())
+		new CustomJobFactory(dsl).jdkVersion(projectName, jdk15())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
@@ -99,7 +99,7 @@ new SpringCloudReleaseToolsBuildMaker(dsl).with {
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
-	[jdk11(), jdk14()].each {
+	[jdk11(), jdk15()].each {
 		buildForIlfordWithJdk(it)
 	}
 }
@@ -192,7 +192,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withBranchName("3.0.x")
 	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
 	  .withCronExpr(oncePerDay())
-	  .withJdk(jdk14())
+	  .withJdk(jdk15())
 	// for postman <-> swagger
 	  .withNodeJs(true)
 	  .withMavenTests(false)
@@ -228,7 +228,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withCronExpr(oncePerDay())
 	// for postman <-> swagger
 	  .withNodeJs(true)
-	  .withJdk(jdk14())
+	  .withJdk(jdk15())
 	// don't want to check compatibility against Greenwich
 	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
 	  .withMavenTests(false)
