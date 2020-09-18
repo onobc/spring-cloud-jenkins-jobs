@@ -1,11 +1,8 @@
 package springcloud
 
-import org.springframework.jenkins.common.view.DashboardViewBuilder
 import javaposse.jobdsl.dsl.DslFactory
 
 DslFactory dsl = this
-
-new DashboardViewBuilder(this).buildDashboard()
 
 dsl.listView('Seeds') {
 	jobs {
