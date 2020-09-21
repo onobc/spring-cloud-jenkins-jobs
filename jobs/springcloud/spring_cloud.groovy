@@ -16,16 +16,14 @@ import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMak
 import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.Jdk11BreweryEndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.JdkBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
-import org.springframework.jenkins.cloud.qa.ConsulMutationBuildMaker
 import org.springframework.jenkins.cloud.qa.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.qa.KubernetesSonarBuildMaker
-import org.springframework.jenkins.cloud.qa.MutationBuildMaker
 import org.springframework.jenkins.cloud.qa.SonarBuildMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
@@ -256,9 +254,11 @@ new SpringCloudSamplesEndToEndBuilder().with {
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
-new Jdk11BreweryEndToEndBuildMaker(dsl).build()
+new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
+new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk14()).build() }
+
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
-["Hoxton", "2020.0.0"].each {
+["Hoxton", "2020.0"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 

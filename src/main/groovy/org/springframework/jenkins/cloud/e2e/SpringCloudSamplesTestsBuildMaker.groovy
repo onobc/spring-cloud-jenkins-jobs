@@ -28,11 +28,11 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForIlford() {
-		build("2020.0.0-SNAPSHOT", "tests", everySixHours(), masterBranch())
+		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests", everySixHours(), masterBranch())
 	}
 
 	void buildForIlfordWithJdk(String jdk) {
-		build("2020.0.0-SNAPSHOT", "tests-${jdk}", everySixHours(), masterBranch(), jdk)
+		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests-${jdk}", everySixHours(), masterBranch(), jdk)
 	}
 
 	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),
@@ -74,9 +74,10 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 						
 						echo "Current java version"
 						java -version
-						echo "Running the build with cloud version [${cloudTrainVersion}] and Boot minor version [${bootMinor}]"
 						export CURRENT_BOOT_VERSION="${bootMinor}"
-						export CURRENT_CLOUD_VERSION="${cloudTrainVersion}"
+						${fetchLatestCloudVersion(cloudTrainVersion)}
+
+						echo "Running the build with cloud train [${currentCloudVersionVar()}] and Boot minor version [${bootMinor}]"
 						./scripts/runAcceptanceTests.sh
 					""")
 			}
