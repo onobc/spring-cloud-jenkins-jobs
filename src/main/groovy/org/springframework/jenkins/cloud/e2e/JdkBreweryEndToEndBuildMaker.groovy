@@ -10,7 +10,7 @@ import org.springframework.jenkins.cloud.common.AllCloudJobs
  */
 @CompileStatic
 class JdkBreweryEndToEndBuildMaker extends BreweryEndToEndBuildMaker {
-	String jdkVersion
+	String jdkVersion = jdk8()
 
 	JdkBreweryEndToEndBuildMaker(DslFactory dsl) {
 		super(dsl)
@@ -22,7 +22,7 @@ class JdkBreweryEndToEndBuildMaker extends BreweryEndToEndBuildMaker {
 
 	@Override
 	protected String jdkVersion() {
-		return jdkVersion
+		return this.jdkVersion
 	}
 
 	JdkBreweryEndToEndBuildMaker withJdk(String jdkVersion) {

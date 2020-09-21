@@ -86,6 +86,15 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 """
 	}
 
+	String fetchLatestCloudVersionAsFunction() {
+		return """
+		function springCloudVersion {
+			local cloudVersion="\${1}"
+			curl --silent https://repo.spring.io/libs-snapshot-local/org/springframework/cloud/spring-cloud-starter-build/maven-metadata.xml | grep "<version>\${cloudVersion}." | grep "SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp' | xargs
+		}
+"""
+	}
+
 	String currentCloudVersionVar() {
 		return CURRENT_CLOUD_VERSION_VAR
 	}

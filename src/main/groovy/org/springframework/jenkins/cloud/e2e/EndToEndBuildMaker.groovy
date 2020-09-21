@@ -104,6 +104,9 @@ class EndToEndBuildMaker implements TestPublisher,
 							#BOOT_VERSION="\\\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
 							curl --silent https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>\${minor}." | grep "BUILD-SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp' | xargs
 						}
+						
+						${fetchLatestCloudVersionAsFunction()}
+						
 						./${scriptName}
 					""")
 				if (postBuildScripts) {

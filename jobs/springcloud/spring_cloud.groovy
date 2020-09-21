@@ -127,12 +127,12 @@ new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Hoxton', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
-
-// CI BUILDS FOR INCUBATOR
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(masterBranch())
 }
+
+// CI BUILDS FOR INCUBATOR
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-contract-raml")
 	deploy("spring-cloud-rsocket")
@@ -140,10 +140,6 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
-new SpringCloudSamplesEndToEndBuildMaker(dsl, "openzipkin").with {
-	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", masterBranch(), oncePerDay())
-	buildWithoutTestsForNewUbuntu("sleuth-webmvc-example", "rabbitmq-sender", oncePerDay())
-}
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", masterBranch(), oncePerDay())
 	buildWithMavenTests("sleuth-issues", "2.2.x", oncePerDay())
@@ -255,7 +251,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
-new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk14()).build() }
+new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk15()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Hoxton", "2020.0"].each {
@@ -265,11 +261,6 @@ new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk14()).build() }
 // E2E
 new EndToEndBuildMaker(dsl, "spring-cloud-samples").with {
 	buildWithoutTests("eureka-release-train-interop", oncePerDay())
-}
-
-// Pilo's apps
-new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	build("messaging-application", oncePerDay())
 }
 
 // QA
