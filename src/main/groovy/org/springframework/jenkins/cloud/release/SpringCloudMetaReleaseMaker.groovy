@@ -147,7 +147,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				echo "Run the meta-releaser!"
 				java -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" \\
 						-Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" \\
-						-jar projects/${options.projectName}/target/${options.projectName}-*.jar ${releaserOptions()} || exit 1
+						-jar projects/${options.projectName}/target/${options.projectName}*SNAPSHOT.jar ${releaserOptions()} || exit 1
 				${cleanGitCredentials()}
 				""")
 			}

@@ -112,7 +112,8 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				if [[ \$${RELEASE_VERSION_PARAM} != "" ]]; then
 					echo "Found the release version parameter. Will use the properties file to set the versions"
 					${fetchConfigurationFile("\${releaserJarLocation}")}
-					additionalParams="--releaser.git.fetch-versions-from-git=false"
+					versions="\$( sed '{:q;N;s/\\n/ --/g;t q}' \${releaserJarLocation}/application.properties )"
+					additionalParams="--releaser.git.fetch-versions-from-git=false --\${versions}"
 				fi
 				echo "Run the releaser against the project"
 				echo "Checking out branch"
@@ -123,7 +124,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				set +x
 				SPRING_CLOUD_RELEASE_REPO="https://github.com/spring-cloud/spring-cloud-release.git"
 				SYSTEM_PROPS="-Dgpg.secretKeyring="\$${gpgSecRing()}" -Dgpg.publicKeyring="\$${gpgPubRing()}" -Dgpg.passphrase="\$${gpgPassphrase()}" -DSONATYPE_USER="\$${sonatypeUser()}" -DSONATYPE_PASSWORD="\$${sonatypePassword()}""
-				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${releaserJarLocation}/${options.projectName}-*.jar ${releaserOptions()} \$additionalParams || exit 1
+				java \${${RELEASER_ADDITIONAL_PROPS_VAR}} -Dreleaser.git.username="\$${githubRepoUserNameEnvVar()}" -Dreleaser.git.password="\$${githubRepoPasswordEnvVar()}" -jar \${releaserJarLocation}/${options.projectName}*SNAPSHOT.jar ${releaserOptions()} \$additionalParams || exit 1
 				${cleanGitCredentials()}
 				""")
 			}
