@@ -113,13 +113,14 @@ class AllCloudJobs {
 	]
 
 	static String bootForReleaseTrain(String releaseTrain) {
+		String defaultBoot = RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().value
 		if (!releaseTrain) {
-			return "2.3"
+			return defaultBoot
 		}
 		// release trains can now have dots so splitting won't work
 		def lastDot = releaseTrain.lastIndexOf(".")
-		String train = releaseTrain.substring(0, lastDot);
-		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(train.toLowerCase())
+		String train = lastDot == -1 ? releaseTrain : releaseTrain.substring(0, lastDot);
+		return RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(train.toLowerCase()) ?: defaultBoot
 	}
 
 	/**
