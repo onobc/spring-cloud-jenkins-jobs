@@ -84,16 +84,16 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( bootVersion "${SPRING_BOOT_MINOR}" )"
 		echo "Boot version [\${${SPRING_BOOT_VERSION_VAR}]" 
 		pushd target
-			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud:1.0.0.BUILD-SNAPSHOT -Dtransitive=false
-			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud:1.0.0.BUILD-SNAPSHOT -Dproject.basedir=../
-			mv dependency/*.jar dependency/spring-cloud-1.0.0-BUILD-SNAPSHOT.jar
+			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dtransitive=false
+			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dproject.basedir=../
+			mv dependency/*.jar dependency/spring-cloud-2.0.0-SNAPSHOT.jar
 			echo "Cloning Spring Cloud Build"
 			git clone https://github.com/spring-cloud/spring-cloud-build.git
 			pushd spring-cloud-build
 				${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
 				git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 				echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-				java -jar ../dependency/spring-cloud-1.0.0-BUILD-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
+				java -jar ../dependency/spring-cloud-2.0.0-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
 				./mvnw clean install -fae -U
 			popd
 		popd
