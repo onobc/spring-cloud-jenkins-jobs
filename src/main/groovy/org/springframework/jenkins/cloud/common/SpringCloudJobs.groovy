@@ -81,6 +81,7 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		echo -e "Getting latest version of Spring Cloud"
 		# Uncomment this to get latest version at all (not necessarily for the minor)
 		#${CURRENT_CLOUD_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/cloud/spring-cloud-starter-build/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
+		$CURRENT_CLOUD_VERSION_VAR="\${$CURRENT_CLOUD_VERSION_VAR:-}"
 		[[ -z "\$${CURRENT_CLOUD_VERSION_VAR}" ]] && ${CURRENT_CLOUD_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/cloud/spring-cloud-starter-build/maven-metadata.xml | grep "<version>${springCloudMinor}." | grep "SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp')"
 		echo -e "Latest version of cloud is [\$${CURRENT_CLOUD_VERSION_VAR}]"
 """
