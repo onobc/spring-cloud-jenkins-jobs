@@ -44,7 +44,7 @@ class ConsulCompatibilityBuildMaker extends CompatibilityTasks implements TestPu
 		dsl.job("${projectName}-${suffix}") {
 			concurrentBuild()
 			parameters {
-				stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_VERSION, 'Which version of Spring Boot should be used for the build')
+				stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_MINOR_VERSION, 'Which version of Spring Boot should be used for the build')
 			}
 			triggers {
 				cron cronExpr

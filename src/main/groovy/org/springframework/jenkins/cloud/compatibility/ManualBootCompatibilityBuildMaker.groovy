@@ -4,7 +4,7 @@ import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.common.AllCloudJobs
 
-import static CompatibilityTasks.DEFAULT_BOOT_VERSION
+import static CompatibilityTasks.DEFAULT_BOOT_MINOR_VERSION
 import static CompatibilityTasks.SPRING_BOOT_VERSION_VAR
 import static org.springframework.jenkins.cloud.compatibility.CompatibilityTasks.SPRING_CLOUD_BUILD_BRANCH
 
@@ -26,7 +26,7 @@ class ManualBootCompatibilityBuildMaker implements SpringCloudJobs {
 		buildAllRelatedJobs()
 		dsl.multiJob("spring-cloud-${BOOT_COMPATIBILITY_SUFFIX}") {
 			parameters {
-				stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_VERSION, 'Which version of Spring Boot should be used for the build')
+				stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_MINOR_VERSION, 'Which version of Spring Boot should be used for the build')
 				stringParam(SPRING_CLOUD_BUILD_BRANCH, masterBranch(), 'Which branch of Spring Cloud Build should be cloned')
 			}
 			steps {

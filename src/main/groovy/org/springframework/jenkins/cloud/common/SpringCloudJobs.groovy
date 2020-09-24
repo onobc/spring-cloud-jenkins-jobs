@@ -10,6 +10,7 @@ import org.springframework.jenkins.common.job.Label
 trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 
 	public static final String CURRENT_CLOUD_VERSION_VAR = "CURRENT_CLOUD_VERSION"
+	public static final String CURRENT_BOOT_VERSION_VAR = "CURRENT_BOOT_VERSION"
 
 	@Override
 	String projectSuffix() {
@@ -83,7 +84,18 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		#${CURRENT_CLOUD_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/cloud/spring-cloud-starter-build/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
 		$CURRENT_CLOUD_VERSION_VAR="\${$CURRENT_CLOUD_VERSION_VAR:-}"
 		[[ -z "\$${CURRENT_CLOUD_VERSION_VAR}" ]] && ${CURRENT_CLOUD_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/cloud/spring-cloud-starter-build/maven-metadata.xml | grep "<version>${springCloudMinor}." | grep "SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp')"
-		echo -e "Latest version of cloud is [\$${CURRENT_CLOUD_VERSION_VAR}]"
+		echo -e "Latest version of cloud for minor [${springCloudMinor}] is [\$${CURRENT_CLOUD_VERSION_VAR}]"
+"""
+	}
+
+	String fetchLatestBootVersion(String bootMinor) {
+		return """
+		echo -e "Getting latest version of Spring Cloud"
+		# Uncomment this to get latest version at all (not necessarily for the minor)
+		#${CURRENT_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
+		$CURRENT_BOOT_VERSION_VAR="\${$CURRENT_BOOT_VERSION_VAR:-}"
+		[[ -z "\$${CURRENT_BOOT_VERSION_VAR}" ]] && ${CURRENT_BOOT_VERSION_VAR}="\$( curlhttps://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>${bootMinor}." | grep "SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp')"
+		echo -e "Latest version of boot minor [${bootMinor}] is [\$${CURRENT_BOOT_VERSION_VAR}]"
 """
 	}
 
@@ -96,8 +108,21 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 """
 	}
 
+	String fetchLatestBootVersionAsFunction() {
+		return """
+		function bootVersion {
+			local bootVersion="\${1}"
+			curl --silent ttps://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>\${bootVersion}." | grep "SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp' | xargs
+		}
+"""
+	}
+
 	String currentCloudVersionVar() {
 		return CURRENT_CLOUD_VERSION_VAR
+	}
+
+	String currentBootVersionVar() {
+		return CURRENT_BOOT_VERSION_VAR
 	}
 
 	String repoUserNameEnvVar() {
