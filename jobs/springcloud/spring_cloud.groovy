@@ -236,16 +236,17 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sc-contract-car-rental", "2.2.x", oncePerDay())
 }
 
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withRepoName("Pearson-Contracts")
-	  .withProjectName("pearson-contracts")
-	  .withOrganization("marcingrzejszczak")
-	  .withCronExpr(oncePerDay())
-	  .withJdk(jdk8())
-	  .withMavenTests(true)
-	  .withGradleTests(true)
-	  .withWipeOutWorkspace(false)
-}.build(dsl)
+// Can't access the repository
+// new SpringCloudSamplesEndToEndBuilder().with {
+// 	it.withRepoName("Pearson-Contracts")
+// 	  .withProjectName("pearson-contracts")
+// 	  .withOrganization("marcingrzejszczak")
+// 	  .withCronExpr(oncePerDay())
+// 	  .withJdk(jdk8())
+// 	  .withMavenTests(true)
+// 	  .withGradleTests(true)
+// 	  .withWipeOutWorkspace(false)
+// }.build(dsl)
 
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
