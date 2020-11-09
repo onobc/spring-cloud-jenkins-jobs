@@ -87,6 +87,9 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())

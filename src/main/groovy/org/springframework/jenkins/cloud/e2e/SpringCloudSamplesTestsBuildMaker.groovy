@@ -51,6 +51,11 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 					failBuild()
 					writeDescription('Build failed due to timeout after {0} minutes of inactivity')
 				}
+				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
+				}
 			}
 			scm {
 				git {

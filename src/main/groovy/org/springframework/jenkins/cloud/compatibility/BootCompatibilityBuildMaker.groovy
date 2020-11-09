@@ -49,6 +49,13 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 					}
 				}
 			}
+			wrappers {
+				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
+				}
+			}
 			steps {
 				shell(loginToDocker())
 				maven {

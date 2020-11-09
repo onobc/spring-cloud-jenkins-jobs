@@ -61,6 +61,13 @@ class ConsulCompatibilityBuildMaker extends CompatibilityTasks implements TestPu
 					}
 				}
 			}
+			wrappers {
+				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
+				}
+			}
 			steps {
 				shell(loginToDocker())
 				steps defaultStepsForBoot()

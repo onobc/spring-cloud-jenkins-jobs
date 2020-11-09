@@ -58,6 +58,9 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())

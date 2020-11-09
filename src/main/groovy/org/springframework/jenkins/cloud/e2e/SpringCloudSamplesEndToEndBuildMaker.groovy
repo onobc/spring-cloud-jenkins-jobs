@@ -83,6 +83,11 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 				if (withNodeJs) {
 					nodejs("9.11.1 Latest Stable")
 				}
+				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
+				}
 			}
 			scm {
 				git {
