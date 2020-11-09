@@ -127,6 +127,8 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				echo "\n\n\nRUNNING THE [\${$RELEASE_VERSION_PARAM}] META-RELEASE!!!\n\n\n" 
 				${setupGitCredentials()}
 				${fetchConfigurationFile("config")}
+				echo "Checking out the branch [\$${RELEASER_BRANCH_PARAM}]"
+				git checkout "\$${RELEASER_BRANCH_PARAM}"
 				mkdir -p target
 				ROOT_VIEW="Spring%20Cloud"
 				CURRENT_VIEW="Releaser"
