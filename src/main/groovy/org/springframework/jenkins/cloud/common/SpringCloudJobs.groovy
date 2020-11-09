@@ -23,7 +23,7 @@ trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 		set -o errexit
 		
 		echo "Logging to Dockerhub..."
-		docker login -p \$${dockerhubUserNameEnvVar()} -u \$${dockerhubPasswordEnvVar()} 
+		docker login -p "\$${dockerhubPasswordEnvVar()}" -u "\$${dockerhubUserNameEnvVar()}"
 		"""
 	}
 
