@@ -50,6 +50,7 @@ class BootCompatibilityBuildMaker extends CompatibilityBuildMaker {
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')

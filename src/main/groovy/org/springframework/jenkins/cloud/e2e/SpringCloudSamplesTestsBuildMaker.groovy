@@ -65,6 +65,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				String bootMinor = AllCloudJobs.bootForReleaseTrain(cloudTrainVersion)
 				shell("""#!/bin/bash
 						set -o errexit

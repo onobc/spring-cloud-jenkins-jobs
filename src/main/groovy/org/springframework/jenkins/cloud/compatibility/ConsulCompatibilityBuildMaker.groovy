@@ -62,6 +62,7 @@ class ConsulCompatibilityBuildMaker extends CompatibilityTasks implements TestPu
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				steps defaultStepsForBoot()
 				shell postConsulShell()
 			}

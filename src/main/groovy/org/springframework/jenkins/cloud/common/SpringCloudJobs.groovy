@@ -17,6 +17,16 @@ trait SpringCloudJobs implements BuildAndDeploy, JdkConfig, Label {
 		return 'spring-cloud'
 	}
 
+	String loginToDocker() {
+		return """\
+		#!/bin/bash
+		set -o errexit
+		
+		echo "Logging to Dockerhub..."
+		docker login -p \$${dockerhubUserNameEnvVar()} -u \$${dockerhubPasswordEnvVar()} 
+		"""
+	}
+
 	String releaserLabel() {
 		return "releaser"
 	}

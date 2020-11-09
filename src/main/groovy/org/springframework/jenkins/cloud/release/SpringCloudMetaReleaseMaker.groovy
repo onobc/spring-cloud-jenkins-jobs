@@ -117,6 +117,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				// build the releaser
 				shell("""#!/bin/bash
 				set -o errexit

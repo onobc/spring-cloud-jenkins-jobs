@@ -85,6 +85,9 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 				colorizeOutput()
 				maskPasswords()
 				credentialsBinding {
+					usernamePassword(dockerhubUserNameEnvVar(),
+							dockerhubPasswordEnvVar(),
+							dockerhubCredentialId())
 					usernamePassword(githubRepoUserNameEnvVar(),
 							githubRepoPasswordEnvVar(),
 							githubUserCredentialId())
@@ -99,6 +102,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 			steps {
 				shell(removeMavenInstallation())
 				shell(stopRunningDocker())
+				shell(loginToDocker())
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')

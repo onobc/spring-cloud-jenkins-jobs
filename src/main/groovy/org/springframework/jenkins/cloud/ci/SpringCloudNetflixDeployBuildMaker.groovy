@@ -101,6 +101,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 			steps {
 				shell(removeMavenInstallation())
 				shell(stopRunningDocker())
+				shell(loginToDocker())
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')

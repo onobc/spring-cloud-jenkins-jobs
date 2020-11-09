@@ -107,6 +107,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 						rm -rf ~/.gradle/caches/modules-2/files-2.1/
 						./${scriptName}
 					""")
+				shell(loginToDocker())
 				if (postBuildScripts) {
 					shell("""#!/bin/bash
 						./${postBuildScripts}
