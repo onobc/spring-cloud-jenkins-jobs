@@ -73,9 +73,9 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				shell(removeMavenInstallation())
 				shell(stopRunningDocker())
-				shell(loginToDocker())
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')

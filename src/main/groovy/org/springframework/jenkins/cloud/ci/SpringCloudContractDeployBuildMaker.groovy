@@ -122,11 +122,11 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				shell("""#!/bin/bash
 	rm -rf /opt/jenkins/data/tools/hudson.tasks.Maven_MavenInstallation/maven33/
 	rm -rf ~/.m2/repository/org/springframework/boot/spring-boot-loader-tools/
 """)
-				shell(loginToDocker())
 				if (deploy) {
 					shell("""#!/bin/bash -x
 echo "Removes old installed stubs and deploys all projects (except for docs)"

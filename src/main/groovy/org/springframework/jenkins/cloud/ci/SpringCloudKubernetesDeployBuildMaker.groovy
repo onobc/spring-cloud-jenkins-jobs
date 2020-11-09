@@ -102,9 +102,9 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 				}
 			}
 			steps {
+				shell(loginToDocker())
 				shell(removeMavenInstallation())
 				shell(stopRunningDocker())
-				shell(loginToDocker())
 				maven {
 					mavenInstallation(maven33())
 					goals('--version')
