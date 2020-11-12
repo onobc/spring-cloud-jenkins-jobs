@@ -153,24 +153,26 @@ new SleuthEndToEndBuildMaker(dsl).with {
 // CONTRACT
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("spring-cloud-contract-samples")
-	  .withProjectName("spring-cloud-contract-samples-build-only")
+	  .withProjectName("spring-cloud-contract-samples-build-maven-only")
 	  .withBranchName("3.0.x")
 	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
 	  .withCronExpr(oncePerDay())
 	  .withJdk(jdk11())
-	  .withMavenTests(false)
+	  .withScriptName("scripts/runMavenBuilds.sh")
+	  .withMavenTests(true)
 	  .withGradleTests(false)
 }.build(dsl)
 
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withRepoName("spring-cloud-contract-samples")
-	  .withProjectName("spring-cloud-contract-samples-compatibility-only")
+	  .withProjectName("spring-cloud-contract-samples-build-gradle-only")
 	  .withBranchName("3.0.x")
-	  .withEnvs(["SKIP_BUILD": "true", "SKIP_DOCS" : "true"])
+	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
 	  .withCronExpr(oncePerDay())
 	  .withJdk(jdk11())
+	  .withScriptName("scripts/runGradleBuilds.sh")
 	  .withMavenTests(false)
-	  .withGradleTests(false)
+	  .withGradleTests(true)
 }.build(dsl)
 
 new SpringCloudSamplesEndToEndBuilder().with {
