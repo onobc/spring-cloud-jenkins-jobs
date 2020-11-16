@@ -80,8 +80,8 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 						
 						echo "Current java version"
 						java -version
-						${fetchLatestBootVersion(bootMinor)}
-						${fetchLatestCloudVersion(cloudTrainVersion)}
+						${fetchLatestBootSnapshotVersion(bootMinor)}
+						${fetchLatestCloudSnapshotVersion(cloudTrainVersion)}
 
 						echo "Running the build with cloud train [\$${currentCloudVersionVar()}] and Boot version [\$${currentBootVersionVar()}]"
 						./scripts/runAcceptanceTests.sh

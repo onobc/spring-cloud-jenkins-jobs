@@ -43,7 +43,7 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 	protected String compileProductionForBoot() {
 		return """#!/bin/bash -x
 					set -o errexit
-					${fetchLatestBootVersion(SPRING_BOOT_MINOR)}
+					${fetchLatestBootSnapshotVersion(SPRING_BOOT_MINOR)}
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
 					${buildCommand()}
@@ -58,7 +58,7 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 	protected String runTestsForBoot() {
 		return """#!/bin/bash -x
 					set -o errexit
-					${fetchLatestBootVersion(SPRING_BOOT_MINOR)}
+					${fetchLatestBootSnapshotVersion(SPRING_BOOT_MINOR)}
 					${bumpBoot()}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae

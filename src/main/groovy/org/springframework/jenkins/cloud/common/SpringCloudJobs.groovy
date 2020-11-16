@@ -87,7 +87,7 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 		return '''./mvnw clean deploy -nsu -P docs,integration,spring -U $MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random'''
 	}
 
-	String fetchLatestCloudVersion(String springCloudMinor) {
+	String fetchLatestCloudSnapshotVersion(String springCloudMinor) {
 		return """
 		echo -e "Getting latest version of Spring Cloud"
 		# Uncomment this to get latest version at all (not necessarily for the minor)
@@ -98,7 +98,15 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 """
 	}
 
-	String fetchLatestBootVersion(String bootMinor) {
+	String fetchLatestBootSnapshotVersion(String bootMinor) {
+		// 2.4.0
+		if (bootMinor.split('.').length == 3) {
+			// should use the provided version
+			return """
+		export $CURRENT_BOOT_VERSION_VAR="\${$CURRENT_BOOT_VERSION_VAR:${bootMinor}"
+		echo -e "Latest version of boot [${bootMinor}] is [\$${CURRENT_BOOT_VERSION_VAR}]"
+"""
+		}
 		return """
 		echo -e "Getting latest version of Spring Cloud"
 		# Uncomment this to get latest version at all (not necessarily for the minor)
