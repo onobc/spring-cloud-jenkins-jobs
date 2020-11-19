@@ -117,9 +117,9 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
-		new BootCompatibilityBuildMaker(dsl).with {
+		/*new BootCompatibilityBuildMaker(dsl).with {
 			it.buildWithTests("${project}-${branch}", project, branch, oncePerDay(), checkTests)
-		}
+		}*/
 	}
 }
 // Release branches for Spring Cloud Release
@@ -296,4 +296,4 @@ new SpringCloudMetaReleaseMaker(dsl)
 new SpringCloudMetaReleaseRepoPurger(dsl).build()
 
 // Compatibility builds
-new ManualBootCompatibilityBuildMaker(dsl).build()
+// new ManualBootCompatibilityBuildMaker(dsl).build()
