@@ -12,8 +12,6 @@ import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseTrainDocsMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
-import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.JdkBreweryEndToEndBuildMaker

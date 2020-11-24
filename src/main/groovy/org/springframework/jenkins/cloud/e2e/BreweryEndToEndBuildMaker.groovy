@@ -39,7 +39,7 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	protected String defaultSwitches(String releaseTrainName) {
 		String boot = AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.get(releaseTrainName.toLowerCase())
 		String releaseTrain = releaseTrainName.capitalize()
-		String bootVersion = boot.split(".").length == 3 ? boot : "\$( bootVersion \"${boot}\" )"
+		String bootVersion = boot.split("\\.").length == 3 ? boot : "\$( bootVersion \"${boot}\" )"
 		String additionalSwitches = "--killattheend -v \"\$( springCloudVersion \"${releaseTrain}\" )\" --branch ${branchName()} -r -b \"${bootVersion}\""
 		println "Found additional switches [${additionalSwitches}]"
 		return additionalSwitches
