@@ -184,6 +184,8 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withGradleTests(false)
 }.build(dsl)
 
+// This will not work because of Gradle
+/*
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
 	  .withBranchName("3.0.x")
@@ -195,6 +197,7 @@ new SpringCloudSamplesEndToEndBuilder().with {
 	  .withMavenTests(false)
 	  .withGradleTests(false)
 }.build(dsl)
+*/
 
 new SpringCloudSamplesEndToEndBuilder().with {
 	it.withProjectAndRepoName("spring-cloud-contract-samples")
