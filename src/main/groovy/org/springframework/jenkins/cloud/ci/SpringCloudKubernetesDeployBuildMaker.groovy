@@ -96,7 +96,7 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 					string(githubToken(), githubTokenCredId())
 				}
 				timeout {
-					noActivity(300)
+					noActivity(600)
 					failBuild()
 					writeDescription('Build failed due to timeout after {0} minutes of inactivity')
 				}
