@@ -132,7 +132,6 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 
 // CI BUILDS FOR INCUBATOR
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
-	deploy("spring-cloud-contract-raml")
 	deploy("spring-cloud-rsocket")
 }
 new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
