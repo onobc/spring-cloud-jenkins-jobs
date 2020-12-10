@@ -135,6 +135,9 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy("spring-cloud-contract-raml")
 	deploy("spring-cloud-rsocket")
 }
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
+	deploy("spring-cloud-sleuth-otel")
+}
 
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
