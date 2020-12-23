@@ -164,9 +164,6 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk11())
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
-	it.withJdk(jdk8())
-}.buildAll(dsl)
-new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk15())
 }.buildAll(dsl)
 
