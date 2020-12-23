@@ -11,13 +11,15 @@ import org.springframework.jenkins.common.job.TestPublisher
 class SpringCloudContractSamplesEndToEndBuilder extends SpringCloudSamplesEndToEndBuilder<SpringCloudContractSamplesEndToEndBuilder> {
 
     void buildAll(DslFactory dsl) {
+        String builderBranchName = branchName
+        String jdkVersion = jdk
         new SpringCloudSamplesEndToEndBuilder().with {
             it.withRepoName("spring-cloud-contract-samples")
                     .withProjectName("spring-cloud-contract-samples-build-maven-only")
-                    .withBranchName(branchName)
+                    .withBranchName(builderBranchName)
                     .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
                     .withCronExpr(oncePerDay())
-                    .withJdk(jdk)
+                    .withJdk(jdkVersion)
                     .withScriptName("scripts/runMavenBuilds.sh")
                     .withMavenTests(true)
                     .withGradleTests(false)
@@ -26,10 +28,10 @@ class SpringCloudContractSamplesEndToEndBuilder extends SpringCloudSamplesEndToE
         new SpringCloudSamplesEndToEndBuilder().with {
             it.withRepoName("spring-cloud-contract-samples")
                     .withProjectName("spring-cloud-contract-samples-build-gradle-only")
-                    .withBranchName(branchName)
+                    .withBranchName(builderBranchName)
                     .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
                     .withCronExpr(oncePerDay())
-                    .withJdk(jdk)
+                    .withJdk(jdkVersion)
                     .withScriptName("scripts/runGradleBuilds.sh")
                     .withMavenTests(false)
                     .withGradleTests(true)
@@ -38,10 +40,10 @@ class SpringCloudContractSamplesEndToEndBuilder extends SpringCloudSamplesEndToE
         new SpringCloudSamplesEndToEndBuilder().with {
             it.withRepoName("spring-cloud-contract-samples")
                     .withProjectName("spring-cloud-contract-samples-docs-only")
-                    .withBranchName(branchName)
+                    .withBranchName(builderBranchName)
                     .withEnvs(["SKIP_BUILD": "true", "SKIP_COMPATIBILITY" : "true"])
                     .withCronExpr(oncePerDay())
-                    .withJdk(jdk)
+                    .withJdk(jdkVersion)
                     .withMavenTests(false)
                     .withGradleTests(false)
         }.build(dsl)
