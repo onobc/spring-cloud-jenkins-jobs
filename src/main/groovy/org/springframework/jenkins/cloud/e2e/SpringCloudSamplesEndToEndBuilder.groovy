@@ -8,7 +8,7 @@ import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Label
 import org.springframework.jenkins.common.job.TestPublisher
 
-class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
+class SpringCloudSamplesEndToEndBuilder<T extends SpringCloudSamplesEndToEndBuilder> implements TestPublisher,
 		JdkConfig, BreweryDefaults, Label, Cron, SpringCloudJobs {
 	String projectName
 	String organization = "spring-cloud-samples"
@@ -25,78 +25,78 @@ class SpringCloudSamplesEndToEndBuilder implements TestPublisher,
 	boolean withNodeJs = false
 	Map<String, String> envs = [:]
 
-	SpringCloudSamplesEndToEndBuilder withOrganization(String organization) {
+	T withOrganization(String organization) {
 		this.organization = organization
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withProjectName(String projectName) {
+	T withProjectName(String projectName) {
 		this.projectName = projectName
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withProjectAndRepoName(String projectName) {
+	T withProjectAndRepoName(String projectName) {
 		this.projectName = projectName
 		this.repoName = projectName
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withJdk(String jdk) {
+	T withJdk(String jdk) {
 		this.jdk = jdk
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withWipeOutWorkspace(boolean wipeOutWorkspace = true) {
+	T withWipeOutWorkspace(boolean wipeOutWorkspace = true) {
 		this.wipeOutWorkspace = wipeOutWorkspace
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withRepoName(String repoName) {
+	T withRepoName(String repoName) {
 		this.repoName = repoName
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withScriptName(String scriptName) {
+	T withScriptName(String scriptName) {
 		this.scriptName = scriptName
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withCronExpr(String cronExpr) {
+	T withCronExpr(String cronExpr) {
 		this.cronExpr = cronExpr
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withBranchName(String branchName) {
+	T withBranchName(String branchName) {
 		this.branchName = branchName
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withEnvs(Map<String, String> envs) {
+	T withEnvs(Map<String, String> envs) {
 		this.envs = envs
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withPostBuildScripts(String postBuildScripts) {
+	T withPostBuildScripts(String postBuildScripts) {
 		this.postBuildScripts = postBuildScripts
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withMavenTests(boolean mavenTests) {
+	T withMavenTests(boolean mavenTests) {
 		this.mavenTests = mavenTests
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withGradleTests(boolean gradleTests) {
+	T withGradleTests(boolean gradleTests) {
 		this.gradleTests = gradleTests
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withNodeJs(boolean withNodeJs) {
+	T withNodeJs(boolean withNodeJs) {
 		this.withNodeJs = withNodeJs
 		return this
 	}
 
-	SpringCloudSamplesEndToEndBuilder withLabel(String label) {
+	T withLabel(String label) {
 		this.label = label
 		return this
 	}

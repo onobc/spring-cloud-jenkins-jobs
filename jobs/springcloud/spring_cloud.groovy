@@ -17,6 +17,7 @@ import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.JdkBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.SpringCloudContractSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
@@ -151,91 +152,23 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 
 // CONTRACT
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withRepoName("spring-cloud-contract-samples")
-	  .withProjectName("spring-cloud-contract-samples-build-maven-only")
-	  .withBranchName("3.0.x")
-	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
-	  .withCronExpr(oncePerDay())
-	  .withJdk(jdk11())
-	  .withScriptName("scripts/runMavenBuilds.sh")
-	  .withMavenTests(true)
-	  .withGradleTests(false)
-}.build(dsl)
-
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withRepoName("spring-cloud-contract-samples")
-	  .withProjectName("spring-cloud-contract-samples-build-gradle-only")
-	  .withBranchName("3.0.x")
-	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
-	  .withCronExpr(oncePerDay())
-	  .withJdk(jdk11())
-	  .withScriptName("scripts/runGradleBuilds.sh")
-	  .withMavenTests(false)
-	  .withGradleTests(true)
-}.build(dsl)
-
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withRepoName("spring-cloud-contract-samples")
-	  .withProjectName("spring-cloud-contract-samples-docs-only")
-	  .withBranchName("3.0.x")
-	  .withEnvs(["SKIP_BUILD": "true", "SKIP_COMPATIBILITY" : "true"])
-	  .withCronExpr(oncePerDay())
-	  .withJdk(jdk11())
-	  .withMavenTests(false)
-	  .withGradleTests(false)
-}.build(dsl)
-
-// This will not work because of Gradle
-/*
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
-	  .withBranchName("3.0.x")
-	  .withEnvs(["SKIP_COMPATIBILITY": "true", "SKIP_DOCS" : "true"])
-	  .withCronExpr(oncePerDay())
-	  .withJdk(jdk15())
-	// for postman <-> swagger
-	  .withNodeJs(true)
-	  .withMavenTests(false)
-	  .withGradleTests(false)
-}.build(dsl)
-*/
-
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
-	  .withBranchName("master")
-	  .withCronExpr(oncePerDay())
-	// for postman <-> swagger
-	  .withEnvs(["SKIP_COMPATIBILITY": "true"])
-	  .withNodeJs(true)
-	  .withMavenTests(false)
-	  .withGradleTests(false)
-}.build(dsl)
-
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
-	  .withBranchName("master")
-	  .withCronExpr(oncePerDay())
-	// for postman <-> swagger
-	  .withNodeJs(true)
-	  .withJdk(jdk11())
-	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
-	  .withMavenTests(false)
-	  .withGradleTests(false)
-}.build(dsl)
-
-new SpringCloudSamplesEndToEndBuilder().with {
-	it.withProjectAndRepoName("spring-cloud-contract-samples")
-	  .withBranchName("master")
-	  .withCronExpr(oncePerDay())
-	// for postman <-> swagger
-	  .withNodeJs(true)
-	  .withJdk(jdk15())
-	// don't want to check compatibility against Greenwich
-	  .withEnvs([SKIP_DOCS: "true", SKIP_COMPATIBILITY: "true"])
-	  .withMavenTests(false)
-	  .withGradleTests(false)
-}.build(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withBranchName("2.2.x")
+			.withJdk(jdk8())
+}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withBranchName("2.2.x")
+			.withJdk(jdk11())
+}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withJdk(jdk11())
+}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withJdk(jdk8())
+}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withJdk(jdk15())
+}.buildAll(dsl)
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
@@ -243,18 +176,6 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sc-contract-car-rental", masterBranch(), oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", "2.2.x", oncePerDay())
 }
-
-// Can't access the repository
-// new SpringCloudSamplesEndToEndBuilder().with {
-// 	it.withRepoName("Pearson-Contracts")
-// 	  .withProjectName("pearson-contracts")
-// 	  .withOrganization("marcingrzejszczak")
-// 	  .withCronExpr(oncePerDay())
-// 	  .withJdk(jdk8())
-// 	  .withMavenTests(true)
-// 	  .withGradleTests(true)
-// 	  .withWipeOutWorkspace(false)
-// }.build(dsl)
 
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
