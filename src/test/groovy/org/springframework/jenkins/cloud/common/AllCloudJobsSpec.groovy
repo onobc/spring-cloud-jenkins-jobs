@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 class AllCloudJobsSpec extends Specification {
 
-	def 'get correct boot version for cloud release train'() {
+	def 'get correct boot version [#boot] for cloud release train [#cloud]'() {
 		expect:
 			AllCloudJobs.bootForReleaseTrain(cloud).startsWith(boot)
 

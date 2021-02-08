@@ -8,7 +8,7 @@ class BreweryEndToEndBuildMakerSpec extends Specification {
 		given:
 			BreweryEndToEndBuildMaker maker = new BreweryEndToEndBuildMaker()
 		when:
-			String switches = maker.defaultSwitches("2020.0.0")
+			String switches = maker.defaultSwitches("2020.0")
 		then:
 			!switches.contains("bootVersion")
 	}
