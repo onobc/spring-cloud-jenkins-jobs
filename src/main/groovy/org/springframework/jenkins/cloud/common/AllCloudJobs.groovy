@@ -26,7 +26,7 @@ class AllCloudJobs {
 												 'spring-cloud-cloudfoundry', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
 												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-gcp', 'spring-cloud-kubernetes',
-	                                             'spring-cloud-circuitbreaker', 'spring-cloud-release']
+	                                             'spring-cloud-circuitbreaker', 'spring-cloud-release', 'spring-cloud-task']
 	/**
 	 * List of all Spring Cloud Stream jobs for the releaser. This list will be used to create the boot compatibility builds
 	 * and will serve as basis for the default jobs
@@ -98,7 +98,8 @@ class AllCloudJobs {
 																		'spring-cloud-vault'       : ['2.2.x'],
 																		'spring-cloud-cloudfoundry': ['2.2.x'],
 																		'spring-cloud-openfeign'   : ['2.2.x'],
-																		'spring-cloud-function'   : ['3.0.x'],
+																		'spring-cloud-task'        : ['2.2.x'],
+																		'spring-cloud-function'    : ['3.0.x'],
 																		'spring-cloud-kubernetes'  : ['1.1.x']]
 
 	/**
