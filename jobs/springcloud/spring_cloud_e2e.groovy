@@ -40,6 +40,9 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk15())
 }.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withJdk(jdk16())
+}.buildAll(dsl)
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
@@ -53,6 +56,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk15()).build() }
+new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk16()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Hoxton", "2020.0"].each {
