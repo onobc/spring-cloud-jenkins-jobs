@@ -41,11 +41,6 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 		return this
 	}
 
-	SpringCloudDeployBuildMakerBuilder deploy(boolean deploy) {
-		this.deploy = deploy
-		return this
-	}
-
 	SpringCloudDeployBuildMakerBuilder upload(boolean upload) {
 		this.upload = upload
 		return this
@@ -65,7 +60,6 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 		def maker = new SpringCloudDeployBuildMaker(this.dsl, this.organization, this.prefix)
 		if (this.jdkVersion) maker.jdkVersion = this.jdkVersion
 		if (this.upload) maker.upload = this.upload
-		maker.deploy = this.deploy
 		maker.cronValue = this.cronValue
 		maker.onGithubPush = this.onGithubPush
 		return maker

@@ -18,7 +18,6 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	private final DslFactory dsl
 	final String organization
 	final String prefix
-	boolean deploy = true
 	boolean upload = true
 	String jdkVersion = jdk8()
 
@@ -131,7 +130,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	}
 
 	String buildCommand() {
-		return this.deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs()
+		return this.upload ? cleanDeployWithDocs() : cleanInstallWithoutDocs()
 	}
 
 	void deployWithoutTests(String project) {
