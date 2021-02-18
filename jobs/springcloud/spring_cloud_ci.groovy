@@ -125,11 +125,13 @@ new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
 	deploy(projectName)
 
 	new SpringCloudDeployBuildMakerBuilder(dsl)
+			.organization("spring-cloud-incubator")
 			.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
 			.onGithubPush(false).cron(oncePerDay())
 			.upload(false).build().deploy(projectName)
 
 	new SpringCloudDeployBuildMakerBuilder(dsl)
+			.organization("spring-cloud-incubator")
 			.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
 			.onGithubPush(false).cron(oncePerDay())
 			.upload(false).build().deploy(projectName)
