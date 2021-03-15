@@ -24,7 +24,7 @@ trait Releaser {
 				ROOT_VIEW="Spring%20Cloud"
 				CURRENT_VIEW="Releaser"
 				echo "Building the releaser. If the build fails after this then it means that the releaser failed to get built. Then please check the build's workspace under [.git/releaser.log] for logs. You can click here to see it [${JENKINS_URL}/view/${ROOT_VIEW}/view/${CURRENT_VIEW}/job/${JOB_NAME}/ws/.git/releaser.log]"
-				./mvnw clean install -am -pl :''' + options.projectName + ''' > "${currentDir}/.git/releaser.log"
+				./mvnw clean install -DskipTests -am -pl :''' + options.projectName + ''' > "${currentDir}/.git/releaser.log"
 			popd'''
 	}
 
