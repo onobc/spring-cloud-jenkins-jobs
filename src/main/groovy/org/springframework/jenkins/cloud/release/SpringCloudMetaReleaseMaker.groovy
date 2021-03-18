@@ -158,7 +158,6 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				slackNotification(it as Node)
 			}
 			publishers {
-				archiveJunit mavenJUnitResults()
 				archiveArtifacts {
 					allowEmpty()
 					pattern(".git/*.log")
