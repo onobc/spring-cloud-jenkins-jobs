@@ -14,7 +14,7 @@ import org.springframework.jenkins.common.job.Maven
 @CompileStatic
 abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 
-	protected static final String DEFAULT_BOOT_MINOR_VERSION = "CHANGE ME"
+	protected static final String DEFAULT_BOOT_MINOR_VERSION = ""
 	protected static final String SPRING_BOOT_VERSION_VAR = 'SPRING_BOOT_VERSION'
 	protected static final String SPRING_BOOT_MINOR = AllCloudConstants.BOOT_MINOR_FOR_API_COMPATIBILITY
 	protected static final String SPRING_VERSION_VAR = 'SPRING_VERSION'
@@ -79,10 +79,7 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		rm -rf target
 		mkdir -p target
 		export MAVEN_PATH=${mavenBin()}
-		${fetchLatestBootVersionAsFunction()}
-		export ${SPRING_BOOT_VERSION_VAR}="\${${SPRING_BOOT_VERSION_VAR}:-}"
-		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( bootVersion "${SPRING_BOOT_MINOR}" )"
-		echo "Boot version [\${${SPRING_BOOT_VERSION_VAR}]" 
+		${fetchLatestBootSnapshotVersion(SPRING_BOOT_MINOR)}
 		pushd target
 			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dtransitive=false
 			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dproject.basedir=../
