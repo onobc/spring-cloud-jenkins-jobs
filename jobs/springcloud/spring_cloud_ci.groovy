@@ -95,6 +95,14 @@ new SpringCloudReleaseTrainDocsMaker(dsl).with {
 	deploy("Hoxton")
 }
 
+ALL_DEFAULT_JOBS.each {String project ->
+	boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
+	new BootCompatibilityBuildMaker(dsl).with {
+		it.buildWithTests(project, project, "master", oncePerDay(), checkTests)
+	}
+}
+// TODO: compatibility builds for custom job projects
+
 // BRANCHES BUILD - spring-cloud organization
 // Build that allows you to deploy, and build gh-pages of multiple branches. Used for projects
 // where we support multiple versions
@@ -105,9 +113,9 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
-		new BootCompatibilityBuildMaker(dsl).with {
+		/*new BootCompatibilityBuildMaker(dsl).with {
 			it.buildWithTests("${project}-${branch}", project, branch, oncePerDay(), checkTests)
-		}
+		}*/
 	}
 }
 // Release branches for Spring Cloud Release
