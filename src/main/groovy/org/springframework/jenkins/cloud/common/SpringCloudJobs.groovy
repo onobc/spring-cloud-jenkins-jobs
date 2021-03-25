@@ -108,7 +108,7 @@ if [ -n "\$(type gtimeout)" ]; then gtimeout 10s docker ps -a -q | xargs -n 1 -P
 """
 		}
 		return """
-		echo -e "Getting latest version of Spring Cloud"
+		echo -e "Getting latest version of Spring Boot"
 		# Uncomment this to get latest version at all (not necessarily for the minor)
 		#${CURRENT_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | sed -ne '/<latest>/s#\\s*<[^>]*>\\s*##gp')"
 		export $CURRENT_BOOT_VERSION_VAR="\${$CURRENT_BOOT_VERSION_VAR:-}"
