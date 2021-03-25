@@ -79,10 +79,10 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		rm -rf target
 		mkdir -p target
 		export MAVEN_PATH=${mavenBin()}
+		${fetchLatestBootVersionAsFunction()}
 		export ${SPRING_BOOT_VERSION_VAR}="\${${SPRING_BOOT_VERSION_VAR}:-}"
-		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( curl https://repo.spring.io/libs-snapshot-local/org/springframework/boot/spring-boot-starter/maven-metadata.xml | grep "<version>${SPRING_BOOT_MINOR}." | grep "SNAPSHOT" | tail -1 | sed -ne '/<version>/s#\\s*<[^>]*>\\s*##gp')"
-
-		echo "Boot version [\${${SPRING_BOOT_VERSION_VAR}]" 
+		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( bootVersion "${SPRING_BOOT_MINOR}" )"
+		echo "Boot version [\$${SPRING_BOOT_VERSION_VAR}]" 
 		pushd target
 			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dtransitive=false
 			\${MAVEN_PATH}/mvn dependency:copy -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dproject.basedir=../
