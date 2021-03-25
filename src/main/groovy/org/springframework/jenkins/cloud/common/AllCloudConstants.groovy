@@ -12,7 +12,7 @@ class AllCloudConstants {
 	/**
 	 * The minor against which the compatibility builds should be checked
 	 */
-	public static final String BOOT_MINOR_FOR_API_COMPATIBILITY = new TreeSet<>(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.values()).getAt(1)
+	public static final String BOOT_MINOR_FOR_API_COMPATIBILITY = "2.5";
 
 	/**
 	 * Spring Cloud Build branch used for compatibility builds.
