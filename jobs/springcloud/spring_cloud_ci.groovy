@@ -11,6 +11,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseTrainDocsMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
+import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
@@ -104,9 +105,9 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
-		/*new BootCompatibilityBuildMaker(dsl).with {
+		new BootCompatibilityBuildMaker(dsl).with {
 			it.buildWithTests("${project}-${branch}", project, branch, oncePerDay(), checkTests)
-		}*/
+		}
 	}
 }
 // Release branches for Spring Cloud Release

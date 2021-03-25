@@ -2,6 +2,7 @@ package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
 
+import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
@@ -31,4 +32,4 @@ new SpringCloudMetaReleaseMaker(dsl)
 new SpringCloudMetaReleaseRepoPurger(dsl).build()
 
 // Compatibility builds
-// new ManualBootCompatibilityBuildMaker(dsl).build()
+new ManualBootCompatibilityBuildMaker(dsl).build()
