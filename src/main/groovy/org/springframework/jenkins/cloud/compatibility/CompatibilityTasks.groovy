@@ -93,7 +93,7 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 				${SPRING_CLOUD_BUILD_BRANCH}="\${${SPRING_CLOUD_BUILD_BRANCH}:-master}"
 				git checkout "\$${SPRING_CLOUD_BUILD_BRANCH}"
 				echo -e "Updating SC-Build's Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
-				java -jar ../dependency/spring-cloud-2.0.0-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
+				java -jar ../dependency/spring-cloud-2.0.0-SNAPSHOT.jar --releaser.git.fetch-versions-from-git=false --"releaser.fixed-versions[spring-boot]=\$${SPRING_BOOT_VERSION_VAR}" --"releaser.fixed-versions[spring-boot-dependencies]=\$${SPRING_BOOT_VERSION_VAR}" --releaser.git.oauth-token="token" -u -i=false
 				./mvnw clean install -fae -U
 			popd
 		popd
