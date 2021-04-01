@@ -10,7 +10,6 @@ import org.springframework.jenkins.common.job.Maven
 /**
  * @author Marcin Grzejszczak
  */
-@PackageScope
 @CompileStatic
 abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 
