@@ -82,25 +82,28 @@ class AllCloudJobs {
 	 */
 	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.2.x'],
 																		'spring-cloud-cli'         : ['2.2.x'],
-																		'spring-cloud-gcp'         : ['1.1.x'],
-																		'spring-cloud-circuitbreaker' : ['1.0.x'],
-																		'spring-cloud-commons'     : ['2.2.x'],
-																		'spring-cloud-contract'    : ['2.2.x'],
-																		'spring-cloud-config'      : ['2.2.x'],
-																		'spring-cloud-netflix'     : ['2.2.x'],
-																		'spring-cloud-consul'      : ['2.2.x'],
-																		'spring-cloud-zookeeper'   : ['2.2.x'],
-																		'spring-cloud-bus'         : ['2.2.x'],
-																		'spring-cloud-build'       : ['2.3.x'],
-																		'spring-cloud-aws'         : ['2.2.x'],
-																		'spring-cloud-gateway'     : ['2.2.x'],
-																		'spring-cloud-security'    : ['2.2.x'],
-																		'spring-cloud-vault'       : ['2.2.x'],
-																		'spring-cloud-cloudfoundry': ['2.2.x'],
-																		'spring-cloud-openfeign'   : ['2.2.x'],
-																		'spring-cloud-task'        : ['2.2.x'],
-																		'spring-cloud-function'    : ['3.0.x'],
-																		'spring-cloud-kubernetes'  : ['1.1.x']]
+																		'spring-cloud-gcp'           : ['1.1.x'],
+																		'spring-cloud-circuitbreaker': ['1.0.x'],
+																		'spring-cloud-commons'       : ['2.2.x'],
+																		'spring-cloud-contract'      : ['2.2.x'],
+																		'spring-cloud-config'        : ['2.2.x'],
+																		'spring-cloud-netflix'       : ['2.2.x'],
+																		'spring-cloud-consul'        : ['2.2.x'],
+																		'spring-cloud-zookeeper'     : ['2.2.x'],
+																		'spring-cloud-bus'           : ['2.2.x'],
+																		'spring-cloud-build'         : ['2.3.x'],
+																		'spring-cloud-aws'           : ['2.2.x'],
+																		'spring-cloud-gateway'       : ['2.2.x'],
+																		'spring-cloud-security'      : ['2.2.x'],
+																		'spring-cloud-vault'         : ['2.2.x'],
+																		'spring-cloud-cloudfoundry'  : ['2.2.x'],
+																		'spring-cloud-openfeign'     : ['2.2.x'],
+																		'spring-cloud-task'          : ['2.2.x'],
+																		'spring-cloud-function'      : ['3.0.x'],
+																		'spring-cloud-kubernetes'    : ['1.1.x']]
+
+	public static final List<String> INCUBATOR_JOBS = ['spring-cloud-sleuth-otel',
+													   'spring-cloud-square']
 
 	/**
 	 * Mapping of a lowercase release train name to a given boot version ordered in time. If you provide
@@ -108,9 +111,9 @@ class AllCloudJobs {
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
 			// TODO: 2020.0 is the train, 2020.0.0 is like Hoxton.RELEASE not Hoxton
-			"2020.0" : "2.4.3", // boot version 2.4.x
-			"hoxton" : "2.3", // boot version 2.2.x
-			"greenwich" : "2.1" // boot version 2.1.x
+			"2020.0"   : "2.4.3", // boot version 2.4.x
+			"hoxton"   : "2.3", // boot version 2.2.x
+			"greenwich": "2.1" // boot version 2.1.x
 	]
 
 	static String bootForReleaseTrain(String releaseTrain) {

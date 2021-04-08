@@ -17,6 +17,7 @@ import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.CUSTOM_BUILD_JOBS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.INCUBATOR_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITHOUT_TESTS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.JOBS_WITH_BRANCHES
 
@@ -129,20 +130,20 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 }
 
 // CI BUILDS FOR INCUBATOR
-new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
-	String projectName = "spring-cloud-sleuth-otel"
-	deploy(projectName)
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {SpringCloudDeployBuildMaker maker ->
+	(INCUBATOR_JOBS).each {
+		deploy(it)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.organization("spring-cloud-incubator")
+				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
+				.onGithubPush(false).cron(oncePerDay())
+				.upload(false).build().deploy(it)
 
-	new SpringCloudDeployBuildMakerBuilder(dsl)
-			.organization("spring-cloud-incubator")
-			.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
-			.onGithubPush(false).cron(oncePerDay())
-			.upload(false).build().deploy(projectName)
-
-	new SpringCloudDeployBuildMakerBuilder(dsl)
-			.organization("spring-cloud-incubator")
-			.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
-			.onGithubPush(false).cron(oncePerDay())
-			.upload(false).build().deploy(projectName)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.organization("spring-cloud-incubator")
+				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
+				.onGithubPush(false).cron(oncePerDay())
+				.upload(false).build().deploy(it)
+	}
 }
 
