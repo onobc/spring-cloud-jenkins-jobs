@@ -130,20 +130,37 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 }
 
 // CI BUILDS FOR INCUBATOR
-new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {SpringCloudDeployBuildMaker maker ->
-	(INCUBATOR_JOBS).each {
-		deploy(it)
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
+	String projectName = "spring-cloud-sleuth-otel"
+	deploy(projectName)
+
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.organization("spring-cloud-incubator")
 				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
 				.onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deploy(it)
+			.upload(false).build().deploy(projectName)
 
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.organization("spring-cloud-incubator")
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
 				.onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deploy(it)
-	}
+			.upload(false).build().deploy(projectName)
+}
+
+new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
+	String projectName = "spring-cloud-square"
+	deploy(projectName)
+
+	new SpringCloudDeployBuildMakerBuilder(dsl)
+			.organization("spring-cloud-incubator")
+			.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
+			.onGithubPush(false).cron(oncePerDay())
+			.upload(false).build().deploy(projectName)
+
+	new SpringCloudDeployBuildMakerBuilder(dsl)
+			.organization("spring-cloud-incubator")
+			.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
+			.onGithubPush(false).cron(oncePerDay())
+			.upload(false).build().deploy(projectName)
 }
 
