@@ -109,11 +109,15 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs())
+//				Build Spring Cloud Kubernetes without deploying to generate images etc
+//				Then run integration tests
+//				 After integration tests pass then deploy artifacts
+				shell("./mvnw clean install -Pspring -B -U")
 				shell("""#!/bin/bash
 	cd spring-cloud-kubernetes-integration-tests
     ./run.sh
 """)
+				shell(deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs())
 				shell("""
 				 ./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configuration-watcher -Pdockerpush
 """)
