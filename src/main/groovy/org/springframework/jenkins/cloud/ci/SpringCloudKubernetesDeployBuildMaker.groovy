@@ -111,13 +111,13 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 				}
 //				Build Spring Cloud Kubernetes without deploying to generate images etc
 //				Then run integration tests
-//				 After integration tests pass then deploy artifacts
+//				 After integration tests pass then deploy artifacts (skip tests since they were already run during the first build)
 				shell("./mvnw clean install -Pspring -B -U")
 				shell("""#!/bin/bash
 	cd spring-cloud-kubernetes-integration-tests
     ./run.sh
 """)
-				shell(deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs())
+				shell(deploy ? cleanDeployWithDocs() + "-DskipTests=true" : cleanInstallWithoutDocs() + "-DskipTests=true")
 				shell("""
 				 ./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configuration-watcher -Pdockerpush
 """)
