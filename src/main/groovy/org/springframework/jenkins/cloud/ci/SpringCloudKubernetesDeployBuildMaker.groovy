@@ -117,7 +117,7 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 	cd spring-cloud-kubernetes-integration-tests
     ./run.sh
 """)
-				shell(deploy ? cleanDeployWithDocs() + "-DskipTests=true" : cleanInstallWithoutDocs() + "-DskipTests=true")
+				shell(deploy ? cleanDeployWithDocs() + " -DskipTests=true" : cleanInstallWithoutDocs() + " -DskipTests=true")
 				shell("""
 				 ./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configuration-watcher -Pdockerpush
 """)
