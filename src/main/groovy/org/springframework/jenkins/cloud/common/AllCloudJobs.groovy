@@ -112,6 +112,7 @@ class AllCloudJobs {
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
 			// TODO: 2020.0 is the train, 2020.0.0 is like Hoxton.RELEASE not Hoxton
 			"2020.0"   : "2.4.3", // boot version 2.4.x
+			"2020.1"   : "2.4.3", // boot version 2.4.x then 2.5.x
 			"hoxton"   : "2.3", // boot version 2.2.x
 			"greenwich": "2.1" // boot version 2.1.x
 	]

@@ -122,6 +122,8 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 // Release branches for Spring Cloud Release
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Hoxton', false)
+new SpringCloudDeployBuildMaker(dsl)
+		.deploy('spring-cloud-release', '2020.1.x', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
