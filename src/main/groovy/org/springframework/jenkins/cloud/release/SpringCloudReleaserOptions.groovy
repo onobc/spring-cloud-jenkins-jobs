@@ -38,7 +38,7 @@ class SpringCloudReleaserOptions {
 					   .dryRun(false)
 	}
 
-	static ReleaserOptions springCloudMaster() {
+	static ReleaserOptions springCloudMain() {
 		return springCloudBuilder()
 				.updateSagan(false)
 				.build()
@@ -100,7 +100,7 @@ class SpringCloudReleaserOptions {
 					   .postReleaseOnly(false)
 	}
 
-	static ReleaserOptions reactorMaster() {
+	static ReleaserOptions reactorMain() {
 		return reactorBuilder()
 				.updateSagan(false)
 				.build()

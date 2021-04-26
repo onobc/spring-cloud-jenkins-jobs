@@ -43,9 +43,9 @@ dsl.nestedView('Spring Cloud') {
 			}
 			columns defaultColumns()
 		}
-		listView('CI.MASTER') {
+		listView('CI.MAIN') {
 			jobs {
-				regex('spring-cloud.*master-ci')
+				regex('spring-cloud.*main-ci')
 			}
 			columns defaultColumns()
 		}
