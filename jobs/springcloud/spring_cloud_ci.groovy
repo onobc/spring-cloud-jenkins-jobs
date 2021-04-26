@@ -123,7 +123,7 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Hoxton', false)
 new SpringCloudDeployBuildMaker(dsl)
-		.deploy('spring-cloud-release', '2020.1.x', false)
+		.deploy('spring-cloud-release', '2021.0.x', false)
 
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
