@@ -22,7 +22,7 @@ class ReleaserOptionsBuilder {
 	boolean postReleaseOnly = false
 	String releaseTrainProjectName
 	String releaserConfigUrl
-	String releaserBranch = "master"
+	String releaserBranch = "main"
 	String releaserConfigBranch
 	List<String> releaseTrainDependencyNames
 	String gitOrgUrl

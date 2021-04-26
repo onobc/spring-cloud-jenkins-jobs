@@ -104,7 +104,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	void jdkBuild(String jdkVersion) {
 		this.jdkVersion = jdkVersion
 		this.upload = false
-		deploy(masterBranch())
+		deploy(mainBranch())
 	}
 
 	protected String antiPermgenAndJava7TlsHack() {

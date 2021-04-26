@@ -18,7 +18,7 @@ class SpringCloudReleaseMasterMaker extends SpringCloudReleaseMaker {
 
 	@Override
 	protected String projectName(String project) {
-		return "${project}-${masterBranch()}-releaser"
+		return "${project}-${mainBranch()}-releaser"
 	}
 
 	@Override
@@ -29,7 +29,7 @@ class SpringCloudReleaseMasterMaker extends SpringCloudReleaseMaker {
 
 	@Override
 	protected String branchToCheck() {
-		return masterBranch()
+		return mainBranch()
 	}
 
 	@Override

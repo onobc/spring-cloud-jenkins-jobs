@@ -28,15 +28,15 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForIlford() {
-		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests", everySixHours(), masterBranch())
+		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests", everySixHours(), mainBranch())
 	}
 
 	void buildForIlfordWithJdk(String jdk) {
-		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests-${jdk}", everySixHours(), masterBranch(), jdk)
+		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests-${jdk}", everySixHours(), mainBranch(), jdk)
 	}
 
 	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),
-					   String branchName = masterBranch(), String jdkVersion = jdk8()) {
+					   String branchName = mainBranch(), String jdkVersion = jdk8()) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
 			triggers {

@@ -23,7 +23,7 @@ class SpringCloudReleaseToolsBuildMaker implements JdkConfig, TestPublisher, Cro
 	}
 
 	void deploy(boolean checkTests = true) {
-		deploy(masterBranch(), checkTests)
+		deploy(mainBranch(), checkTests)
 	}
 
 	void deploy(String branchToBuild, boolean checkTests = true) {
@@ -33,7 +33,7 @@ class SpringCloudReleaseToolsBuildMaker implements JdkConfig, TestPublisher, Cro
 				githubPush()
 			}
 			parameters {
-				stringParam(branchVarName(), branchToBuild ?: masterBranch(), 'Which branch should be built')
+				stringParam(branchVarName(), branchToBuild ?: mainBranch(), 'Which branch should be built')
 			}
 			jdk jdk8()
 			scm {

@@ -15,7 +15,7 @@ class SpringCloudSamplesEndToEndBuilder<T extends SpringCloudSamplesEndToEndBuil
 	String repoName
 	String scriptName = "scripts/runAcceptanceTests.sh"
 	String cronExpr
-	String branchName = masterBranch()
+	String branchName = mainBranch()
 	String label = ""
 	String postBuildScripts = ""
 	boolean wipeOutWorkspace = true

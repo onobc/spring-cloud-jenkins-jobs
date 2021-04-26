@@ -92,14 +92,14 @@ new SpringCloudSamplesTestsBuildMaker(dsl).with {
 }
 
 new SpringCloudReleaseTrainDocsMaker(dsl).with {
-	deploy(masterBranch())
+	deploy(mainBranch())
 	deploy("Hoxton")
 }
 
 ALL_DEFAULT_JOBS.each {String project ->
 	boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 	new BootCompatibilityBuildMaker(dsl).with {
-		it.buildWithTests(project, project, "master", oncePerDay(), checkTests)
+		it.buildWithTests(project, project, "main", oncePerDay(), checkTests)
 	}
 }
 // TODO: compatibility builds for custom job projects
@@ -128,7 +128,7 @@ new SpringCloudDeployBuildMaker(dsl)
 new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 new VaultSpringCloudDeployBuildMaker(dsl).with {
-	deploy(masterBranch())
+	deploy(mainBranch())
 }
 
 

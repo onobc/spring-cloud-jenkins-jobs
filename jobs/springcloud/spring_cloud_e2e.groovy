@@ -16,11 +16,11 @@ DslFactory dsl = this
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithMavenTests("spring-cloud-sleuth-samples", masterBranch(), oncePerDay())
+	buildWithMavenTests("spring-cloud-sleuth-samples", mainBranch(), oncePerDay())
 	buildWithMavenTests("spring-cloud-sleuth-samples", "3.1.x", oncePerDay())
-	buildWithMavenTests("sleuth-issues", masterBranch(), oncePerDay())
+	buildWithMavenTests("sleuth-issues", mainBranch(), oncePerDay())
 	buildWithMavenTests("sleuth-issues", "2.2.x", oncePerDay())
-	buildWithMavenTests("sleuth-documentation-apps", masterBranch(), oncePerDay())
+	buildWithMavenTests("sleuth-documentation-apps", mainBranch(), oncePerDay())
 	buildWithMavenTests("sleuth-documentation-apps", "2.2.x", oncePerDay())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
@@ -47,9 +47,9 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 }.buildAll(dsl)
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
-	buildWithMavenTests("the-legacy-app", masterBranch(), oncePerDay())
+	buildWithMavenTests("the-legacy-app", mainBranch(), oncePerDay())
 	buildWithMavenTests("the-legacy-app", "2.2.x", oncePerDay())
-	buildWithMavenTests("sc-contract-car-rental", masterBranch(), oncePerDay())
+	buildWithMavenTests("sc-contract-car-rental", mainBranch(), oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", "2.2.x", oncePerDay())
 }
 

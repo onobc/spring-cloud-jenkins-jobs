@@ -40,7 +40,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	}
 
 	void deploy(String project, boolean checkTests = true) {
-		deploy(project, masterBranch(), checkTests)
+		deploy(project, mainBranch(), checkTests)
 	}
 
 	private String prefix(String project) {
@@ -61,7 +61,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 				}
 			}
 			parameters {
-				stringParam(branchVarName(), branchToBuild ?: masterBranch(), 'Which branch should be built')
+				stringParam(branchVarName(), branchToBuild ?: mainBranch(), 'Which branch should be built')
 			}
 			if (jdkVersion != jdk8()) {
 				label(ubuntu18_04())
