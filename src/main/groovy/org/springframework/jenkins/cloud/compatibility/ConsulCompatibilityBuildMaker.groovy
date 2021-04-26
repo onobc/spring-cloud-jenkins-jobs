@@ -53,7 +53,7 @@ class ConsulCompatibilityBuildMaker extends CompatibilityTasks implements TestPu
 				git {
 					remote {
 						url "https://github.com/spring-cloud/$projectName"
-						branch 'master'
+						branch "main"
 					}
 					extensions {
 						wipeOutWorkspace()
@@ -95,7 +95,7 @@ class ConsulCompatibilityBuildMaker extends CompatibilityTasks implements TestPu
 				git {
 					remote {
 						url "https://github.com/spring-cloud/$projectName"
-						branch 'master'
+						branch "main"
 					}
 					extensions {
 						wipeOutWorkspace()
