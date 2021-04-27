@@ -109,6 +109,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 					mavenInstallation(maven33())
 					goals('--version')
 				}
+				shell(firstBuildContractModule())
 				shell(deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs())
 			}
 			configure {
