@@ -2,7 +2,6 @@ package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
 
-import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.CustomJobFactory
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
@@ -125,7 +124,6 @@ new SpringCloudDeployBuildMaker(dsl)
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', '2021.0.x', false)
 
-new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(mainBranch())

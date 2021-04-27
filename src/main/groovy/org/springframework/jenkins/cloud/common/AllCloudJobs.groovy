@@ -73,8 +73,8 @@ class AllCloudJobs {
 	 * we will have custom implementations. Check out {@link org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker}
 	 * for more info.
 	 */
-	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-consul', 'spring-cloud-build',
-														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
+	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-build', 'spring-cloud-contract',
+														  'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
 	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.

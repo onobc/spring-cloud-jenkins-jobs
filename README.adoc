@@ -37,8 +37,8 @@ If your job needs to be building other branches except for master just add your 
 entries to the `JOBS_WITH_BRANCHES` map in `org.springframework.jenkins.cloud.common.AllCloudJobs`.
 
 If you have some custom builds just add the entry to `ALL_JOBS` and `CUSTOM_BUILD_JOBS`.
- Next you should just create your own implementation (check `org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker`
- for an example). Remember also to call it from the seed job (e.g. `springcloud/spring_cloud.groovy:29` for Consul).
+ Next you should just create your own implementation (check `org.springframework.jenkins.cloud.ci.SpringCloudNetflixDeployBuildMaker`
+ for an example). Remember also to call it from the seed job (e.g. `springcloud/spring_cloud.groovy:29` for Netflix).
 
 The views are automatically generated for you. They base on the name convention so check out
 `springcloud/spring_cloud_views.groovy` - it's pretty straightforward.
