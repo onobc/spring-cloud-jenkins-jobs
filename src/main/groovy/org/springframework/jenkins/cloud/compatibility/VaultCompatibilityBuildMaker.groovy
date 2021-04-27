@@ -68,14 +68,10 @@ class VaultCompatibilityBuildMaker extends CompatibilityBuildMaker implements Ha
 				shell("""\
 						${antiPermgenAndJava7TlsHack()}
 						${preVaultShell()}
-					""")
-			}
-			steps checkTests ? defaultStepsWithTestsForBoot() : defaultStepsForBoot()
-			steps {
-				shell("""\
 						trap "{ ${postVaultShell()} }" EXIT
 					""")
 			}
+			steps checkTests ? defaultStepsWithTestsForBoot() : defaultStepsForBoot()
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
 			}
