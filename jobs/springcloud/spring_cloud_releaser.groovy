@@ -6,18 +6,18 @@ import org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBu
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
-import org.springframework.jenkins.cloud.release.SpringCloudReleaseMasterMaker
+import org.springframework.jenkins.cloud.release.SpringCloudReleaseMainMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaserOptions
 
-import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_MASTER_RELEASER_JOBS
+import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_MAIN_RELEASER_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_RELEASER_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_STREAM_JOBS_FOR_RELEASER
 
 DslFactory dsl = this
 
 // RELEASER
-ALL_MASTER_RELEASER_JOBS.each {
-	new SpringCloudReleaseMasterMaker(dsl).release(it, SpringCloudReleaserOptions.springCloudMaster())
+ALL_MAIN_RELEASER_JOBS.each {
+	new SpringCloudReleaseMainMaker(dsl).release(it, SpringCloudReleaserOptions.springCloudMain())
 }
 ALL_RELEASER_JOBS.each {
 	new SpringCloudReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.springCloud())

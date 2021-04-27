@@ -14,7 +14,7 @@ DslFactory dsl = this
 
 // RELEASER
 ["reactor-core", "reactor-addons", "reactor-pool", "reactor-netty", "reactor-kafka", "reactor-kotlin-extensions"].each {
-//	new SpringCloudReleaseMasterMaker(dsl).release(it, SpringCloudReleaserOptions.reactorMaster())
+//	new SpringCloudReleaseMainMaker(dsl).release(it, SpringCloudReleaserOptions.reactorMain())
 	new ReactorReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.reactor())
 }
 

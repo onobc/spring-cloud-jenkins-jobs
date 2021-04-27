@@ -10,7 +10,7 @@ import groovy.transform.CompileStatic
  *
  * e.g.
  *
- * spring-cloud-sleuth-master-ci
+ * spring-cloud-sleuth-main-ci
  * spring-cloud-netflix-1.0.x-ci
  *
  * @author Marcin Grzejszczak
@@ -36,14 +36,14 @@ class AllCloudJobs {
 																	 "spring-cloud-stream-binder-kafka",
 																	 "spring-cloud-schema-registry"]
 
-	public static final List<String> ALL_JOBS_WITH_NO_MASTER_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN = [
+	public static final List<String> ALL_JOBS_WITH_NO_MAIN_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN = [
 	        "spring-cloud-gcp"
 	]
 
 	/**
-	 * List of all single project jobs to be used by the master releaser
+	 * List of all single project jobs to be used by the main releaser
 	 */
-	public static final List<String> ALL_MASTER_RELEASER_JOBS = ALL_JOBS - ALL_JOBS_WITH_NO_MASTER_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN
+	public static final List<String> ALL_MAIN_RELEASER_JOBS = ALL_JOBS - ALL_JOBS_WITH_NO_MAIN_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN
 
 	/**
 	 * List of all single project jobs to be used by the releaser
@@ -77,7 +77,7 @@ class AllCloudJobs {
 														  'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
-	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
+	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for main branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
 	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.2.x', '3.1.x'],

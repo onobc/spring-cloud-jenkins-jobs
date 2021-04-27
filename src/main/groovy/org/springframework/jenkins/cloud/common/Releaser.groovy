@@ -18,7 +18,7 @@ trait Releaser {
 			tmpDir="$(mktemp -d)"
 			trap "{ rm -rf ${tmpDir}; }" EXIT
 			echo "Cloning to [${tmpDir}] and building the releaser"
-			git clone -b "${RELEASER_BRANCH:-master}" --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "${tmpDir}"
+			git clone -b "${RELEASER_BRANCH:-main}" --single-branch https://github.com/spring-cloud/spring-cloud-release-tools.git "${tmpDir}"
 			pushd "${tmpDir}"
 				rm -rf ~/.m2/repository/org/springframework/cloud
 				ROOT_VIEW="Spring%20Cloud"
