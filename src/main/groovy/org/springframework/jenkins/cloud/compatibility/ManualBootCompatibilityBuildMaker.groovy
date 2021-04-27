@@ -51,7 +51,6 @@ class ManualBootCompatibilityBuildMaker implements SpringCloudJobs {
 			new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTests(it)
 		}
 		new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTests("spring-cloud-contract")
-		new ConsulCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTestsForBoot()
 		new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX, 'spring-cloud-samples').buildWithoutTests('tests')
 	}
 }
