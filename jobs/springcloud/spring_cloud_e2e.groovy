@@ -40,9 +40,6 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk11())
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
-	it.withJdk(jdk15())
-}.buildAll(dsl)
-new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk16())
 }.buildAll(dsl)
 
@@ -57,7 +54,6 @@ new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
-new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk15()).build() }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk16()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
