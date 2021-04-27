@@ -102,6 +102,9 @@ ALL_DEFAULT_JOBS.each {String project ->
 	}
 }
 // TODO: compatibility builds for custom job projects
+new BootCompatibilityBuildMaker(dsl).with {
+	it.buildWithTests("spring-cloud-netflix", "spring-cloud-netflix", "main", oncePerDay(), true)
+}
 
 // BRANCHES BUILD - spring-cloud organization
 // Build that allows you to deploy, and build gh-pages of multiple branches. Used for projects
