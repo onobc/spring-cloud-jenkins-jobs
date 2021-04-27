@@ -106,6 +106,9 @@ ALL_DEFAULT_JOBS.each {String project ->
 new BootCompatibilityBuildMaker(dsl).with {
 	it.buildWithTests("spring-cloud-netflix", "spring-cloud-netflix", "main", oncePerDay(), true)
 }
+new BootCompatibilityBuildMaker(dsl).with {
+	it.buildWithTests("spring-cloud-contract", "spring-cloud-contract", "main", oncePerDay(), true)
+}
 new VaultCompatibilityBuildMaker(dsl).with {
 	it.buildWithTests("spring-cloud-vault", "spring-cloud-vault", "main", oncePerDay(), true)
 }
