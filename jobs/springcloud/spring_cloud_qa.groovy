@@ -2,7 +2,6 @@ package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
 
-import org.springframework.jenkins.cloud.qa.ConsulSonarBuildMaker
 import org.springframework.jenkins.cloud.qa.KubernetesSonarBuildMaker
 import org.springframework.jenkins.cloud.qa.SonarBuildMaker
 
@@ -15,7 +14,6 @@ DslFactory dsl = this
 	new SonarBuildMaker(dsl).buildSonar(it)
 	// new MutationBuildMaker(dsl).build(it)
 }
-new ConsulSonarBuildMaker(dsl).buildSonar()
 // new ConsulMutationBuildMaker(dsl).build()
 new KubernetesSonarBuildMaker(dsl).buildSonar()
 // new MutationBuildMaker(dsl).build("spring-cloud-contract")
