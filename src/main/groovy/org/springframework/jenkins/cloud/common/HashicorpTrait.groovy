@@ -19,6 +19,7 @@ trait HashicorpTrait {
 
 					echo "Run Vault"
 					./src/test/bash/local_run_vault.sh &
+					echo "Vault Running"
 				'''
 	}
 
