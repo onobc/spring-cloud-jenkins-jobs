@@ -11,6 +11,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudReleaseTrainDocsMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
+import org.springframework.jenkins.cloud.compatibility.VaultCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
@@ -104,6 +105,9 @@ ALL_DEFAULT_JOBS.each {String project ->
 // TODO: compatibility builds for custom job projects
 new BootCompatibilityBuildMaker(dsl).with {
 	it.buildWithTests("spring-cloud-netflix", "spring-cloud-netflix", "main", oncePerDay(), true)
+}
+new VaultCompatibilityBuildMaker(dsl).with {
+	it.buildWithTests("spring-cloud-vault", "spring-cloud-vault", "main", oncePerDay(), true)
 }
 
 // BRANCHES BUILD - spring-cloud organization
