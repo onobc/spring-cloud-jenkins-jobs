@@ -36,10 +36,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.upload(false).build().deploy(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
-				.onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deploy(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
 				.onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deploy(it)
@@ -51,9 +47,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
-				.upload(false).build().deployWithoutTests(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15()).onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16()).onGithubPush(false).cron(oncePerDay())
@@ -69,7 +62,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk15())
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk16())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
@@ -87,7 +79,7 @@ new SpringCloudReleaseToolsBuildMaker(dsl).with {
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
-	[jdk11(), jdk15(), jdk16()].each {
+	[jdk11(), jdk16()].each {
 		buildForIlfordWithJdk(it)
 	}
 }
@@ -149,7 +141,7 @@ INCUBATOR_JOBS.each { String projectName ->
 
 		def jdk11Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
 				.organization(org)
-				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk15())
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.cron(oncePerDay())
 				.upload(false).build()
 		jdk11Maker.deploy(projectName)
