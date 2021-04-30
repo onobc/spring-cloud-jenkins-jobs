@@ -105,6 +105,9 @@ class AllCloudJobs {
 	public static final List<String> INCUBATOR_JOBS = ['spring-cloud-sleuth-otel',
 													   'spring-cloud-square']
 
+
+	public static final Map<String, List<String>> INCUBATOR_JOBS_WITH_BRANCHES = ['spring-cloud-sleuth-otel'      : ['1.1.x']]
+
 	/**
 	 * Mapping of a lowercase release train name to a given boot version ordered in time. If you provide
 	 * full MAJOR.MINOR.PATCH then we will use exactly that version.

@@ -9,6 +9,7 @@ import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMake
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseTrainDocsMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.VaultCompatibilityBuildMaker
@@ -141,21 +142,33 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 
 
 // CI BUILDS FOR INCUBATOR
-INCUBATOR_JOBS.each {String projectName ->
-	new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
+INCUBATOR_JOBS.each { String projectName ->
+	def org = "spring-cloud-incubator"
+	new SpringCloudDeployBuildMaker(dsl, org).with {
 		deploy(projectName)
 
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.organization("spring-cloud-incubator")
-				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
+		def jdk11Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
+				.organization(org)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk15())
 				.cron(oncePerDay())
-				.upload(false).build().deploy(projectName)
+				.upload(false).build()
+		jdk11Maker.deploy(projectName)
 
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.organization("spring-cloud-incubator")
+		def jdk16Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
+				.organization(org)
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
 				.cron(oncePerDay())
-				.upload(false).build().deploy(projectName)
+				.upload(false).build()
+		jdk16Maker.deploy(projectName)
+
+		List<String> branches = AllCloudJobs.INCUBATOR_JOBS_WITH_BRANCHES[projectName]
+		if (branches) {
+			branches.each {
+				jdk11Maker.deploy(projectName, it)
+				jdk16Maker.deploy(projectName, it)
+			}
+		}
 	}
+
 }
 
