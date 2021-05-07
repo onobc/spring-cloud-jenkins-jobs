@@ -64,9 +64,8 @@ class VaultCompatibilityBuildMaker extends CompatibilityBuildMaker implements Ha
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(antiPermgenAndJava7TlsHack())
-				shell("""\
-						${antiPermgenAndJava7TlsHack()}
+				// #!/bin/bash must be first in the line without tabs
+				shell("""${antiPermgenAndJava7TlsHack()}
 						${preVaultShell()}
 						trap "{ ${postVaultShell()} }" EXIT
 						${ checkTests ? runTestsForBoot() : compileProductionForBoot()}
