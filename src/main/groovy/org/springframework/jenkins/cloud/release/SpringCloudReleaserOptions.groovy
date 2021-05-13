@@ -18,7 +18,7 @@ class SpringCloudReleaserOptions {
 					   .releaseThisTrainBom("spring-cloud-dependencies/pom.xml")
 					   .releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-release")
 					   .releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-release")
-					   .releaserBranch("master")
+					   .releaserBranch("main")
 					   .releaserConfigBranch("jenkins-releaser-config")
 					   .projectsToSkip(AllCloudConstants.DEFAULT_RELEASER_SKIPPED_PROJECTS)
 					   .releaseTrainProjectName("spring-cloud-release")
@@ -38,7 +38,7 @@ class SpringCloudReleaserOptions {
 					   .dryRun(false)
 	}
 
-	static ReleaserOptions springCloudMaster() {
+	static ReleaserOptions springCloudMain() {
 		return springCloudBuilder()
 				.updateSagan(false)
 				.build()
@@ -50,7 +50,7 @@ class SpringCloudReleaserOptions {
 							  .releaseThisTrainBom("spring-cloud-stream-dependencies/pom.xml")
 							  .releaseTrainBomUrl("https://github.com/spring-cloud/spring-cloud-stream-starters")
 							  .releaserConfigUrl("https://raw.githubusercontent.com/spring-cloud/spring-cloud-stream-starters")
-							  .releaserBranch("master")
+							  .releaserBranch("main")
 							  .releaserConfigBranch("jenkins-releaser-config")
 							  .projectsToSkip(AllCloudConstants.DEFAULT_STREAM_RELEASER_SKIPPED_PROJECTS)
 							  .releaseTrainProjectName("spring-cloud-stream-starters")
@@ -81,7 +81,7 @@ class SpringCloudReleaserOptions {
 					   .projectName("reactor")
 					   .releaseTrainBomUrl("https://github.com/reactor/reactor")
 					   .releaserConfigUrl("https://raw.githubusercontent.com/reactor/reactor")
-					   .releaserBranch("master")
+					   .releaserBranch("main")
 					   .releaserConfigBranch("releases")
 					   .releaseTrainProjectName("reactor")
 					   .releaseTrainDependencyNames(["reactor"])
@@ -100,7 +100,7 @@ class SpringCloudReleaserOptions {
 					   .postReleaseOnly(false)
 	}
 
-	static ReleaserOptions reactorMaster() {
+	static ReleaserOptions reactorMain() {
 		return reactorBuilder()
 				.updateSagan(false)
 				.build()

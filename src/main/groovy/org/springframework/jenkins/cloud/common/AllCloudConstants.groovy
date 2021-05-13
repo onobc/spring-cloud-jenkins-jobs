@@ -17,7 +17,7 @@ class AllCloudConstants {
 	/**
 	 * Spring Cloud Build branch used for compatibility builds.
 	 */
-	public static final String SPRING_CLOUD_BUILD_BRANCH_FOR_COMPATIBILITY_BUILD = 'master'
+	public static final String SPRING_CLOUD_BUILD_BRANCH_FOR_COMPATIBILITY_BUILD = "main"
 
 	/**
 	 * Latest version of Boot to be checked. Used in some E2E test (e.g. Camden vs latest Boot)

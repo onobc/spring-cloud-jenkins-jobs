@@ -27,7 +27,7 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 
 	@Override
 	void deploy() {
-		doDeploy("${prefixJob(repoName)}-${masterBranch()}-ci", masterBranch())
+		doDeploy("${prefixJob(repoName)}-${mainBranch()}-ci", mainBranch())
 	}
 
 	@Override
@@ -52,7 +52,7 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 
 	@Override
 	void jdkBuild(String jdkVersion) {
-		doDeploy("spring-cloud-${jdkVersion}-${projectName()}-${masterBranch()}-ci", masterBranch(), jdkVersion, false)
+		doDeploy("spring-cloud-${jdkVersion}-${projectName()}-${mainBranch()}-ci", mainBranch(), jdkVersion, false)
 	}
 
 	private void doDeploy(String projectName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
@@ -109,11 +109,15 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(deploy ? cleanDeployWithDocs() : cleanInstallWithoutDocs())
+//				Build Spring Cloud Kubernetes without deploying to generate images etc
+//				Then run integration tests
+//				 After integration tests pass then deploy artifacts (skip tests since they were already run during the first build)
+				shell("./mvnw clean install -Pspring -B -U")
 				shell("""#!/bin/bash
 	cd spring-cloud-kubernetes-integration-tests
     ./run.sh
 """)
+				shell(deploy ? "./mvnw deploy -Pdocs,deploy,spring -B -U -DskipTests=true" : "./mvnw install -Pdeploy,spring -B -U -DskipTests=true")
 				shell("""
 				 ./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configuration-watcher -Pdockerpush
 """)

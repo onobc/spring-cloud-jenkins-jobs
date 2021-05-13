@@ -2,7 +2,6 @@ package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
 
-import org.springframework.jenkins.cloud.ci.ConsulSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.CustomJobFactory
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
@@ -10,8 +9,10 @@ import org.springframework.jenkins.cloud.ci.SpringCloudKubernetesDeployBuildMake
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseToolsBuildMaker
 import org.springframework.jenkins.cloud.ci.SpringCloudReleaseTrainDocsMaker
 import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
+import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
+import org.springframework.jenkins.cloud.compatibility.VaultCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
@@ -35,10 +36,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.upload(false).build().deploy(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
-				.onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deploy(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
 				.onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deploy(it)
@@ -50,9 +47,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 		// JDK compatibility
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
-				.upload(false).build().deployWithoutTests(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15()).onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16()).onGithubPush(false).cron(oncePerDay())
@@ -68,7 +62,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk15())
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk16())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
@@ -86,23 +79,32 @@ new SpringCloudReleaseToolsBuildMaker(dsl).with {
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
-	[jdk11(), jdk15(), jdk16()].each {
+	[jdk11(), jdk16()].each {
 		buildForIlfordWithJdk(it)
 	}
 }
 
 new SpringCloudReleaseTrainDocsMaker(dsl).with {
-	deploy(masterBranch())
+	deploy(mainBranch())
 	deploy("Hoxton")
 }
 
 ALL_DEFAULT_JOBS.each {String project ->
 	boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
 	new BootCompatibilityBuildMaker(dsl).with {
-		it.buildWithTests(project, project, "master", oncePerDay(), checkTests)
+		it.buildWithTests(project, project, "main", oncePerDay(), checkTests)
 	}
 }
 // TODO: compatibility builds for custom job projects
+new BootCompatibilityBuildMaker(dsl).with {
+	it.buildWithTests("spring-cloud-netflix", "spring-cloud-netflix", "main", oncePerDay(), true)
+}
+new BootCompatibilityBuildMaker(dsl).with {
+	it.buildWithTests("spring-cloud-contract", "spring-cloud-contract", "main", oncePerDay(), true)
+}
+new VaultCompatibilityBuildMaker(dsl).with {
+	it.buildWithTests("spring-cloud-vault", "spring-cloud-vault", "main", oncePerDay(), true)
+}
 
 // BRANCHES BUILD - spring-cloud organization
 // Build that allows you to deploy, and build gh-pages of multiple branches. Used for projects
@@ -122,30 +124,43 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 // Release branches for Spring Cloud Release
 new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', 'Hoxton', false)
+new SpringCloudDeployBuildMaker(dsl)
+		.deploy('spring-cloud-release', '2021.0.x', false)
 
-new ConsulSpringCloudDeployBuildMaker(dsl).deploy()
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
 new VaultSpringCloudDeployBuildMaker(dsl).with {
-	deploy(masterBranch())
+	deploy(mainBranch())
 }
 
 
 // CI BUILDS FOR INCUBATOR
-INCUBATOR_JOBS.each {String projectName ->
-	new SpringCloudDeployBuildMaker(dsl, "spring-cloud-incubator").with {
+INCUBATOR_JOBS.each { String projectName ->
+	def org = "spring-cloud-incubator"
+	new SpringCloudDeployBuildMaker(dsl, org).with {
 		deploy(projectName)
 
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.organization("spring-cloud-incubator")
-				.prefix("spring-cloud-${jdk15()}").jdkVersion(jdk15())
+		def jdk11Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
+				.organization(org)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.cron(oncePerDay())
-				.upload(false).build().deploy(projectName)
+				.upload(false).build()
+		jdk11Maker.deploy(projectName)
 
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.organization("spring-cloud-incubator")
+		def jdk16Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
+				.organization(org)
 				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
 				.cron(oncePerDay())
-				.upload(false).build().deploy(projectName)
+				.upload(false).build()
+		jdk16Maker.deploy(projectName)
+
+		List<String> branches = AllCloudJobs.INCUBATOR_JOBS_WITH_BRANCHES[projectName]
+		if (branches) {
+			branches.each {
+				jdk11Maker.deploy(projectName, it)
+				jdk16Maker.deploy(projectName, it)
+			}
+		}
 	}
+
 }
 

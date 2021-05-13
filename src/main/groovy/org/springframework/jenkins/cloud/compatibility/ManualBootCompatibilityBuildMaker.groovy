@@ -27,7 +27,7 @@ class ManualBootCompatibilityBuildMaker implements SpringCloudJobs {
 		dsl.multiJob("spring-cloud-${BOOT_COMPATIBILITY_SUFFIX}") {
 			parameters {
 				stringParam(SPRING_BOOT_VERSION_VAR, DEFAULT_BOOT_MINOR_VERSION, 'Which version of Spring Boot should be used for the build')
-				stringParam(SPRING_CLOUD_BUILD_BRANCH, masterBranch(), 'Which branch of Spring Cloud Build should be cloned')
+				stringParam(SPRING_CLOUD_BUILD_BRANCH, mainBranch(), 'Which branch of Spring Cloud Build should be cloned')
 			}
 			steps {
 				phase('spring-boot-compatibility-phase') {
@@ -51,7 +51,6 @@ class ManualBootCompatibilityBuildMaker implements SpringCloudJobs {
 			new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTests(it)
 		}
 		new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTests("spring-cloud-contract")
-		new ConsulCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX).buildWithoutTestsForBoot()
 		new BootCompatibilityBuildMaker(dsl, BOOT_COMPATIBILITY_SUFFIX, 'spring-cloud-samples').buildWithoutTests('tests')
 	}
 }

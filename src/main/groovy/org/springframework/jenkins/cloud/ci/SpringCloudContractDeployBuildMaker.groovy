@@ -42,7 +42,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 
 	@Override
 	void deploy() {
-		doDeploy("${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch())
+		doDeploy("${prefixJob(projectName)}-${mainBranch()}-ci", this.projectName, mainBranch())
 	}
 
 	@Override
@@ -67,7 +67,7 @@ class SpringCloudContractDeployBuildMaker implements JdkConfig, TestPublisher, C
 
 	@Override
 	void jdkBuild(String jdkVersion) {
-		doDeploy("spring-cloud-${jdkVersion}-${prefixJob(projectName)}-${masterBranch()}-ci", this.projectName, masterBranch(), jdkVersion, false)
+		doDeploy("spring-cloud-${jdkVersion}-${prefixJob(projectName)}-${mainBranch()}-ci", this.projectName, mainBranch(), jdkVersion, false)
 	}
 
 	private void doDeploy(String projectName, String repoName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {

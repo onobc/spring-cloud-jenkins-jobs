@@ -6,19 +6,19 @@ import javaposse.jobdsl.dsl.jobs.FreeStyleJob
 /**
  * @author Marcin Grzejszczak
  */
-class SpringCloudReleaseMasterMaker extends SpringCloudReleaseMaker {
+class SpringCloudReleaseMainMaker extends SpringCloudReleaseMaker {
 
-	SpringCloudReleaseMasterMaker(DslFactory dsl) {
+	SpringCloudReleaseMainMaker(DslFactory dsl) {
 		super(dsl)
 	}
 
-	SpringCloudReleaseMasterMaker(DslFactory dsl, String organization) {
+	SpringCloudReleaseMainMaker(DslFactory dsl, String organization) {
 		super(dsl, organization)
 	}
 
 	@Override
 	protected String projectName(String project) {
-		return "${project}-${masterBranch()}-releaser"
+		return "${project}-${mainBranch()}-releaser"
 	}
 
 	@Override
@@ -29,7 +29,7 @@ class SpringCloudReleaseMasterMaker extends SpringCloudReleaseMaker {
 
 	@Override
 	protected String branchToCheck() {
-		return masterBranch()
+		return mainBranch()
 	}
 
 	@Override

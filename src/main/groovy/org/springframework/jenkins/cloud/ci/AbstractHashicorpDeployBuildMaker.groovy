@@ -31,7 +31,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	}
 
 	@Override
-	void deploy(String branchName = 'master') {
+	void deploy(String branchName = "main") {
 		dsl.job("$project-$branchName-ci") {
 			triggers {
 				cron cronValue
@@ -104,7 +104,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	void jdkBuild(String jdkVersion) {
 		this.jdkVersion = jdkVersion
 		this.upload = false
-		deploy(masterBranch())
+		deploy(mainBranch())
 	}
 
 	protected String antiPermgenAndJava7TlsHack() {

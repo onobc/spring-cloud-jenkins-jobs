@@ -46,12 +46,12 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 		dsl.job(projectName(project)) {
 			additionalConfiguration(delegate as FreeStyleJob)
 			parameters {
-				stringParam(branchVarName(), masterBranch(), "Your project's branch")
+				stringParam(branchVarName(), mainBranch(), "Your project's branch")
 				stringParam(RELEASE_VERSION_PARAM, "", "Name of the release (e.g. Hoxton.RELEASE). Will correspond to the properties file (e.g. hoxton_release.properties) in the branch with releaser properties")
 				stringParam(RELEASER_BRANCH_PARAM, options.releaserBranch, "Branch for the releaser code")
 				stringParam(RELEASER_CONFIG_URL_PARAM, options.releaserConfigUrl, "Root of the URL where the RAW version of the configuration file is present")
 				stringParam(RELEASER_CONFIG_BRANCH_PARAM, options.releaserConfigBranch, "Branch, where the RAW version of the configuration file is present")
-				stringParam(RELEASER_POM_BRANCH_VAR, masterBranch(), "Spring Cloud Release branch. If [${RELEASE_VERSION_PARAM}] was passed, then this will be ignored")
+				stringParam(RELEASER_POM_BRANCH_VAR, mainBranch(), "Spring Cloud Release branch. If [${RELEASE_VERSION_PARAM}] was passed, then this will be ignored")
 				stringParam(RELEASER_ADDITIONAL_PROPS_VAR, '', 'Additional system properties')
 				stringParam(RELEASER_RELEASE_TRAIN_PROJECT_NAME_VAR, options.releaseTrainProjectName, 'Name of the project that represents the BOM of the release train')
 				stringParam(RELEASER_GIT_RELEASE_TRAIN_BOM_URL_VAR, options.releaseTrainBomUrl, 'Subfolder of the pom that contains the versions for the release train')

@@ -21,7 +21,6 @@ class CustomJobFactory implements JdkConfig, Cron {
 		this.organization = "spring-cloud"
 		this.jobs.putAll(
 				[
-						(consul().projectName())  : consul(),
 						(build().projectName())   : build(),
 						(contract().projectName()): contract(),
 						(netflix().projectName()) : netflix(),
@@ -60,18 +59,6 @@ class CustomJobFactory implements JdkConfig, Cron {
 
 	String compileOnlyCommand(String projectName) {
 		return jobOrException(projectName).compileOnlyCommand()
-	}
-
-	private CustomJob consul() {
-		ConsulSpringCloudDeployBuildMaker maker = new ConsulSpringCloudDeployBuildMaker(dsl) {
-			@Override
-			boolean checkTests() {
-				return false
-			}
-		}
-		maker.cronValue = oncePerDay()
-		maker.onGithubPush = false
-		return maker
 	}
 
 	private CustomJob build() {

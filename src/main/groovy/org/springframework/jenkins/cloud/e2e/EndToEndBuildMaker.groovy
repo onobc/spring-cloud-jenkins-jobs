@@ -141,7 +141,7 @@ class EndToEndBuildMaker implements TestPublisher,
 	}
 
 	protected String branchName() {
-		return "master"
+		return "main"
 	}
 
 	protected void customConfiguration(String projectName, Node node) {

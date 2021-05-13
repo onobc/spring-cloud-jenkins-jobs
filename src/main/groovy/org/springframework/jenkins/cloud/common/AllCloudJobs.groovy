@@ -10,7 +10,7 @@ import groovy.transform.CompileStatic
  *
  * e.g.
  *
- * spring-cloud-sleuth-master-ci
+ * spring-cloud-sleuth-main-ci
  * spring-cloud-netflix-1.0.x-ci
  *
  * @author Marcin Grzejszczak
@@ -36,14 +36,14 @@ class AllCloudJobs {
 																	 "spring-cloud-stream-binder-kafka",
 																	 "spring-cloud-schema-registry"]
 
-	public static final List<String> ALL_JOBS_WITH_NO_MASTER_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN = [
+	public static final List<String> ALL_JOBS_WITH_NO_MAIN_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN = [
 	        "spring-cloud-gcp"
 	]
 
 	/**
-	 * List of all single project jobs to be used by the master releaser
+	 * List of all single project jobs to be used by the main releaser
 	 */
-	public static final List<String> ALL_MASTER_RELEASER_JOBS = ALL_JOBS - ALL_JOBS_WITH_NO_MASTER_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN
+	public static final List<String> ALL_MAIN_RELEASER_JOBS = ALL_JOBS - ALL_JOBS_WITH_NO_MAIN_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN
 
 	/**
 	 * List of all single project jobs to be used by the releaser
@@ -73,14 +73,14 @@ class AllCloudJobs {
 	 * we will have custom implementations. Check out {@link org.springframework.jenkins.cloud.compatibility.ManualBootCompatibilityBuildMaker}
 	 * for more info.
 	 */
-	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-consul', 'spring-cloud-build',
-														  'spring-cloud-contract', 'spring-cloud-netflix', 'spring-cloud-vault']
+	public static final List<String> CUSTOM_BUILD_JOBS = ['spring-cloud-build', 'spring-cloud-contract',
+														  'spring-cloud-netflix', 'spring-cloud-vault']
 
 	/**
-	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for master branch. Sometimes you need other branches.
+	 * {@link AllCloudJobs#ALL_DEFAULT_JOBS} creates jobs for main branch. Sometimes you need other branches.
 	 * That's why it's enough to provide the name of the project and the list of branches to build
 	 */
-	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.2.x'],
+	public static final Map<String, List<String>> JOBS_WITH_BRANCHES = ['spring-cloud-sleuth'      : ['2.2.x', '3.1.x'],
 																		'spring-cloud-cli'         : ['2.2.x'],
 																		'spring-cloud-gcp'           : ['1.1.x'],
 																		'spring-cloud-circuitbreaker': ['1.0.x'],
@@ -105,6 +105,9 @@ class AllCloudJobs {
 	public static final List<String> INCUBATOR_JOBS = ['spring-cloud-sleuth-otel',
 													   'spring-cloud-square']
 
+
+	public static final Map<String, List<String>> INCUBATOR_JOBS_WITH_BRANCHES = ['spring-cloud-sleuth-otel'      : ['1.1.x']]
+
 	/**
 	 * Mapping of a lowercase release train name to a given boot version ordered in time. If you provide
 	 * full MAJOR.MINOR.PATCH then we will use exactly that version.
@@ -112,6 +115,7 @@ class AllCloudJobs {
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
 			// TODO: 2020.0 is the train, 2020.0.0 is like Hoxton.RELEASE not Hoxton
 			"2020.0"   : "2.4.3", // boot version 2.4.x
+			"2021.0"   : "2.4.3", // boot version 2.4.x then 2.5.x
 			"hoxton"   : "2.3", // boot version 2.2.x
 			"greenwich": "2.1" // boot version 2.1.x
 	]

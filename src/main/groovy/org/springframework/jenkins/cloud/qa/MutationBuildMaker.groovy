@@ -38,7 +38,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 				git {
 					remote {
 						url "https://github.com/spring-cloud/$projectName"
-						branch 'master'
+						branch "main"
 					}
 					extensions {
 						wipeOutWorkspace()

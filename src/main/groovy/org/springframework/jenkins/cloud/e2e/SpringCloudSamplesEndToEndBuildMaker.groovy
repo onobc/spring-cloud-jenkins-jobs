@@ -50,10 +50,10 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 	}
 
 	void buildWithoutTests(String projectName, String cronExpr) {
-		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, masterBranch(), "", false, false)
+		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, mainBranch(), "", false, false)
 	}
 
-	void buildWithGradleAndMavenTests(String projectName, String cronExpr, String branch = masterBranch()) {
+	void buildWithGradleAndMavenTests(String projectName, String cronExpr, String branch = mainBranch()) {
 		build(projectName, projectName, "scripts/runAcceptanceTests.sh", cronExpr, branch, '', true, true)
 	}
 
@@ -61,7 +61,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 		return this.jdkVersion == jdk8() ? "" : "${this.jdkVersion}-"
 	}
 
-	protected void build(String projectName, String repoName, String scriptName, String cronExpr, String branchName = masterBranch(),
+	protected void build(String projectName, String repoName, String scriptName, String cronExpr, String branchName = mainBranch(),
 						 String postBuildScripts = "", boolean mavenTests = false,
 						 boolean gradleTests = false, String newLabel = "", boolean isWipeOutWorkspace = true, boolean withNodeJs = false) {
 		String organization = this.organization
