@@ -156,6 +156,7 @@ INCUBATOR_JOBS.each { String projectName ->
 		List<String> branches = AllCloudJobs.INCUBATOR_JOBS_WITH_BRANCHES[projectName]
 		if (branches) {
 			branches.each {
+				deploy(projectName, it)
 				jdk11Maker.deploy(projectName, it)
 				jdk16Maker.deploy(projectName, it)
 			}
