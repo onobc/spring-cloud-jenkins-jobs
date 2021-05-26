@@ -23,7 +23,6 @@ class SleuthBenchmarksBuildMaker implements JdkConfig, Cron {
 
 	void buildSleuth(String cronExpr) {
 		dsl.job('spring-cloud-sleuth-benchmark-ci') {
-			label("largemem")
 			triggers {
 				cron cronExpr
 			}
