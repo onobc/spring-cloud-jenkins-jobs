@@ -21,7 +21,7 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("sleuth-issues", mainBranch(), oncePerDay())
 	buildWithMavenTests("sleuth-issues", "2.2.x", oncePerDay())
 	buildWithMavenTests("sleuth-documentation-apps", mainBranch(), oncePerDay())
-	buildWithMavenTests("sleuth-documentation-apps", "2.2.x", oncePerDay())
+	buildWithMavenTests("sleuth-documentation-apps", "3.1.x", oncePerDay())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())
