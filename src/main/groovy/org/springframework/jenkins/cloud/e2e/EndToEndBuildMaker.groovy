@@ -63,7 +63,7 @@ class EndToEndBuildMaker implements TestPublisher,
 				environmentVariables([
 						TERM: 'dumb',
 						RETRIES: 70,
-						WAVEFRONT_URI: "https://longboard.wavefront.com"
+						WAVEFRONT_URI: "https://vmware.wavefront.com"
 				])
 				timeout {
 					noActivity(defaultInactivity())
