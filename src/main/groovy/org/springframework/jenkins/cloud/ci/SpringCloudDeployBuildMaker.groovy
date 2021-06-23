@@ -8,6 +8,7 @@ import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.cloud.common.SpringCloudNotification
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
+import org.springframework.jenkins.common.job.Slack
 import org.springframework.jenkins.common.job.TestPublisher
 
 /**
@@ -20,6 +21,8 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	final String prefix
 	boolean upload = true
 	String jdkVersion = jdk8()
+
+	Closure<Node> slack = { Node node -> SpringCloudNotification.cloudSlack(node) }
 
 	SpringCloudDeployBuildMaker(DslFactory dsl) {
 		this(dsl, 'spring-cloud', '')
@@ -113,7 +116,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 				shell(buildCommand())
 			}
 			configure {
-				SpringCloudNotification.cloudSlack(it as Node)
+				slack.call(it as Node)
 			}
 			if (checkTests) {
 				publishers {

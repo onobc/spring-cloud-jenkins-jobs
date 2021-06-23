@@ -12,6 +12,7 @@ class SpringCloudNotification {
 	public static final String CLOUD_ROOM = "spring-cloud-firehose"
 	public static final String CLOUD_PIPELINES_ROOM = "cloudpipes-firehose"
 	public static final String STREAM_ROOM = "s-c-stream-firehose"
+	public static final String OBSERVABILITY_ROOM = "observability-firehose"
 
 	static Slack cloudSlack(Node rootNode) {
 		return SlackPlugin.slackNotification(rootNode) {
@@ -32,6 +33,22 @@ class SpringCloudNotification {
 	static Slack cloudPipelinesSlack(Node rootNode) {
 		return SlackPlugin.slackNotification(rootNode) {
 			room(CLOUD_PIPELINES_ROOM)
+			notifySuccess(false)
+			notifyAborted(false)
+			notifyNotBuilt(false)
+			notifyUnstable(true)
+			notifyRegression(false)
+			notifyFailure(false)
+			notifyBackToNormal(true)
+			notifyRepeatedFailure(true)
+			includeTestSummary(true)
+			includeFailedTests(true)
+		}
+	}
+
+	static Slack observabilitySlack(Node rootNode) {
+		return SlackPlugin.slackNotification(rootNode) {
+			room(OBSERVABILITY_ROOM)
 			notifySuccess(false)
 			notifyAborted(false)
 			notifyNotBuilt(false)

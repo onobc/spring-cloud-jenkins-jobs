@@ -7,6 +7,7 @@ import org.springframework.jenkins.cloud.common.CloudCron
 import org.springframework.jenkins.cloud.common.SpringCloudJobs
 import org.springframework.jenkins.common.job.JdkConfig
 import org.springframework.jenkins.common.job.Maven
+import org.springframework.jenkins.common.job.Slack
 import org.springframework.jenkins.common.job.TestPublisher
 
 /**
@@ -15,11 +16,12 @@ import org.springframework.jenkins.common.job.TestPublisher
 @CompileStatic
 class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, CloudCron,
 		SpringCloudJobs, Maven {
-	private final DslFactory dsl
+	protected final DslFactory dsl
 	String organization
 	String prefix
 	String jdkVersion = jdk8()
 	boolean upload = true
+	Closure<Node> slack
 
 	SpringCloudDeployBuildMakerBuilder(DslFactory dsl) {
 		this.dsl = dsl
@@ -55,9 +57,15 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 		return this
 	}
 
+	SpringCloudDeployBuildMakerBuilder slack(Closure<Node> slack) {
+		this.slack = slack
+		return this
+	}
+
 	SpringCloudDeployBuildMaker build() {
 		def maker = new SpringCloudDeployBuildMaker(this.dsl, this.organization, this.prefix)
 		if (this.jdkVersion) maker.jdkVersion = this.jdkVersion
+		if (this.slack) maker.slack = this.slack
 		maker.upload = this.upload
 		maker.cronValue = this.cronValue
 		maker.onGithubPush = this.onGithubPush

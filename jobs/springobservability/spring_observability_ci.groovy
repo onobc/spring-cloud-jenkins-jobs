@@ -2,16 +2,13 @@ package springobservability
 
 import javaposse.jobdsl.dsl.DslFactory
 
-import org.springframework.jenkins.cloud.ci.SpringCloudDeployBuildMakerBuilder
+import org.springframework.jenkins.observability.ci.ObservabilityDeployBuildMakerBuilder
 
 DslFactory dsl = this
 
 // CI BUILDS
-new SpringCloudDeployBuildMakerBuilder(dsl).with {
-	organization("spring-projects")
-	jdkVersion(jdk16())
+new ObservabilityDeployBuildMakerBuilder(dsl).with {
 	upload(true)
 	cron(everyThreeHours())
 	onGithubPush(true)
-	prefix("spring-observability")
 }.build().deploy("spring-observability")
