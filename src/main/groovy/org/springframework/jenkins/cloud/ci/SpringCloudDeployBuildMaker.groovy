@@ -45,6 +45,10 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 
 	private String prefix(String project) {
 		if (this.prefix) {
+			// spring-observability prefix & repo name
+			if (project == this.prefix) {
+				return ""
+			}
 			return this.prefix.endsWith("-") ? this.prefix : this.prefix + "-"
 		}
 		return project.startsWith("spring-cloud-") ? "" : "spring-cloud-"

@@ -18,8 +18,23 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 
 	private final DslFactory dsl
 
+	private final String organization
+
+	String jdkVersion = jdk8()
+
 	MutationBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
+		this.organization = "spring-cloud"
+	}
+
+	MutationBuildMaker(DslFactory dsl, String organization) {
+		this.dsl = dsl
+		this.organization = organization
+	}
+
+	MutationBuildMaker jdk(String jdkVersion) {
+		this.jdkVersion = jdkVersion
+		return this
 	}
 
 	void build(String projectName) {
@@ -37,7 +52,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 			scm {
 				git {
 					remote {
-						url "https://github.com/spring-cloud/$projectName"
+						url "https://github.com/$organization/$projectName"
 						branch "main"
 					}
 					extensions {
@@ -46,7 +61,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 					}
 				}
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			steps defaultSteps()
 			publishers {
 				archiveArtifacts mavenJUnitResults()
