@@ -91,7 +91,7 @@ class AllCloudJobs {
 																		'spring-cloud-consul'        : ['2.2.x'],
 																		'spring-cloud-zookeeper'     : ['2.2.x'],
 																		'spring-cloud-bus'           : ['2.2.x'],
-																		'spring-cloud-build'         : ['2.3.x', '3.1.x'],
+																		'spring-cloud-build'         : ['2.3.x', '3.0.x'],
 																		'spring-cloud-aws'           : ['2.2.x'],
 																		'spring-cloud-gateway'       : ['2.2.x'],
 																		'spring-cloud-security'      : ['2.2.x'],
