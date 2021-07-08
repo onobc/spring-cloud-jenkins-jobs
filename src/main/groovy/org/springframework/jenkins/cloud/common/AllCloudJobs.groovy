@@ -84,7 +84,7 @@ class AllCloudJobs {
 																		'spring-cloud-cli'         : ['2.2.x'],
 																		'spring-cloud-gcp'           : ['1.1.x'],
 																		'spring-cloud-circuitbreaker': ['1.0.x'],
-																		'spring-cloud-commons'       : ['2.2.x'],
+																		'spring-cloud-commons'       : ['2.2.x', '3.0.x'],
 																		'spring-cloud-contract'      : ['2.2.x'],
 																		'spring-cloud-config'        : ['2.2.x'],
 																		'spring-cloud-netflix'       : ['2.2.x'],
