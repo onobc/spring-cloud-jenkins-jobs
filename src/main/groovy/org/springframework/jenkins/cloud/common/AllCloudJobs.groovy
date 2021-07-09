@@ -84,7 +84,7 @@ class AllCloudJobs {
 																		'spring-cloud-build'         : ['2.3.x', '3.0.x'],
 																		'spring-cloud-bus'           : ['2.2.x', '3.0.x'],
 																		'spring-cloud-circuitbreaker': ['1.0.x', '2.0.x'],
-																		'spring-cloud-cli'           : ['2.2.x'],
+																		'spring-cloud-cli'           : ['2.2.x', '3.0.x'],
 																		'spring-cloud-cloudfoundry'  : ['2.2.x', '3.0.x'],
 																		'spring-cloud-commons'       : ['2.2.x', '3.0.x'],
 																		'spring-cloud-config'        : ['2.2.x', '3.0.x'],
