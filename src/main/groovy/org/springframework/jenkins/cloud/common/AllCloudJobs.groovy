@@ -93,7 +93,7 @@ class AllCloudJobs {
 																		'spring-cloud-function'      : ['3.0.x'],
 																		'spring-cloud-gateway'       : ['2.2.x', '3.0.x'],
 																		'spring-cloud-gcp'           : ['1.1.x'],
-																		'spring-cloud-kubernetes'    : ['1.1.x'],
+																		'spring-cloud-kubernetes'    : ['1.1.x', '2.0.x'],
 																		'spring-cloud-netflix'       : ['2.2.x', '3.0.x'],
 																		'spring-cloud-openfeign'     : ['2.2.x', '3.0.x'],
 																		'spring-cloud-security'      : ['2.2.x'],
