@@ -88,7 +88,7 @@ class AllCloudJobs {
 																		'spring-cloud-cloudfoundry'  : ['2.2.x', '3.0.x'],
 																		'spring-cloud-commons'       : ['2.2.x', '3.0.x'],
 																		'spring-cloud-config'        : ['2.2.x', '3.0.x'],
-																		'spring-cloud-consul'        : ['2.2.x'],
+																		'spring-cloud-consul'        : ['2.2.x', '3.0.x'],
 																		'spring-cloud-contract'      : ['2.2.x'],
 																		'spring-cloud-function'      : ['3.0.x'],
 																		'spring-cloud-gateway'       : ['2.2.x', '3.0.x'],
