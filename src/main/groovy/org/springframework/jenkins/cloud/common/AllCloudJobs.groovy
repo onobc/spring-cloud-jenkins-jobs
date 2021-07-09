@@ -100,7 +100,7 @@ class AllCloudJobs {
 																		'spring-cloud-sleuth'        : ['2.2.x', '3.0.x'],
 																		'spring-cloud-task'          : ['2.2.x'],
 																		'spring-cloud-vault'         : ['2.2.x'],
-																		'spring-cloud-zookeeper'     : ['2.2.x']]
+																		'spring-cloud-zookeeper'     : ['2.2.x', '3.0.x']]
 
 	public static final List<String> INCUBATOR_JOBS = ['spring-cloud-sleuth-otel',
 													   'spring-cloud-square']
