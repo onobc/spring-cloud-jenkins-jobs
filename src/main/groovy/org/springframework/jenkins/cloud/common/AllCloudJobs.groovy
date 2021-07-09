@@ -97,7 +97,7 @@ class AllCloudJobs {
 																		'spring-cloud-netflix'       : ['2.2.x', '3.0.x'],
 																		'spring-cloud-openfeign'     : ['2.2.x', '3.0.x'],
 																		'spring-cloud-security'      : ['2.2.x'],
-																		'spring-cloud-sleuth'        : ['2.2.x', '3.1.x'],
+																		'spring-cloud-sleuth'        : ['2.2.x', '3.0.x'],
 																		'spring-cloud-task'          : ['2.2.x'],
 																		'spring-cloud-vault'         : ['2.2.x'],
 																		'spring-cloud-zookeeper'     : ['2.2.x']]
