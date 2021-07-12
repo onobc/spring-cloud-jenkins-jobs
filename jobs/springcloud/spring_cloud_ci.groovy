@@ -77,15 +77,6 @@ new SpringCloudReleaseToolsBuildMaker(dsl).with {
 	deploy("1.0.x")
 }
 
-new SpringCloudSamplesTestsBuildMaker(dsl).with {
-	buildForIlford()
-	buildForJubilee()
-	[jdk11(), jdk16()].each {
-		buildForIlfordWithJdk(it)
-		buildForJubileeWithJdk(it)
-	}
-}
-
 new SpringCloudReleaseTrainDocsMaker(dsl).with {
 	deploy(mainBranch())
 	deploy("2020.0.x")

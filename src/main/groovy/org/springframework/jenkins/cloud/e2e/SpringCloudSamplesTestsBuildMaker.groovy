@@ -28,11 +28,11 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForIlford() {
-		build("2020.0", "tests-2020.0", everySixHours(), "2020.0.x")
+		build("2020.0", "tests", everySixHours(), "2020.0.x")
 	}
 
 	void buildForIlfordWithJdk(String jdk) {
-		build("2020.0", "tests-2020.0-${jdk}", everySixHours(), "2020.0.x", jdk)
+		build("2020.0", "tests-${jdk}", everySixHours(), "2020.0.x", jdk)
 	}
 
 	void buildForJubilee() {

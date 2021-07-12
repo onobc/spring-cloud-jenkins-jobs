@@ -76,7 +76,6 @@
 						<configuration>
 							<sources>
 								<source>jobs</source>
-								<source>src/main/groovy</source>
 							</sources>
 						</configuration>
 					</execution>

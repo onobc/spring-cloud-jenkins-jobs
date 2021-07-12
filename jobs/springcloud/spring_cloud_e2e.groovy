@@ -10,8 +10,18 @@ import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudContractSamplesEndToEndBuilder
 import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesEndToEndBuildMaker
+import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 
 DslFactory dsl = this
+
+new SpringCloudSamplesTestsBuildMaker(dsl).with {
+	buildForIlford()
+	buildForJubilee()
+	[jdk11(), jdk16()].each {
+		buildForIlfordWithJdk(it)
+		buildForJubileeWithJdk(it)
+	}
+}
 
 // SLEUTH
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
