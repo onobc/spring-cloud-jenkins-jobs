@@ -95,7 +95,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>
-								${project.basedir}/build/libs
+								${project.basedir}/build/lib
 							</outputDirectory>
 							<includeArtifactIds>jenkins-common</includeArtifactIds>
 						</configuration>
