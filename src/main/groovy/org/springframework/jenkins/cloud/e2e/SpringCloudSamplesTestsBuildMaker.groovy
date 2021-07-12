@@ -28,11 +28,19 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	void buildForIlford() {
-		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests", everySixHours(), mainBranch())
+		build("2020.0", "tests-2020.0", everySixHours(), "2020.0.x")
 	}
 
 	void buildForIlfordWithJdk(String jdk) {
-		build(AllCloudJobs.RELEASE_TRAIN_TO_BOOT_VERSION_MINOR.entrySet().first().key, "tests-${jdk}", everySixHours(), mainBranch(), jdk)
+		build("2020.0", "tests-2020.0-${jdk}", everySixHours(), "2020.0.x", jdk)
+	}
+
+	void buildForJubilee() {
+		build("2021.0", "tests", everySixHours(), mainBranch())
+	}
+
+	void buildForJubilee(String jdk) {
+		build("2021.0", "tests-${jdk}", everySixHours(), mainBranch(), jdk)
 	}
 
 	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),

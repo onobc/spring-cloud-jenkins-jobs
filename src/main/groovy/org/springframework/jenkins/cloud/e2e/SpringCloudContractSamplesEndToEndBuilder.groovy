@@ -36,16 +36,5 @@ class SpringCloudContractSamplesEndToEndBuilder extends SpringCloudSamplesEndToE
                     .withMavenTests(false)
                     .withGradleTests(true)
         }.build(dsl)
-
-        new SpringCloudSamplesEndToEndBuilder().with {
-            it.withRepoName("spring-cloud-contract-samples")
-                    .withProjectName("spring-cloud-contract-samples-docs-only")
-                    .withBranchName(builderBranchName)
-                    .withEnvs(["SKIP_BUILD": "true", "SKIP_COMPATIBILITY" : "true"])
-                    .withCronExpr(oncePerDay())
-                    .withJdk(jdkVersion)
-                    .withMavenTests(false)
-                    .withGradleTests(false)
-        }.build(dsl)
     }
 }

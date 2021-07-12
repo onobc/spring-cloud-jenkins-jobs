@@ -92,8 +92,9 @@ new SpringCloudReleaseTrainDocsMaker(dsl).with {
 
 ALL_DEFAULT_JOBS.each {String project ->
 	boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
+	// We're using the latest Boot version at this point
 	new BootCompatibilityBuildMaker(dsl).with {
-		it.buildWithTests(project, project, "main", oncePerDay(), checkTests)
+		it.buildWithTests(project, project, "main", "", checkTests)
 	}
 }
 // TODO: compatibility builds for custom job projects

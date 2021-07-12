@@ -12,7 +12,7 @@ job('spring-common-seed') {
         }
     }
     steps {
-        gradle("clean build")
+        shell("./mvnw clean install")
         dsl {
             external('jobs/springcommon/*.groovy')
             removeAction('DISABLE')

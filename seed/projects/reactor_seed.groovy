@@ -12,7 +12,7 @@ job('reactor-seed') {
         }
     }
     steps {
-        gradle("clean build")
+        shell("./mvnw clean install")
         dsl {
             external('jobs/reactor/*.groovy')
             removeAction('DISABLE')

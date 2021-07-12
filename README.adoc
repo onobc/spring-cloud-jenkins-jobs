@@ -4,7 +4,7 @@ The repository contains job definitions using https://wiki.jenkins-ci.org/displa
 
 == How to build it
 
-`./gradlew clean build`
+`./mvnw clean install`
 
 WARNING: The ran test only checks if your scripts compile.
 
@@ -53,18 +53,6 @@ the project automatically takes the latest branch version and reuses it as point
 
 Just modify the default properties file contents here `AllCloudConstants.DEFAULT_RELEASER_PROPERTIES_FILE_CONTENT`
 
-= Jenkins
-
-The Gradle build comes with some useful tasks (run `./gradlew tasks` to see the whole list). Let's focus on
-the following ones
-
-```
-Jenkins tasks
--------------
-startJenkins - Starts Jenkins via Docker Compose
-stopJenkins - Stops Jenkins via Docker Compose
-```
-
 = Running Jenkins
 
 Just run 
@@ -72,13 +60,6 @@ Just run
 [source]
 ----
 docker-compose up -d
-----
-
-or
-
-[source]
-----
-./gradlew startJenkins
 ----
 
 and your jenkins with plugins present in `plugins.txt` will be ready at port 8080. 

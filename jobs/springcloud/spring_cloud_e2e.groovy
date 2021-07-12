@@ -37,6 +37,14 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 			.withJdk(jdk11())
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withBranchName("3.0.x")
+			.withJdk(jdk8())
+}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withBranchName("3.0.x")
+			.withJdk(jdk11())
+}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk11())
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
@@ -45,8 +53,10 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", mainBranch(), oncePerDay())
+	buildWithMavenTests("the-legacy-app", "3.0.x", oncePerDay())
 	buildWithMavenTests("the-legacy-app", "2.2.x", oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", mainBranch(), oncePerDay())
+	buildWithMavenTests("sc-contract-car-rental", "3.0.x", oncePerDay())
 	buildWithMavenTests("sc-contract-car-rental", "2.2.x", oncePerDay())
 }
 
@@ -57,7 +67,7 @@ new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk16()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
-["Hoxton", "2020.0"].each {
+["Hoxton", "2020.0", "2021.0"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 

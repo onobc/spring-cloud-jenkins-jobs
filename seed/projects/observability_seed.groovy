@@ -12,7 +12,7 @@ job('observability-seed') {
         }
     }
     steps {
-        gradle("clean build")
+        shell("./mvnw clean install")
         dsl {
             external('jobs/springobservability/*.groovy')
             removeAction('DISABLE')
