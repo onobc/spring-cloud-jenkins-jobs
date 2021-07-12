@@ -39,7 +39,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 		build("2021.0", "tests", everySixHours(), mainBranch())
 	}
 
-	void buildForJubilee(String jdk) {
+	void buildForJubileeWithJdk(String jdk) {
 		build("2021.0", "tests-${jdk}", everySixHours(), mainBranch(), jdk)
 	}
 

@@ -17,11 +17,12 @@ DslFactory dsl = this
 new SleuthBenchmarksBuildMaker(dsl).buildSleuth()
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("spring-cloud-sleuth-samples", mainBranch(), oncePerDay())
-	buildWithMavenTests("spring-cloud-sleuth-samples", "3.1.x", oncePerDay())
+	buildWithMavenTests("spring-cloud-sleuth-samples", "3.0.x", oncePerDay())
 	buildWithMavenTests("sleuth-issues", mainBranch(), oncePerDay())
+	buildWithMavenTests("sleuth-issues", "3.0.x", oncePerDay())
 	buildWithMavenTests("sleuth-issues", "2.2.x", oncePerDay())
 	buildWithMavenTests("sleuth-documentation-apps", mainBranch(), oncePerDay())
-	buildWithMavenTests("sleuth-documentation-apps", "3.1.x", oncePerDay())
+	buildWithMavenTests("sleuth-documentation-apps", "3.0.x", oncePerDay())
 }
 new SleuthEndToEndBuildMaker(dsl).with {
 	buildSleuth(oncePerDay())

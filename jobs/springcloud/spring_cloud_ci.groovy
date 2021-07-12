@@ -79,8 +79,10 @@ new SpringCloudReleaseToolsBuildMaker(dsl).with {
 
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
+	buildForJubilee()
 	[jdk11(), jdk16()].each {
 		buildForIlfordWithJdk(it)
+		buildForJubileeWithJdk(it)
 	}
 }
 

@@ -76,7 +76,6 @@
 						<configuration>
 							<sources>
 								<source>jobs</source>
-								<source>seed</source>
 							</sources>
 						</configuration>
 					</execution>
