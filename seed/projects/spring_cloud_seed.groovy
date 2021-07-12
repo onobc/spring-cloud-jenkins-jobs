@@ -12,7 +12,7 @@ job('spring-cloud-seed') {
         }
     }
     steps {
-        shell("./mvnw clean install")
+        shell("./mvnw clean install -B")
         dsl {
             external('jobs/springcloud/*.groovy')
             removeAction('DISABLE')
