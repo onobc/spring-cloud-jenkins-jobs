@@ -13,7 +13,6 @@ import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
 import org.springframework.jenkins.cloud.compatibility.VaultCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.e2e.SpringCloudSamplesTestsBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS

@@ -49,10 +49,6 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withBranchName("3.0.x")
-			.withJdk(jdk8())
-}.buildAll(dsl)
-new SpringCloudContractSamplesEndToEndBuilder().with {
-	it.withBranchName("3.0.x")
 			.withJdk(jdk11())
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
