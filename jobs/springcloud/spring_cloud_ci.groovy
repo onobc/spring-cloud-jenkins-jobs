@@ -12,7 +12,6 @@ import org.springframework.jenkins.cloud.ci.VaultSpringCloudDeployBuildMaker
 import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.common.CloudJdkConfig
 import org.springframework.jenkins.cloud.compatibility.BootCompatibilityBuildMaker
-import org.springframework.jenkins.cloud.compatibility.VaultCompatibilityBuildMaker
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_DEFAULT_JOBS
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_JOBS_WITH_TESTS
@@ -82,23 +81,25 @@ new SpringCloudReleaseTrainDocsMaker(dsl).with {
 	deploy("Hoxton")
 }
 
-ALL_DEFAULT_JOBS.each {String project ->
-	boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
-	// We're using the latest Boot version at this point
-	new BootCompatibilityBuildMaker(dsl).with {
-		it.buildWithTests(project, project, "main", "", checkTests)
-	}
-}
+
+// TODO: Main is being built against 2.6.0-SNAPSHOTs - we don't need to check the compatibility against Boot 2.5
+//ALL_DEFAULT_JOBS.each {String project ->
+//	boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
+//	// We're using the latest Boot version at this point
+//	new BootCompatibilityBuildMaker(dsl).with {
+//		it.buildWithTests(project, project, "main", "", checkTests)
+//	}
+//}
 // TODO: compatibility builds for custom job projects
-new BootCompatibilityBuildMaker(dsl).with {
-	it.buildWithTests("spring-cloud-netflix", "spring-cloud-netflix", "main", oncePerDay(), true)
-}
-new BootCompatibilityBuildMaker(dsl).with {
-	it.buildWithTests("spring-cloud-contract", "spring-cloud-contract", "main", oncePerDay(), true)
-}
-new VaultCompatibilityBuildMaker(dsl).with {
-	it.buildWithTests("spring-cloud-vault", "spring-cloud-vault", "main", oncePerDay(), true)
-}
+//new BootCompatibilityBuildMaker(dsl).with {
+//	it.buildWithTests("spring-cloud-netflix", "spring-cloud-netflix", "main", oncePerDay(), true)
+//}
+//new BootCompatibilityBuildMaker(dsl).with {
+//	it.buildWithTests("spring-cloud-contract", "spring-cloud-contract", "main", oncePerDay(), true)
+//}
+//new VaultCompatibilityBuildMaker(dsl).with {
+//	it.buildWithTests("spring-cloud-vault", "spring-cloud-vault", "main", oncePerDay(), true)
+//}
 
 // BRANCHES BUILD - spring-cloud organization
 // Build that allows you to deploy, and build gh-pages of multiple branches. Used for projects
