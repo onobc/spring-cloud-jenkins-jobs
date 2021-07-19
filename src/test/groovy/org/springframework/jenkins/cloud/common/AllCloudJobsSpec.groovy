@@ -12,8 +12,8 @@ class AllCloudJobsSpec extends Specification {
 
 		where:
 			cloud               || boot
-			null                || "2.5"
-			"null"              || "2.5"
+			null                || "2.6"
+			"null"              || "2.6"
 			"2020.0.0"          || "2.5"
 			"2020.0.0-SNAPSHOT" || "2.5"
 			"Hoxton.RELEASE"    || "2.3"

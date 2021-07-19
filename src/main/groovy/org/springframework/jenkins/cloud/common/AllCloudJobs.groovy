@@ -111,13 +111,15 @@ class AllCloudJobs {
 	/**
 	 * Mapping of a lowercase release train name to a given boot version ordered in time. If you provide
 	 * full MAJOR.MINOR.PATCH then we will use exactly that version.
+	 *
+	 * IMPORTANT: The latest Boot needs to be the first entry in the map.
 	 */
 	public static final Map<String, String> RELEASE_TRAIN_TO_BOOT_VERSION_MINOR = [
 			// TODO: 2020.0 is the train, 2020.0.0 is like Hoxton.RELEASE not Hoxton
-			"2020.0"   : "2.5", // boot version 2.4.x
-			"2021.0"   : "2.6", // boot version 2.4.x then 2.5.x
-			"hoxton"   : "2.3", // boot version 2.2.x
-			"greenwich": "2.1" // boot version 2.1.x
+			"2021.0"   : "2.6",
+			"2020.0"   : "2.5",
+			"hoxton"   : "2.3",
+			"greenwich": "2.1"
 	]
 
 	static String bootForReleaseTrain(String releaseTrain) {
