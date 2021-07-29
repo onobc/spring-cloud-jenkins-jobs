@@ -111,7 +111,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					additionalCredentials(delegate as CredentialsBindingContext)
 				}
 				timeout {
-					noActivity(300)
+					noActivity(600)
 					failBuild()
 					writeDescription('Build failed due to timeout after {0} minutes of inactivity')
 				}
