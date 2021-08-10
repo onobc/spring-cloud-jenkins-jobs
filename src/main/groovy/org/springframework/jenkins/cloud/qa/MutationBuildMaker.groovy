@@ -20,11 +20,14 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 
 	private final String organization
 
+	String rootView;
+
 	String jdkVersion = jdk8()
 
 	MutationBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
 		this.organization = "spring-cloud"
+		this.rootView = "Spring%20Cloud"
 	}
 
 	MutationBuildMaker(DslFactory dsl, String organization) {
@@ -34,6 +37,11 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 
 	MutationBuildMaker jdk(String jdkVersion) {
 		this.jdkVersion = jdkVersion
+		return this
+	}
+
+	MutationBuildMaker rootView(String rootView) {
+		this.rootView = rootView
 		return this
 	}
 
@@ -77,7 +85,7 @@ class MutationBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 		return buildStep {
 			shell("./mvnw clean verify -Pmutation,spring org.pitest:pitest-maven:report-aggregate-module -U || ${postAction()}")
 			shell('''\
-ROOT_VIEW="Spring%20Cloud"
+ROOT_VIEW=''' + this.rootView + '''
 CURRENT_VIEW="QA"
 INDEX_HTML="target/pit-reports/index.html"
 echo "You can click here to see the PIT report [${JENKINS_URL}/view/${ROOT_VIEW}/view/${CURRENT_VIEW}/job/${JOB_NAME}/ws/${INDEX_HTML}]"

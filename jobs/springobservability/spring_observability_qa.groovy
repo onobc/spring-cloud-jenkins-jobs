@@ -7,5 +7,6 @@ import org.springframework.jenkins.cloud.qa.MutationBuildMaker
 DslFactory dsl = this
 
 new MutationBuildMaker(dsl, "spring-projects").with {
+	rootView("Observability")
 	jdk(jdk16())
 }.build("spring-observability")
