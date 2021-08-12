@@ -17,7 +17,7 @@ DslFactory dsl = this
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
 	buildForJubilee()
-	[jdk11(), jdk16()].each {
+	[jdk11(), jdk16(), jdk17()].each {
 		buildForIlfordWithJdk(it)
 		buildForJubileeWithJdk(it)
 	}
@@ -57,6 +57,9 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk16())
 }.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().with {
+	it.withJdk(jdk17())
+}.buildAll(dsl)
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", mainBranch(), oncePerDay())
@@ -72,6 +75,7 @@ new NetflixEndToEndBuildMaker(dsl).with {
 }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk16()).build() }
+new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk17()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["Hoxton", "2020.0", "2021.0"].each {
