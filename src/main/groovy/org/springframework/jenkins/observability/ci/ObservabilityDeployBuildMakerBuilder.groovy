@@ -25,7 +25,7 @@ class ObservabilityDeployBuildMakerBuilder extends SpringCloudDeployBuildMakerBu
 	ObservabilityDeployBuildMakerBuilder(DslFactory dsl) {
 		super(dsl)
 		jdkVersion(jdk16())
-		organization("spring-projects")
+		organization("spring-projects-experimental")
 		prefix("spring-observability")
 		slack({ Node node -> SpringCloudNotification.observabilitySlack(node) } as Closure<Node>)
 	}
