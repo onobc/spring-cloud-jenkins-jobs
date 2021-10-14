@@ -113,7 +113,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				if [[ \$${RELEASE_VERSION_PARAM} != "" ]]; then
 					echo "Found the release version parameter. Will use the properties file to set the versions"
 					${fetchConfigurationFile("\${releaserJarLocation}")}
-					versions="\$( sed '{:q;N;s/\\n/ --/g;t q}' \${releaserJarLocation}/application.properties )"
+					versions="--\$( sed '{:q;N;s/\\n/ --/g;t q}' \${releaserJarLocation}/application.properties )"
 					additionalParams="--releaser.git.fetch-versions-from-git=false \${versions}"
 				fi
 				echo "Run the releaser against the project"
