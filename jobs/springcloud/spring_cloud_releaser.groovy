@@ -33,3 +33,6 @@ new SpringCloudMetaReleaseRepoPurger(dsl).build()
 
 // Compatibility builds
 new ManualBootCompatibilityBuildMaker(dsl).build()
+
+// Incubator
+new SpringCloudReleaseMaker(dsl, "spring-cloud-incubator").release("spring-cloud-square", SpringCloudReleaserOptions.springCloudIncubator())
