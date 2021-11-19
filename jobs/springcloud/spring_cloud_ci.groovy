@@ -138,7 +138,7 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 
 // CI BUILDS FOR INCUBATOR
 INCUBATOR_JOBS.each { String projectName ->
-	def org = "spring-cloud-incubator"
+	def org = "spring-projects-experimental"
 	new SpringCloudDeployBuildMaker(dsl, org).with {
 		deploy(projectName)
 
