@@ -34,10 +34,6 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.upload(false).build().deploy(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
-				.onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deploy(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17())
 				.onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deploy(it)
@@ -51,10 +47,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
 				.upload(false).build().deployWithoutTests(it)
 		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16()).onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deployWithoutTests(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk16()).onGithubPush(false).cron(oncePerDay())
+				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17()).onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deployWithoutTests(it)
 		// Normal CI build
 		new SpringCloudDeployBuildMakerBuilder(dsl)
@@ -67,7 +60,6 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk16())
 		new CustomJobFactory(dsl).jdkVersion(projectName, jdk17())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
@@ -149,13 +141,6 @@ INCUBATOR_JOBS.each { String projectName ->
 				.upload(false).build()
 		jdk11Maker.deploy(projectName)
 
-		def jdk16Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
-				.organization(org)
-				.prefix("spring-cloud-${jdk16()}").jdkVersion(jdk16())
-				.cron(oncePerDay())
-				.upload(false).build()
-		jdk16Maker.deploy(projectName)
-
 		def jdk17Maker = new SpringCloudDeployBuildMakerBuilder(dsl)
 				.organization(org)
 				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17())
@@ -168,7 +153,6 @@ INCUBATOR_JOBS.each { String projectName ->
 			branches.each {
 				deploy(projectName, it)
 				jdk11Maker.deploy(projectName, it)
-				jdk16Maker.deploy(projectName, it)
 				jdk17Maker.deploy(projectName, it)
 			}
 		}

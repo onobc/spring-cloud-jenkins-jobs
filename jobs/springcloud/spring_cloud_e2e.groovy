@@ -17,7 +17,7 @@ DslFactory dsl = this
 new SpringCloudSamplesTestsBuildMaker(dsl).with {
 	buildForIlford()
 	buildForJubilee()
-	[jdk11(), jdk16(), jdk17()].each {
+	[jdk11(), jdk17()].each {
 		buildForIlfordWithJdk(it)
 		buildForJubileeWithJdk(it)
 	}
@@ -55,9 +55,6 @@ new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk11())
 }.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
-	it.withJdk(jdk16())
-}.buildAll(dsl)
-new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk17())
 }.buildAll(dsl)
 
@@ -74,7 +71,6 @@ new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
-new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk16()).build() }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk17()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
