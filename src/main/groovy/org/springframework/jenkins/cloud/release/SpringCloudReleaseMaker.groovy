@@ -92,7 +92,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 					string(gpgPassphrase(), "spring-gpg-passphrase")
 					string(githubToken(), githubTokenCredId())
 					usernamePassword(sonatypeUser(), sonatypePassword(),
-							"oss-token")
+							"oss-s01-token")
 					additionalCredentials(delegate as CredentialsBindingContext)
 				}
 				timeout {
