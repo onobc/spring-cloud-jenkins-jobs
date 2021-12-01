@@ -107,7 +107,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 					string(gradlePublishKeyEnvVar(), gradlePublishKeySecretId())
 					string(gradlePublishSecretEnvVar(), gradlePublishSecretSecretId())
 					usernamePassword(sonatypeUser(), sonatypePassword(),
-							"oss-token")
+							"oss-s01-token")
 					additionalCredentials(delegate as CredentialsBindingContext)
 				}
 				timeout {
