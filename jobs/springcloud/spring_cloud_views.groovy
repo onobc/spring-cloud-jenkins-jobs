@@ -71,6 +71,7 @@ dsl.nestedView('Spring Cloud') {
 				name('spring-cloud-task-2.3.x-ci')
 				name('spring-cloud-vault-3.0.x-ci')
 				name('spring-cloud-zookeeper-3.0.x-ci')
+				name('spring-cloud-tests-2020.0.x-e2e')
 			}
 			columns defaultColumns()
 		}
@@ -96,6 +97,7 @@ dsl.nestedView('Spring Cloud') {
 				name('spring-cloud-task-main-ci')
 				name('spring-cloud-vault-main-ci')
 				name('spring-cloud-zookeeper-main-ci')
+				name('spring-cloud-tests-main-e2e')
 			}
 			columns defaultColumns()
 		}
