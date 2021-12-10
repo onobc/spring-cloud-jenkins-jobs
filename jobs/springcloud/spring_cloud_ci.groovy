@@ -123,6 +123,7 @@ new SpringCloudDeployBuildMaker(dsl)
 		.deploy('spring-cloud-release', '2020.0.x', false)
 
 new SpringCloudKubernetesDeployBuildMaker(dsl).deploy()
+new SpringCloudKubernetesDeployBuildMaker(dsl).deploy('2.0.x')
 new VaultSpringCloudDeployBuildMaker(dsl).with {
 	deploy(mainBranch())
 }
