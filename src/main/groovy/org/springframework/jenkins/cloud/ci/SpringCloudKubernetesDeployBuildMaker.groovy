@@ -119,7 +119,7 @@ class SpringCloudKubernetesDeployBuildMaker implements JdkConfig, TestPublisher,
 """)
 				shell(deploy ? "./mvnw deploy -Pdocs,deploy,spring -B -U -DskipTests=true" : "./mvnw install -Pdeploy,spring -B -U -DskipTests=true")
 				shell("""./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configuration-watcher -Pdockerpush""")
-				if(!branchName.equals("2.0.x") {
+				if(!branchName.equals("2.0.x")) {
 					shell("""./mvnw dockerfile:push -pl :spring-cloud-kubernetes-configserver -Pdockerpush""")
 					shell("""./mvnw dockerfile:push -pl :spring-cloud-kubernetes-discoveryserver -Pdockerpush""")
 				}
