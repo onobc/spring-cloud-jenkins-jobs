@@ -36,7 +36,6 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 
 // CONTRACT
-}.buildAll(dsl)
 new SpringCloudContractSamplesEndToEndBuilder().with {
 	it.withJdk(jdk11())
 }.buildAll(dsl)
@@ -56,7 +55,7 @@ new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
 new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk17()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
-["2020.0", "2021.0"].each {
+["2020.0", "2021.0", "2022.0"].each {
 	new BreweryEndToEndBuildMaker(dsl).build(it)
 }
 

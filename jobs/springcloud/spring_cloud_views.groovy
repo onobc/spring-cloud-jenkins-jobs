@@ -77,6 +77,32 @@ dsl.nestedView('Spring Cloud') {
 		}
 		listView('CI.Jubilee') {
 			jobs {
+				name('spring-cloud-build-3.1.x-ci')
+				name('spring-cloud-bus-3.1.x-ci')
+				name('spring-cloud-circuitbreaker-2.1.x-ci')
+				name('spring-cloud-cli-3.1.x-ci')
+				name('spring-cloud-cloudfoundry-3.1.x-ci')
+				name('spring-cloud-commons-3.1.x-ci')
+				name('spring-cloud-config-3.1.x-ci')
+				name('spring-cloud-consul-3.1.x-ci')
+				name('spring-cloud-contract-3.1.x-ci')
+				name('spring-cloud-function-3.2.x-ci')
+				name('spring-cloud-gateway-3.1.x-ci')
+				name('spring-cloud-kubernetes-2.1.x-ci')
+				name('spring-cloud-netflix-3.1.x-ci')
+				name('spring-cloud-openfeign-3.1.x-ci')
+				name('spring-cloud-release-2021.0.x-ci')
+				name('spring-cloud-sleuth-3.1.x-ci')
+				name('spring-cloud-stream-3.2.x-ci')
+				name('spring-cloud-task-2.4.x-ci')
+				name('spring-cloud-vault-3.1.x-ci')
+				name('spring-cloud-zookeeper-3.1.x-ci')
+				name('spring-cloud-tests-2021.0.x-e2e')
+			}
+			columns defaultColumns()
+		}
+		listView('CI.Kilburn') {
+			jobs {
 				name('spring-cloud-build-main-ci')
 				name('spring-cloud-bus-main-ci')
 				name('spring-cloud-circuitbreaker-main-ci')
@@ -92,7 +118,6 @@ dsl.nestedView('Spring Cloud') {
 				name('spring-cloud-netflix-main-ci')
 				name('spring-cloud-openfeign-main-ci')
 				name('spring-cloud-release-main-ci')
-				name('spring-cloud-sleuth-main-ci')
 				name('spring-cloud-stream-main-ci')
 				name('spring-cloud-task-main-ci')
 				name('spring-cloud-vault-main-ci')

@@ -77,6 +77,7 @@ new SpringCloudReleaseToolsBuildMaker(dsl).with {
 
 new SpringCloudReleaseTrainDocsMaker(dsl).with {
 	deploy(mainBranch())
+	deploy("2021.0.x")
 	deploy("2020.0.x")
 	deploy("Hoxton")
 }
