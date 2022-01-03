@@ -30,27 +30,23 @@ println "Projects without tests $JOBS_WITHOUT_TESTS"
 new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 	(ALL_DEFAULT_JOBS).each {
 		// JDK compatibility
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
-				.upload(false).build().deploy(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
+		// TODO: Future 18+
+		/*new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17())
 				.onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deploy(it)
+				.upload(false).build().deploy(it)*/
 		// Normal CI build
-		new SpringCloudDeployBuildMakerBuilder(dsl)
+		new SpringCloudDeployBuildMakerBuilder(dsl).jdkVersion(jdk17())
 				.build().deploy(it)
 	}
 	JOBS_WITHOUT_TESTS.each {
 		// JDK compatibility
-		new SpringCloudDeployBuildMakerBuilder(dsl)
-				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
-				.upload(false).build().deployWithoutTests(it)
-		new SpringCloudDeployBuildMakerBuilder(dsl)
+		// TODO: Future 18+
+		/*new SpringCloudDeployBuildMakerBuilder(dsl)
 				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17()).onGithubPush(false).cron(oncePerDay())
-				.upload(false).build().deployWithoutTests(it)
+				.upload(false).build().deployWithoutTests(it)*/
 		// Normal CI build
-		new SpringCloudDeployBuildMakerBuilder(dsl)
+		new SpringCloudDeployBuildMakerBuilder(dsl).jdkVersion(jdk17())
 				.build().deployWithoutTests(it)
 	}
 }
@@ -59,13 +55,14 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
 		new CustomJobFactory(dsl).deploy(projectName)
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
-		new CustomJobFactory(dsl).jdkVersion(projectName, jdk17())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
 		branches.each {
 			new CustomJobFactory(dsl).deploy(projectName, it)
+			// TODO: branch jdk compatibility
+//			new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
+//			new CustomJobFactory(dsl).jdkVersion(projectName, jdk17())
 		}
 	}
 }
@@ -111,6 +108,15 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 	}
 	branches.each { String branch ->
 		boolean checkTests = !JOBS_WITHOUT_TESTS.contains(project)
+		// TODO: Branch jdk compat
+		// JDK compatibility
+		/*new SpringCloudDeployBuildMakerBuilder(dsl)
+				.prefix("spring-cloud-${jdk11()}").jdkVersion(jdk11())
+				.upload(false).build().deploy(it)
+		new SpringCloudDeployBuildMakerBuilder(dsl)
+				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17())
+				.onGithubPush(false).cron(oncePerDay())
+				.upload(true).build().deploy(it)*/
 		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
 		/*new BootCompatibilityBuildMaker(dsl).with {
 			it.buildWithTests("${project}-${branch}", project, branch, oncePerDay(), checkTests)
