@@ -43,6 +43,10 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	}
 
 	void release(String project, ReleaserOptions options = new ReleaserOptions()) {
+		release(project, jdk8(), options)
+	}
+
+	void release(String project, String jdkVersion, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(projectName(project)) {
 			additionalConfiguration(delegate as FreeStyleJob)
 			parameters {
@@ -61,7 +65,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, options.postReleaseOnly, 'If set to true will run only post release tasks')
 				booleanParam(DRY_RUN_PARAM, options.dryRun, 'If true then will run meta-release in a dry run mode')
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			scm {
 				git {
 					remote {

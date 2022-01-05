@@ -24,7 +24,7 @@ class SpringCloudReleaseMainMaker extends SpringCloudReleaseMaker {
 	@Override
 	void release(String project, ReleaserOptions options) {
 		options.updateSagan = false
-		super.release(project, options)
+		super.release(project, jdk17(), options)
 	}
 
 	@Override
