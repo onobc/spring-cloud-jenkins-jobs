@@ -54,13 +54,13 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 // Custom jobs builder
 CUSTOM_BUILD_JOBS.each { String projectName ->
 	new CloudJdkConfig().with {
-		new CustomJobFactory(dsl).deploy(projectName)
+		new CustomJobFactory(dsl).deployWithJdk(projectName, jdk17())
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
 		branches.each { branch ->
 			new CustomJobFactory(dsl).with {
-				it.deployWithJdk(projectName, jdk17(), branch)
+				it.deploy(projectName, branch)
 			}
 			// TODO: branch jdk compatibility
 //			new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
