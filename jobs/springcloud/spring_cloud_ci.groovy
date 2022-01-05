@@ -58,8 +58,10 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	}
 	List<String> branches = JOBS_WITH_BRANCHES[projectName]
 	if (branches) {
-		branches.each {
-			new CustomJobFactory(dsl).deploy(projectName, it)
+		branches.each { branch ->
+			new CustomJobFactory(dsl).with {
+				it.deployWithJdk(projectName, jdk17(), branch)
+			}
 			// TODO: branch jdk compatibility
 //			new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
 //			new CustomJobFactory(dsl).jdkVersion(projectName, jdk17())
