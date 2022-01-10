@@ -20,7 +20,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 	final String organization
 	final String prefix
 	boolean upload = true
-	String jdkVersion = jdk8()
+	String jdkVersion = jdk17()
 
 	Closure<Node> slack = { Node node -> SpringCloudNotification.cloudSlack(node) }
 
@@ -36,10 +36,6 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 		this.dsl = dsl
 		this.organization = organization ?: 'spring-cloud'
 		this.prefix = prefix ?: ''
-	}
-
-	static SpringCloudDeployBuildMaker cloudPipelines(DslFactory dsl) {
-		return new SpringCloudDeployBuildMaker(dsl, "CloudPipelines", "cloudpipelines")
 	}
 
 	void deploy(String project, boolean checkTests = true) {
@@ -69,9 +65,6 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 			}
 			parameters {
 				stringParam(branchVarName(), branchToBuild ?: mainBranch(), 'Which branch should be built')
-			}
-			if (jdkVersion != jdk8()) {
-				label(ubuntu18_04())
 			}
 			jdk jdkVersion
 			scm {

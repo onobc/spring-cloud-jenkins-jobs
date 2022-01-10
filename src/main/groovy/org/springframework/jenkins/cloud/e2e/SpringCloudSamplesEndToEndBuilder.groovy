@@ -19,7 +19,7 @@ class SpringCloudSamplesEndToEndBuilder<T extends SpringCloudSamplesEndToEndBuil
 	String label = ""
 	String postBuildScripts = ""
 	boolean wipeOutWorkspace = true
-	String jdk = jdk8()
+	String jdk = jdk17()
 	boolean mavenTests = false
 	boolean gradleTests = false
 	boolean withNodeJs = false

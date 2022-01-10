@@ -55,7 +55,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 		doDeploy("spring-cloud-${jdkVersion}-${projectName()}-${mainBranch()}-ci", mainBranch(), jdkVersion, false)
 	}
 
-	private void doDeploy(String projectName, String branchName, String jdkVersion = jdk8(), boolean deploy = true) {
+	private void doDeploy(String projectName, String branchName, String jdkVersion = jdk17(), boolean deploy = true) {
 		dsl.job(projectName) {
 			triggers {
 				cron cronValue
@@ -67,9 +67,6 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 				stringParam(branchVarName(), branchName, 'Which branch should be built')
 			}
 			jdk jdkVersion
-			if (jdkVersion != jdk8()) {
-				label(ubuntu18_04())
-			}
 			scm {
 				git {
 					remote {

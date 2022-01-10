@@ -16,7 +16,7 @@ class SpringCloudSamplesEndToEndBuildMaker implements TestPublisher,
 
 	private final DslFactory dsl
 	private final String organization
-	String jdkVersion = jdk11()
+	String jdkVersion = jdk17()
 	Map<String, String> additionalEnvs = [:]
 
 	SpringCloudSamplesEndToEndBuildMaker(DslFactory dsl) {

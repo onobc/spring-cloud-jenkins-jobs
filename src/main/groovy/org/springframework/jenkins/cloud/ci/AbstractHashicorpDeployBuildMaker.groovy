@@ -21,7 +21,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 	protected final DslFactory dsl
 	protected final String organization
 	protected final String project
-	protected String jdkVersion = jdk8()
+	protected String jdkVersion = jdk17()
 	protected boolean upload = true
 
 	AbstractHashicorpDeployBuildMaker(DslFactory dsl, String organization, String project) {

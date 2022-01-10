@@ -14,7 +14,7 @@ class VaultSpringCloudDeployBuildMaker extends AbstractHashicorpDeployBuildMaker
 
 	@Override
 	protected String jdkVersion(String branchName) {
-		return jdk8()
+		return jdk17()
 	}
 
 	@Override

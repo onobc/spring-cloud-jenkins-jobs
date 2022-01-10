@@ -35,7 +35,7 @@ class SpringCloudReleaseToolsBuildMaker implements JdkConfig, TestPublisher, Cro
 			parameters {
 				stringParam(branchVarName(), branchToBuild ?: mainBranch(), 'Which branch should be built')
 			}
-			jdk jdk8()
+			jdk jdk17()
 			scm {
 				git {
 					remote {

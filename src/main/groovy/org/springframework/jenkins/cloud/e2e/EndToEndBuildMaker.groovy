@@ -137,7 +137,7 @@ class EndToEndBuildMaker implements TestPublisher,
 	}
 
 	protected String jdkVersion() {
-		return jdk8()
+		return jdk17()
 	}
 
 	protected String branchName() {

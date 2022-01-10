@@ -19,7 +19,7 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 	protected final DslFactory dsl
 	String organization
 	String prefix
-	String jdkVersion = jdk8()
+	String jdkVersion = jdk17()
 	boolean upload = true
 	Closure<Node> slack
 
@@ -64,8 +64,12 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 
 	SpringCloudDeployBuildMaker build() {
 		def maker = new SpringCloudDeployBuildMaker(this.dsl, this.organization, this.prefix)
-		if (this.jdkVersion) maker.jdkVersion = this.jdkVersion
-		if (this.slack) maker.slack = this.slack
+		if (this.jdkVersion) {
+			maker.jdkVersion = this.jdkVersion
+		}
+		if (this.slack) {
+			maker.slack = this.slack
+		}
 		maker.upload = this.upload
 		maker.cronValue = this.cronValue
 		maker.onGithubPush = this.onGithubPush

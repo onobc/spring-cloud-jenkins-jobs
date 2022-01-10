@@ -36,7 +36,7 @@ new SpringCloudDeployBuildMaker(dsl).with { SpringCloudDeployBuildMaker maker ->
 				.onGithubPush(false).cron(oncePerDay())
 				.upload(false).build().deploy(it)*/
 		// Normal CI build
-		new SpringCloudDeployBuildMakerBuilder(dsl).jdkVersion(jdk17())
+		new SpringCloudDeployBuildMakerBuilder(dsl)
 				.build().deploy(it)
 	}
 	JOBS_WITHOUT_TESTS.each {
@@ -60,13 +60,20 @@ CUSTOM_BUILD_JOBS.each { String projectName ->
 	if (branches) {
 		branches.each { branch ->
 			new CustomJobFactory(dsl).with {
-				it.deploy(projectName, branch)
+				it.deployWithJdk(projectName, jdk8(), branch)
 			}
 			// TODO: branch jdk compatibility
 //			new CustomJobFactory(dsl).jdkVersion(projectName, jdk11())
 //			new CustomJobFactory(dsl).jdkVersion(projectName, jdk17())
 		}
 	}
+}
+
+// Sleuth
+JOBS_WITH_BRANCHES['spring-cloud-sleuth'].each {String branch ->
+	new SpringCloudDeployBuildMakerBuilder(dsl).with {
+		jdkVersion(jdk8())
+	}.build().deploy('spring-cloud-sleuth', branch)
 }
 
 new SpringCloudReleaseToolsBuildMaker(dsl).with {
@@ -119,7 +126,9 @@ JOBS_WITH_BRANCHES.each { String project, List<String> branches ->
 				.prefix("spring-cloud-${jdk17()}").jdkVersion(jdk17())
 				.onGithubPush(false).cron(oncePerDay())
 				.upload(true).build().deploy(it)*/
-		new SpringCloudDeployBuildMaker(dsl).deploy(project, branch, checkTests)
+		new SpringCloudDeployBuildMakerBuilder(dsl).with {
+			jdkVersion(jdk8())
+		}.build().deploy(project, branch, checkTests)
 		/*new BootCompatibilityBuildMaker(dsl).with {
 			it.buildWithTests("${project}-${branch}", project, branch, oncePerDay(), checkTests)
 		}*/
@@ -142,6 +151,7 @@ new VaultSpringCloudDeployBuildMaker(dsl).with {
 INCUBATOR_JOBS.each { String projectName ->
 	def org = "spring-projects-experimental"
 	new SpringCloudDeployBuildMaker(dsl, org).with {
+		jdkVersion = jdk8()
 		deploy(projectName)
 
 		def jdk11Maker = new SpringCloudDeployBuildMakerBuilder(dsl)

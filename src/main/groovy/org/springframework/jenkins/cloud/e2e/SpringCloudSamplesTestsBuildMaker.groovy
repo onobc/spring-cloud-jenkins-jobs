@@ -44,7 +44,7 @@ class SpringCloudSamplesTestsBuildMaker implements TestPublisher,
 	}
 
 	private void build(String cloudTrainVersion, String projectName, String cronExpr = everySixHours(),
-					   String branchName = mainBranch(), String jdkVersion = jdk8()) {
+					   String branchName = mainBranch(), String jdkVersion = jdk17()) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-${branchName}-e2e") {
 			triggers {
