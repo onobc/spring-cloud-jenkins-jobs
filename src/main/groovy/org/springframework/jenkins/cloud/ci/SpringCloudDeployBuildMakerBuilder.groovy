@@ -19,7 +19,7 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 	protected final DslFactory dsl
 	String organization
 	String prefix
-	String jdkVersion = jdk17()
+	String jdkVersion
 	boolean upload = true
 	Closure<Node> slack
 
