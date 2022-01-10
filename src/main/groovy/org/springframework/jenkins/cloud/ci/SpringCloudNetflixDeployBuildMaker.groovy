@@ -66,7 +66,7 @@ class SpringCloudNetflixDeployBuildMaker implements JdkConfig, TestPublisher, Cl
 			parameters {
 				stringParam(branchVarName(), branchName, 'Which branch should be built')
 			}
-			jdk jdkVersion
+			jdk branchName != mainBranch() ? jdk8() : jdkVersion
 			scm {
 				git {
 					remote {

@@ -136,7 +136,7 @@ echo "Removes old installed stubs and deploys all projects (except for docs)"
 rm -rf ~/.m2/repository/com/example && rm -rf ~/.m2/repository/org/springframework/cloud/contract/verifier/stubs/ && ./mvnw clean deploy -nsu -P integration,spring -U \$MVN_LOCAL_OPTS -Dmaven.test.redirectTestOutputToFile=true -Dsurefire.runOrder=random
 """)
 				}
-				boolean jdkIs17 = jdkVersion == jdk17()
+				boolean jdkIs17 = jdkVer == jdk17()
 				shell("""#!/bin/bash -x
 					echo "Building Spring Cloud Contract docs"
 					./scripts/generateDocs.sh

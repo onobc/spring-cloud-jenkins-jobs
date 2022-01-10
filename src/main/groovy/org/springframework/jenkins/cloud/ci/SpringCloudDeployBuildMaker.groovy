@@ -66,7 +66,7 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 			parameters {
 				stringParam(branchVarName(), branchToBuild ?: mainBranch(), 'Which branch should be built')
 			}
-			jdk jdkVersion
+			jdk branchToBuild != mainBranch() ? jdk8() : jdkVersion
 			scm {
 				git {
 					remote {
