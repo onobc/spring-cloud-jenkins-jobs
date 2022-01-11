@@ -40,7 +40,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				}
 			}
 			jdk(jdkVersion(branchName))
-			label(jdk17())
+			label("linux&&jdk17")
 			scm {
 				git {
 					remote {
