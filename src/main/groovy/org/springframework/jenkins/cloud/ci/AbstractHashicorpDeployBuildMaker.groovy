@@ -40,7 +40,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				}
 			}
 			jdk(jdkVersion(branchName))
-			label(openJdk7())
+			label(jdk17())
 			scm {
 				git {
 					remote {
@@ -83,9 +83,8 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 					mavenInstallation(maven33())
 					goals('--version')
 				}
-				shell(antiPermgenAndJava7TlsHack())
 				shell("""\
-						${antiPermgenAndJava7TlsHack()}
+						${antiPermgenAndJava7TlsHack(branchName)}
 						${preStep()}
 						trap "{ ${postStep()} }" EXIT
 						${upload ? cleanDeployWithDocs() : cleanInstallWithoutDocs()}
@@ -107,7 +106,11 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 		deploy(mainBranch())
 	}
 
-	protected String antiPermgenAndJava7TlsHack() {
+	protected String antiPermgenAndJava7TlsHack(String branchName) {
+		println "branchName2 = ${branchName}"
+		if (branchName == "main") {
+			return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:MaxPermSize=4096M -Dhttps.protocols=TLSv1.2"'
+		}
 		return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=4096M -Dhttps.protocols=TLSv1.2"'
 	}
 

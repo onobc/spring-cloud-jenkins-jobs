@@ -82,10 +82,10 @@ class VaultCompatibilityBuildMaker extends CompatibilityBuildMaker implements Ha
 		}
 	}
 
-	protected String antiPermgenAndJava7TlsHack(branchName) {
+	protected String antiPermgenAndJava7TlsHack(String branchName) {
 		println "branchName = ${branchName}"
 		if (branchName == "main") {
-			return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=4096M -Dhttps.protocols=TLSv1.2"'
+			return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:MaxPermSize=4096M -Dhttps.protocols=TLSv1.2"'
 		}
 		return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=4096M -Dhttps.protocols=TLSv1.2"'
 	}
