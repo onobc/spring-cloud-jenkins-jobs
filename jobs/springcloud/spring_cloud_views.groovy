@@ -106,8 +106,6 @@ dsl.nestedView('Spring Cloud') {
 				name('spring-cloud-build-main-ci')
 				name('spring-cloud-bus-main-ci')
 				name('spring-cloud-circuitbreaker-main-ci')
-				name('spring-cloud-cli-main-ci')
-				name('spring-cloud-cloudfoundry-main-ci')
 				name('spring-cloud-commons-main-ci')
 				name('spring-cloud-config-main-ci')
 				name('spring-cloud-consul-main-ci')
