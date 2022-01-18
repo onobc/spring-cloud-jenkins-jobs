@@ -37,7 +37,7 @@ class AllCloudJobs {
 																	 "spring-cloud-schema-registry"]
 
 	public static final List<String> ALL_JOBS_WITH_NO_MAIN_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN = [
-	        "spring-cloud-gcp", "spring-cloud-sleuth"
+	        "spring-cloud-cli", "spring-cloud-cloudfoundry", "spring-cloud-gcp", "spring-cloud-sleuth"
 	]
 
 	/**
