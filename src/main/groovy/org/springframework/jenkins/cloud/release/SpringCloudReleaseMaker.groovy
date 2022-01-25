@@ -65,7 +65,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, options.postReleaseOnly, 'If set to true will run only post release tasks')
 				booleanParam(DRY_RUN_PARAM, options.dryRun, 'If true then will run meta-release in a dry run mode')
 			}
-			jdk "\$${branchVarName()}" != mainBranch() ? jdk8() : jdkVersion
+			jdk jdkVersion
 			scm {
 				git {
 					remote {
