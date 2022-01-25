@@ -43,7 +43,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 	}
 
 	void release(String project, ReleaserOptions options = new ReleaserOptions()) {
-		release(project, jdk8(), options)
+		release(project, jdk17(), options)
 	}
 
 	void release(String project, String jdkVersion, ReleaserOptions options = new ReleaserOptions()) {
@@ -65,7 +65,7 @@ class SpringCloudReleaseMaker implements JdkConfig, TestPublisher,
 				booleanParam(RELEASER_POST_RELEASE_ONLY_VAR, options.postReleaseOnly, 'If set to true will run only post release tasks')
 				booleanParam(DRY_RUN_PARAM, options.dryRun, 'If true then will run meta-release in a dry run mode')
 			}
-			jdk jdkVersion
+			jdk "\$${branchVarName()}" != mainBranch() ? jdk8() : jdkVersion
 			scm {
 				git {
 					remote {
