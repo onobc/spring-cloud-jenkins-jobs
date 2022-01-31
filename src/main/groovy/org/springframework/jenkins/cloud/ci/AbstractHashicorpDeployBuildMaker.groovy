@@ -40,7 +40,7 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 				}
 			}
 			jdk(jdkVersion(branchName))
-			label("linux&&jdk17")
+			label(findLabel(branchName))
 			scm {
 				git {
 					remote {
@@ -111,6 +111,13 @@ abstract class AbstractHashicorpDeployBuildMaker implements JdkConfig, TestPubli
 			return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Dhttps.protocols=TLSv1.2"'
 		}
 		return '#!/bin/bash -x\nexport MAVEN_OPTS="-Xms256M -Xmx1024M -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=4096M -Dhttps.protocols=TLSv1.2"'
+	}
+
+	protected String findLabel(String branchName) {
+		if (branchName.equals("main")) {
+			return "linux&&jdk17"
+		}
+		return "linux&&jdk8"
 	}
 
 	protected String jdkVersion(String branchName) {
