@@ -52,7 +52,6 @@ class CustomJobFactory implements JdkConfig, Cron {
 		else {
 			job.deploy()
 		}
-		job.jdkBuild(jdkVersion)
 	}
 
 	void jdkVersion(String projectName, String jdkVersion) {
