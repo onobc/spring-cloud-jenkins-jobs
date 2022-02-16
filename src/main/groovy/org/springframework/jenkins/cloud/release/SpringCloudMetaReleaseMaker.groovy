@@ -75,7 +75,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 				stringParam(RELEASER_PROJECTS_TO_SKIP_VAR, options.projectsToSkip, 'Names of projects to skip deployment for meta-release')
 			}
-			jdk jdk17()
+			jdk jdk8()
 			scm {
 				git {
 					remote {

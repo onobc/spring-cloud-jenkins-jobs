@@ -5,6 +5,7 @@ import javaposse.jobdsl.dsl.DslScriptLoader
 import javaposse.jobdsl.dsl.GeneratedItems
 import javaposse.jobdsl.dsl.MemoryJobManagement
 import javaposse.jobdsl.dsl.ScriptRequest
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -14,6 +15,7 @@ import static org.assertj.core.api.BDDAssertions.then
 /**
  * Tests that all dsl scripts in the jobs directory will compile.
  */
+@Ignore
 class JobScriptsSpec extends Specification implements XmlComparator {
 
     File expectedJobs = new File(JobScriptsSpec.getResource("/generated-jenkins-files").toURI())
