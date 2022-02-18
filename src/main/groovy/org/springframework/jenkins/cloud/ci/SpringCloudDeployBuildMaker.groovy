@@ -116,12 +116,6 @@ class SpringCloudDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron
 					archiveJunit mavenJUnitResults()
 				}
 			}
-			List<String> emails = AllCloudJobs.EMAIL_NOTIFICATIONS.get(project)
-			if (emails) {
-				publishers {
-					mailer(emails.join(","), true, true)
-				}
-			}
 		}
 	}
 

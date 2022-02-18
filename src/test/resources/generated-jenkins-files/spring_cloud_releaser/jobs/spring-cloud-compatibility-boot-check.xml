@@ -149,15 +149,6 @@
                     <configs class='java.util.Collections$EmptyList'></configs>
                 </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
                 <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
-                    <jobName>spring-cloud-gcp-compatibility-boot-check</jobName>
-                    <currParams>true</currParams>
-                    <exposedSCM>true</exposedSCM>
-                    <disableJob>false</disableJob>
-                    <killPhaseOnJobResultCondition>FAILURE</killPhaseOnJobResultCondition>
-                    <abortAllJob>false</abortAllJob>
-                    <configs class='java.util.Collections$EmptyList'></configs>
-                </com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
-                <com.tikal.jenkins.plugins.multijob.PhaseJobsConfig>
                     <jobName>spring-cloud-kubernetes-compatibility-boot-check</jobName>
                     <currParams>true</currParams>
                     <exposedSCM>true</exposedSCM>

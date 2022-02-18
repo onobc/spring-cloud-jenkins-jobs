@@ -25,7 +25,7 @@ class AllCloudJobs {
 												 'spring-cloud-bus', 'spring-cloud-commons', 'spring-cloud-config',
 												 'spring-cloud-cloudfoundry', 'spring-cloud-build',
 												 'spring-cloud-cli', 'spring-cloud-contract', 'spring-cloud-vault', 'spring-cloud-gateway',
-												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-gcp', 'spring-cloud-kubernetes',
+												 'spring-cloud-openfeign', 'spring-cloud-function', 'spring-cloud-kubernetes',
 	                                             'spring-cloud-circuitbreaker', 'spring-cloud-release', 'spring-cloud-task']
 	/**
 	 * List of all Spring Cloud Stream jobs for the releaser. This list will be used to create the boot compatibility builds
@@ -37,7 +37,7 @@ class AllCloudJobs {
 																	 "spring-cloud-schema-registry"]
 
 	public static final List<String> ALL_JOBS_WITH_NO_MAIN_BRANCH_ACTIVE_IN_MAINTAINED_RELEASE_TRAIN = [
-	        "spring-cloud-cli", "spring-cloud-cloudfoundry", "spring-cloud-gcp", "spring-cloud-sleuth"
+	        "spring-cloud-cli", "spring-cloud-cloudfoundry", "spring-cloud-sleuth"
 	]
 
 	/**
@@ -92,7 +92,6 @@ class AllCloudJobs {
 																		'spring-cloud-contract'      : ['2.2.x', '3.0.x', '3.1.x'],
 																		'spring-cloud-function'      : ['3.0.x', '3.1.x', '3.2.x'],
 																		'spring-cloud-gateway'       : ['2.2.x', '3.0.x', '3.1.x'],
-																		'spring-cloud-gcp'           : ['1.1.x'],
 																		'spring-cloud-kubernetes'    : ['1.1.x', '2.0.x', '2.1.x'],
 																		'spring-cloud-netflix'       : ['2.2.x', '3.0.x', '3.1.x'],
 																		'spring-cloud-openfeign'     : ['2.2.x', '3.0.x', '3.1.x'],
@@ -153,13 +152,5 @@ class AllCloudJobs {
 	 * the implementors to ensure that those jobs really exist.
 	 */
 	public static final List<String> BOOT_COMPATIBILITY_BUILD_JOBS = ALL_JOBS + ALL_SAMPLES_JOBS - JOBS_WITHOUT_BOOT_COMPATIBILITY
-
-	/**
-	 * Map of projects to email addresses. If a project name is matched, the list of email
-	 * addresses will be applied to the project.
-	 */
-	public static final Map<String, List<String>> EMAIL_NOTIFICATIONS = [
-			"spring-cloud-gcp": ["meltsufin@google.com", "abilan@pivotal.io"]
-	]
 
 }
