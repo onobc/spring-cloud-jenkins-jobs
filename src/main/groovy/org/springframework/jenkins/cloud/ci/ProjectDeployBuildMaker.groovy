@@ -27,6 +27,7 @@ class ProjectDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron,
 		this.dsl = dsl
 		this.train = train
 		this.project = project
+		buildContext.branch = train.projectsWithBranch[project]
 	}
 
 	void deploy() {

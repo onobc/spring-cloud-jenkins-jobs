@@ -1,12 +1,13 @@
 package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
-import org.springframework.jenkins.cloud.common.Projects
 import org.springframework.jenkins.cloud.common.ReleaseTrains
+import org.springframework.jenkins.cloud.release.ReleaserOptions
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudMetaReleaseRepoPurger
+import org.springframework.jenkins.cloud.release.SpringCloudProjectReleaseMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaseMaker
-import org.springframework.jenkins.cloud.release.SpringCloudReleaseMainMaker
+import org.springframework.jenkins.cloud.release.SpringCloudReleaseSnapshotMaker
 import org.springframework.jenkins.cloud.release.SpringCloudReleaserOptions
 
 import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_STREAM_JOBS_FOR_RELEASER
@@ -14,17 +15,29 @@ import static org.springframework.jenkins.cloud.common.AllCloudJobs.ALL_STREAM_J
 DslFactory dsl = this
 
 // RELEASER
-ReleaseTrains.CURRENT_ACTIVE.projectsWithBranch.each { project, branch ->
-	new SpringCloudReleaseMainMaker(dsl).release(project.repo, SpringCloudReleaserOptions.springCloudMain())
+ReleaseTrains.allActive().each { train ->
+	// meta releaser per train, for jdk configuration
+	new SpringCloudMetaReleaseMaker(dsl)
+			.release("spring-cloud-${train.codename}-meta-releaser", train.jdkBaseline(),
+					SpringCloudReleaserOptions.springCloud())
+
+	train.projects().each { project ->
+		// snapshot release, daily, no sagan
+
+		ReleaserOptions snapshotOptions = SpringCloudReleaserOptions.springCloudSnapshot()
+		// release, no schedule
+		ReleaserOptions releaseOptions = SpringCloudReleaserOptions.springCloud()
+
+		// TODO: train behavior?
+		if (train.codename == "Experimental") {
+			snapshotOptions = SpringCloudReleaserOptions.springProjectsExperimental()
+			releaseOptions = SpringCloudReleaserOptions.springProjectsExperimental()
+		}
+
+		new SpringCloudReleaseSnapshotMaker(dsl, train, project).release(snapshotOptions)
+		new SpringCloudProjectReleaseMaker(dsl, train, project).release(releaseOptions)
+	}
 }
-Projects.ALL.each { project ->
-	new SpringCloudReleaseMaker(dsl).release(project.repo, SpringCloudReleaserOptions.springCloud())
-}
-ALL_STREAM_JOBS_FOR_RELEASER.each {
-	new SpringCloudReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.springCloudStream())
-}
-new SpringCloudMetaReleaseMaker(dsl)
-		.release("spring-cloud-meta-releaser", SpringCloudReleaserOptions.springCloud())
 new SpringCloudMetaReleaseMaker(dsl)
 		.release("spring-cloud-stream-meta-releaser", SpringCloudReleaserOptions.springCloudStream())
 new SpringCloudMetaReleaseRepoPurger(dsl).build()
@@ -33,6 +46,6 @@ new SpringCloudMetaReleaseRepoPurger(dsl).build()
 // Compatibility builds
 //new ManualBootCompatibilityBuildMaker(dsl).build()
 
-// Experimental
-ReleaseTrains.EXPERIMENTAL.projectsWithBranch.each { project, branch ->
-new SpringCloudReleaseMaker(dsl, project.org).release(project.repo, SpringCloudReleaserOptions.springProjectsExperimental()) }
+ALL_STREAM_JOBS_FOR_RELEASER.each {
+	new SpringCloudReleaseMaker(dsl).release(it, SpringCloudReleaserOptions.springCloudStream())
+}

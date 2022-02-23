@@ -47,6 +47,10 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 	}
 
 	void release(String jobName, ReleaserOptions options = new ReleaserOptions()) {
+		release(jobName, jdk8(), options)
+	}
+
+	void release(String jobName, String jdkVersion, ReleaserOptions options = new ReleaserOptions()) {
 		dsl.job(jobName) {
 			additionalConfiguration(delegate as FreeStyleJob)
 			parameters {
@@ -75,7 +79,7 @@ class SpringCloudMetaReleaseMaker implements JdkConfig, TestPublisher,
 				stringParam(RELEASER_POM_THIS_TRAIN_BOM, options.releaseThisTrainBom, 'URL to a project containing a BOM. Defaults to Spring Cloud Release Git repository')
 				stringParam(RELEASER_PROJECTS_TO_SKIP_VAR, options.projectsToSkip, 'Names of projects to skip deployment for meta-release')
 			}
-			jdk jdk8()
+			jdk jdkVersion
 			scm {
 				git {
 					remote {

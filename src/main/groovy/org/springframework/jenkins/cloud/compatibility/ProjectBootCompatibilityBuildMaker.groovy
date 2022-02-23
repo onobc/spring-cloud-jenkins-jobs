@@ -26,6 +26,7 @@ class ProjectBootCompatibilityBuildMaker extends CompatibilityTasks implements J
 		this.dsl = dsl
 		this.train = train
 		this.project = project
+		buildContext.branch = train.projectsWithBranch[project]
 	}
 
 	void build(String bootVersion) {

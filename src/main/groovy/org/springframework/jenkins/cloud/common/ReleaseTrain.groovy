@@ -33,4 +33,16 @@ class ReleaseTrain {
 	// jdk compatibility, first is baseline
 	List<String> jdks = []
 
+	String jdkBaseline() {
+		jdks.isEmpty() ? null : jdks[0]
+	}
+
+	Collection<Project> projects() {
+		projectsWithBranch.keySet()
+	}
+
+	String releaseBranch() {
+		projectsWithBranch[Projects.RELEASE]
+	}
+
 }

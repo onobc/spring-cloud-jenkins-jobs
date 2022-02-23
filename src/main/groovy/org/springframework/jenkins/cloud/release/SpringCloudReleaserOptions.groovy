@@ -38,7 +38,7 @@ class SpringCloudReleaserOptions {
 					   .dryRun(false)
 	}
 
-	static ReleaserOptions springCloudMain() {
+	static ReleaserOptions springCloudSnapshot() {
 		return springCloudBuilder()
 				.updateSagan(false)
 				.build()

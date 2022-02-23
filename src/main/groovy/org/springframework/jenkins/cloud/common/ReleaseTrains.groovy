@@ -173,4 +173,8 @@ class ReleaseTrains {
 
 	public static final ReleaseTrain CURRENT_ACTIVE = KILBURN
 
+	static List<ReleaseTrain> allActive() {
+		ALL.findAll { it.active }
+	}
+
 }

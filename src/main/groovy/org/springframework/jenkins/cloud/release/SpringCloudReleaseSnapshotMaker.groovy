@@ -2,34 +2,39 @@ package org.springframework.jenkins.cloud.release
 
 import javaposse.jobdsl.dsl.DslFactory
 import javaposse.jobdsl.dsl.jobs.FreeStyleJob
+import org.springframework.jenkins.cloud.common.Project
+import org.springframework.jenkins.cloud.common.ReleaseTrain
 
 /**
  * @author Marcin Grzejszczak
+ * @author Spencer Gibb
  */
-class SpringCloudReleaseMainMaker extends SpringCloudReleaseMaker {
+class SpringCloudReleaseSnapshotMaker extends SpringCloudReleaseMaker {
 
-	SpringCloudReleaseMainMaker(DslFactory dsl) {
-		super(dsl)
-	}
+	private final ReleaseTrain train
+	private final Project project
+	private String branch
 
-	SpringCloudReleaseMainMaker(DslFactory dsl, String organization) {
-		super(dsl, organization)
+	SpringCloudReleaseSnapshotMaker(DslFactory dsl, ReleaseTrain train, Project project) {
+		super(dsl, project.org)
+		this.train = train
+		this.project = project
+		branch = train.projectsWithBranch[project]
 	}
 
 	@Override
 	protected String projectName(String project) {
-		return "${project}-${mainBranch()}-releaser"
+		return "${project}-${train.codename}-${branch}-snapshot-releaser"
 	}
 
-	@Override
-	void release(String project, ReleaserOptions options) {
+	void release(ReleaserOptions options) {
 		options.updateSagan = false
-		super.release(project, jdk17(), options)
+		super.release(project.repo, train.jdkBaseline(), branch, train.releaseBranch(), options)
 	}
 
 	@Override
 	protected String branchToCheck() {
-		return mainBranch()
+		return branch
 	}
 
 	@Override

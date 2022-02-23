@@ -10,17 +10,16 @@ DslFactory dsl = this
 
 // CI BUILDS
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
-ReleaseTrains.ALL.findAll { it.active }.each { train ->
+ReleaseTrains.allActive().each { train ->
 	// each jdk in the train
 	boolean first = true
 	train.jdks.each { jdk ->
 		 // each project and branch
-		 train.projectsWithBranch.each { project, branch ->
+		 train.projects().each { project ->
 			 if (first || project.checkJdkCompatibility) {
 				 def maker = new ProjectDeployBuildMaker(dsl, train, project)
 				 maker.buildContext.jdk = jdk
 				 maker.buildContext.upload = first
-				 maker.buildContext.branch = branch
 				 maker.deploy()
 			 }
 		 }
@@ -30,17 +29,16 @@ ReleaseTrains.ALL.findAll { it.active }.each { train ->
 
 // Boot compatibility BUILDS
 // Branch build maker that allows you to build and deploy a branch - this will be done on demand
-ReleaseTrains.ALL.findAll { it.active }.each { train ->
+ReleaseTrains.allActive().each { train ->
 	// default jdk for boot compatibility
-	String jdk = train.jdks.get(0)
+	String jdk = train.jdkBaseline()
 	// ci builds above test default jdk, so we want everything but first
 	train.bootVersions.subList(1, train.bootVersions.size()).each { bootVersion ->
 		 // each project and branch that wants jdk compatibility
-		 train.projectsWithBranch.findAll { it.key.checkJdkCompatibility }.each { project, branch ->
+		 train.projects().findAll { it.checkJdkCompatibility }.each { project ->
 			  def maker = new ProjectBootCompatibilityBuildMaker(dsl, train, project)
 			  maker.buildContext.jdk = jdk
 			  maker.buildContext.upload = false
-			  maker.buildContext.branch = branch
 			  maker.build(bootVersion)
 		 }
 	}
