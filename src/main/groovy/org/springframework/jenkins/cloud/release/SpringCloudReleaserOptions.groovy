@@ -71,7 +71,7 @@ class SpringCloudReleaserOptions {
 						.build()
 	}
 
-	static ReleaserOptions springCloudIncubator() {
+	static ReleaserOptions springProjectsExperimental() {
 		return springCloudBuilder()
 						.gitOrgUrl("https://github.com/spring-projects-experimental/")
 						.runUpdatedSamples(false)

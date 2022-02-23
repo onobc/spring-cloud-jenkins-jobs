@@ -19,6 +19,7 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 	protected final DslFactory dsl
 	String organization
 	String prefix
+	String jobName
 	String jdkVersion
 	boolean upload = true
 	Closure<Node> slack
@@ -34,6 +35,11 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 
 	SpringCloudDeployBuildMakerBuilder prefix(String prefix) {
 		this.prefix = prefix
+		return this
+	}
+
+	SpringCloudDeployBuildMakerBuilder jobName(String jobName) {
+		this.jobName = jobName
 		return this
 	}
 
@@ -69,6 +75,9 @@ class SpringCloudDeployBuildMakerBuilder implements JdkConfig, TestPublisher, Cl
 		}
 		if (this.slack) {
 			maker.slack = this.slack
+		}
+		if (this.jobName) {
+			maker.jobName = jobName
 		}
 		maker.upload = this.upload
 		maker.cronValue = this.cronValue

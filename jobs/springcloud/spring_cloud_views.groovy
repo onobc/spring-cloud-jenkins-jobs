@@ -1,6 +1,7 @@
 package springcloud
 
 import javaposse.jobdsl.dsl.DslFactory
+import org.springframework.jenkins.cloud.common.ReleaseTrains
 
 DslFactory dsl = this
 
@@ -13,27 +14,10 @@ dsl.listView('Seeds') {
 
 dsl.nestedView('Spring Cloud') {
 	views {
+		def views = delegate
 		listView('Boot.NEXT') {
 			jobs {
 				regex('spring-cloud.*-compatibility-check')
-			}
-			columns defaultColumns()
-		}
-		listView('Boot.MANUAL') {
-			jobs {
-				name('spring-cloud-compatibility-boot-check')
-			}
-			columns defaultColumns()
-		}
-		listView('Spring.NEXT') {
-			jobs {
-				regex('spring-cloud.*-compatibility-spring-check')
-			}
-			columns defaultColumns()
-		}
-		listView('Spring.MANUAL') {
-			jobs {
-				name('spring-cloud-compatibility-spring-check')
 			}
 			columns defaultColumns()
 		}
@@ -43,92 +27,14 @@ dsl.nestedView('Spring Cloud') {
 			}
 			columns defaultColumns()
 		}
-		listView('CI.MAIN') {
-			jobs {
-				regex('spring-cloud.*main-ci')
+		// ALL Release Train CI Views
+		ReleaseTrains.ALL.each { train ->
+			views.listView("CI.${train.codename}") {
+				jobs {
+					regex("spring-cloud.*-${train.codename}-.*-ci")
+				}
+				columns defaultColumns()
 			}
-			columns defaultColumns()
-		}
-		listView('CI.ilford') {
-			jobs {
-				name('spring-cloud-build-3.0.x-ci')
-				name('spring-cloud-bus-3.0.x-ci')
-				name('spring-cloud-circuitbreaker-2.0.x-ci')
-				name('spring-cloud-cli-3.0.x-ci')
-				name('spring-cloud-cloudfoundry-3.0.x-ci')
-				name('spring-cloud-commons-3.0.x-ci')
-				name('spring-cloud-config-3.0.x-ci')
-				name('spring-cloud-consul-3.0.x-ci')
-				name('spring-cloud-contract-3.0.x-ci')
-				name('spring-cloud-function-3.1.x-ci')
-				name('spring-cloud-gateway-3.0.x-ci')
-				name('spring-cloud-kubernetes-2.0.x-ci')
-				name('spring-cloud-netflix-3.0.x-ci')
-				name('spring-cloud-openfeign-3.0.x-ci')
-				name('spring-cloud-release-2020.0.x-ci')
-				name('spring-cloud-sleuth-3.0.x-ci')
-				name('spring-cloud-stream-3.1.x-ci')
-				name('spring-cloud-task-2.3.x-ci')
-				name('spring-cloud-vault-3.0.x-ci')
-				name('spring-cloud-zookeeper-3.0.x-ci')
-				name('spring-cloud-tests-2020.0.x-e2e')
-			}
-			columns defaultColumns()
-		}
-		listView('CI.Jubilee') {
-			jobs {
-				name('spring-cloud-build-3.1.x-ci')
-				name('spring-cloud-bus-3.1.x-ci')
-				name('spring-cloud-circuitbreaker-2.1.x-ci')
-				name('spring-cloud-cli-3.1.x-ci')
-				name('spring-cloud-cloudfoundry-3.1.x-ci')
-				name('spring-cloud-commons-3.1.x-ci')
-				name('spring-cloud-config-3.1.x-ci')
-				name('spring-cloud-consul-3.1.x-ci')
-				name('spring-cloud-contract-3.1.x-ci')
-				name('spring-cloud-function-3.2.x-ci')
-				name('spring-cloud-gateway-3.1.x-ci')
-				name('spring-cloud-kubernetes-2.1.x-ci')
-				name('spring-cloud-netflix-3.1.x-ci')
-				name('spring-cloud-openfeign-3.1.x-ci')
-				name('spring-cloud-release-2021.0.x-ci')
-				name('spring-cloud-sleuth-3.1.x-ci')
-				name('spring-cloud-stream-3.2.x-ci')
-				name('spring-cloud-task-2.4.x-ci')
-				name('spring-cloud-vault-3.1.x-ci')
-				name('spring-cloud-zookeeper-3.1.x-ci')
-				name('spring-cloud-tests-2021.0.x-e2e')
-			}
-			columns defaultColumns()
-		}
-		listView('CI.Kilburn') {
-			jobs {
-				name('spring-cloud-build-main-ci')
-				name('spring-cloud-bus-main-ci')
-				name('spring-cloud-circuitbreaker-main-ci')
-				name('spring-cloud-commons-main-ci')
-				name('spring-cloud-config-main-ci')
-				name('spring-cloud-consul-main-ci')
-				name('spring-cloud-contract-main-ci')
-				name('spring-cloud-function-main-ci')
-				name('spring-cloud-gateway-main-ci')
-				name('spring-cloud-kubernetes-main-ci')
-				name('spring-cloud-netflix-main-ci')
-				name('spring-cloud-openfeign-main-ci')
-				name('spring-cloud-release-main-ci')
-				name('spring-cloud-stream-main-ci')
-				name('spring-cloud-task-main-ci')
-				name('spring-cloud-vault-main-ci')
-				name('spring-cloud-zookeeper-main-ci')
-				name('spring-cloud-tests-main-e2e')
-			}
-			columns defaultColumns()
-		}
-		listView('JDK') {
-			jobs {
-				regex('spring-cloud.*jdk.*')
-			}
-			columns defaultColumns()
 		}
 		listView('E2E') {
 			jobs {
