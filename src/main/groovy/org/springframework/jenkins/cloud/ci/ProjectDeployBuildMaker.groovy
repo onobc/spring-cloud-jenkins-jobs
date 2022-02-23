@@ -1,7 +1,6 @@
 package org.springframework.jenkins.cloud.ci
 
 import javaposse.jobdsl.dsl.DslFactory
-import org.springframework.jenkins.cloud.common.AllCloudJobs
 import org.springframework.jenkins.cloud.common.CloudCron
 import org.springframework.jenkins.cloud.common.Project
 import org.springframework.jenkins.cloud.common.ReleaseTrain
