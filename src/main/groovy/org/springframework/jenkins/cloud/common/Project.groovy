@@ -56,11 +56,5 @@ class Project {
 	/**
 	 * Provides information to project methods unkown ahead of time.
 	 */
-	@CompileStatic
-	static class BuildContext {
-		boolean upload = true
-		String branch
-		String jdk
-	}
 
 }

@@ -1,6 +1,7 @@
 package org.springframework.jenkins.cloud.ci
 
 import javaposse.jobdsl.dsl.DslFactory
+import org.springframework.jenkins.cloud.common.BuildContext
 import org.springframework.jenkins.cloud.common.CloudCron
 import org.springframework.jenkins.cloud.common.Project
 import org.springframework.jenkins.cloud.common.ReleaseTrain
@@ -18,7 +19,7 @@ class ProjectDeployBuildMaker implements JdkConfig, TestPublisher, CloudCron,
 	private final DslFactory dsl
 	private final ReleaseTrain train
 	private final Project project
-	public final Project.BuildContext buildContext = new Project.BuildContext()
+	public final BuildContext buildContext = new BuildContext()
 	Closure<Node> slack = { Node node -> SpringCloudNotification.cloudSlack(node) }
 
 

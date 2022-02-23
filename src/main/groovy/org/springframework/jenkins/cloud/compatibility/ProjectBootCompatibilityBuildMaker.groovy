@@ -1,6 +1,7 @@
 package org.springframework.jenkins.cloud.compatibility
 
 import javaposse.jobdsl.dsl.DslFactory
+import org.springframework.jenkins.cloud.common.BuildContext
 import org.springframework.jenkins.cloud.common.Project
 import org.springframework.jenkins.cloud.common.Projects
 import org.springframework.jenkins.cloud.common.ReleaseTrain
@@ -17,7 +18,7 @@ class ProjectBootCompatibilityBuildMaker extends CompatibilityTasks implements J
 	private final DslFactory dsl
 	private final ReleaseTrain train
 	private final Project project
-	public final Project.BuildContext buildContext = new Project.BuildContext()
+	public final BuildContext buildContext = new BuildContext()
 	String cronExpr = oncePerDay()
 	String suffix = CompatibilityBuildMaker.COMPATIBILITY_BUILD_DEFAULT_SUFFIX
 
