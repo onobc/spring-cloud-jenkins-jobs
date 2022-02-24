@@ -34,15 +34,16 @@ class ReleaseTrain {
 	List<String> jdks = []
 
 	String jdkBaseline() {
-		jdks.isEmpty() ? null : jdks[0]
+		return jdks.isEmpty() ? null : jdks[0]
 	}
 
 	Collection<Project> projects() {
-		projectsWithBranch.keySet()
+		return projectsWithBranch.keySet()
 	}
 
 	String releaseBranch() {
-		projectsWithBranch[Projects.RELEASE]
+		// default for experimental train that doesn't have release
+		return projectsWithBranch.getOrDefault(Projects.RELEASE, "main")
 	}
 
 }
