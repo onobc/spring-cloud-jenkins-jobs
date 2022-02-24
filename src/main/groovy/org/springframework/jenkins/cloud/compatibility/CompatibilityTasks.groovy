@@ -43,7 +43,7 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		return """#!/bin/bash -x
 					set -o errexit
 					${fetchLatestBootSnapshotVersion(bootVersion)}
-					${bumpBoot()}
+					${bumpBoot(bootVersion)}
 					echo -e "Checking if prod code compiles against latest boot"
 					${buildCommand()}
 					${printDepsForBoot()}
@@ -58,14 +58,14 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		return """#!/bin/bash -x
 					set -o errexit
 					${fetchLatestBootSnapshotVersion(bootVersion)}
-					${bumpBoot()}
+					${bumpBoot(bootVersion)}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae
 					${printDepsForBoot()}
 					"""
 	}
 
-	protected String bumpBoot() {
+	protected String bumpBoot(String bootVersion = SPRING_BOOT_MINOR) {
 		return """
 		echo "Removing stored spring-cloud-release-tools"
 		rm -rf ~/.m2/repository/org/springframework/cloud/internal
@@ -80,7 +80,7 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		export MAVEN_PATH=${mavenBin()}
 		${fetchLatestBootVersionAsFunction()}
 		export ${SPRING_BOOT_VERSION_VAR}="\${${SPRING_BOOT_VERSION_VAR}:-}"
-		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( bootVersion "${SPRING_BOOT_MINOR}" )"
+		[[ -z "\$${SPRING_BOOT_VERSION_VAR}" ]] && ${SPRING_BOOT_VERSION_VAR}="\$( bootVersion "${bootVersion}" )"
 		echo "Boot version [\$${SPRING_BOOT_VERSION_VAR}]" 
 		pushd target
 			\${MAVEN_PATH}/mvn dependency:get -DremoteRepositories=https://repo.spring.io/libs-snapshot-local -Dartifact=org.springframework.cloud.internal:spring-cloud:2.0.0-SNAPSHOT -Dtransitive=false
