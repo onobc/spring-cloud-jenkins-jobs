@@ -3,6 +3,8 @@ package org.springframework.jenkins.cloud.common
 
 import groovy.transform.CompileStatic
 
+import org.springframework.jenkins.cloud.common.Project.ReleaseType
+
 /**
  * TBD
  *
@@ -100,16 +102,19 @@ class Projects {
 
 	public static final Project SQUARE = new Project(
 			repo: "spring-cloud-square",
-			org: "spring-projects-experimental"
+			org: "spring-projects-experimental",
+			releaseType: ReleaseType.RELEASE
 	)
 
 	public static final Project SLEUTH_OTEL = new Project(
 			repo: "spring-cloud-sleuth-otel",
-			org: "spring-projects-experimental"
+			org: "spring-projects-experimental",
+			releaseType: ReleaseType.RELEASE
 	)
 
 	public static final Project RELEASE_TOOLS = new Project(
-			repo: "spring-cloud-release-tools"
+			repo: "spring-cloud-release-tools",
+			releaseType: ReleaseType.NONE
 	)
 
 	public static final List<Project> ALL = [BUILD, BUS, CIRCUITBREAKER, CLI, CLOUDFOUNDRY, COMMONS, CONFIG,

@@ -11,6 +11,8 @@ class Project {
 
 	enum BuildSystem { MAVEN, GRADLE, BOTH }
 
+	enum ReleaseType { SNAPSHOT, RELEASE, BOTH, NONE }
+
 	// repo spring-cloud-build
 	String repo;
 
@@ -26,6 +28,8 @@ class Project {
 	// enum build system, maven, gradle, both
 	BuildSystem buildSystem = BuildSystem.MAVEN
 
+	ReleaseType releaseType = ReleaseType.BOTH
+
 	// included in boot compatibility?
 	boolean checkJdkCompatibility = true
 
@@ -34,6 +38,14 @@ class Project {
 
 	String getName() {
 		return name ?: repo
+	}
+
+	boolean releaseTypeSnapshots() {
+		releaseType == ReleaseType.SNAPSHOT || releaseType == ReleaseType.BOTH
+	}
+
+	boolean releaseTypeRelease() {
+		releaseType == ReleaseType.RELEASE || releaseType == ReleaseType.BOTH
 	}
 
 	// custom build stuff (branch param, jdk param)

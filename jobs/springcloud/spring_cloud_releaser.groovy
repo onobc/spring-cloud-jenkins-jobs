@@ -34,8 +34,12 @@ ReleaseTrains.allActive().each { train ->
 			releaseOptions = SpringCloudReleaserOptions.springProjectsExperimental()
 		}
 
-		new SpringCloudReleaseSnapshotMaker(dsl, train, project).release(snapshotOptions)
-		new SpringCloudProjectReleaseMaker(dsl, train, project).release(releaseOptions)
+		if (project.releaseTypeSnapshots()) {
+			new SpringCloudReleaseSnapshotMaker(dsl, train, project).release(snapshotOptions)
+		}
+		if (project.releaseTypeRelease()) {
+			new SpringCloudProjectReleaseMaker(dsl, train, project).release(releaseOptions)
+		}
 	}
 }
 new SpringCloudMetaReleaseMaker(dsl)
