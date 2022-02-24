@@ -38,7 +38,7 @@ class ProjectBootCompatibilityBuildMaker extends CompatibilityTasks implements J
 		dsl.job(jobName) {
 			concurrentBuild()
 			parameters {
-				stringParam(SPRING_BOOT_VERSION_VAR, bootVersion, 'Which version of Spring Boot should be used for the build')
+				stringParam(SPRING_BOOT_VERSION_VAR, "", 'Which version of Spring Boot should be used for the build')
 				stringParam(SPRING_CLOUD_BUILD_BRANCH, train.projectsWithBranch[Projects.BUILD], 'Which branch of Spring Cloud Build should be checked out')
 			}
 			triggers {
