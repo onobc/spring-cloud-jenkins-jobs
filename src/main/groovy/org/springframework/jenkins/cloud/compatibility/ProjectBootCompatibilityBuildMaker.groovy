@@ -31,7 +31,9 @@ class ProjectBootCompatibilityBuildMaker extends CompatibilityTasks implements J
 
 	void build(String bootVersion) {
 		Project.verify(project, buildContext)
-		String jobName = "${project.getName()}-${train.codename}-${buildContext.branch}-${buildContext.jdk}-${suffix}"
+		String jobName = "${project.getName()}-${train.codename}-${buildContext.branch}-${buildContext.jdk}-boot${bootVersion}-${suffix}"
+
+		bootVersion = bootVersion.replace(".x", "")
 
 		dsl.job(jobName) {
 			concurrentBuild()
