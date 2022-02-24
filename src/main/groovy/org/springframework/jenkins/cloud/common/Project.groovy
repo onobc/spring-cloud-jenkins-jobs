@@ -44,6 +44,9 @@ class Project {
 	String labelExpression(BuildContext context) {
 		return null;
 	}
+	boolean publishTests(BuildContext context) {
+		return hasTests
+	}
 
 	static void verify(Project project, BuildContext buildContext) {
 		assert project.org?.trim() : "Project org is required"

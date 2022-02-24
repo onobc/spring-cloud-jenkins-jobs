@@ -42,4 +42,8 @@ rm -rf ~/.m2/repository/com/example && rm -rf ~/.m2/repository/org/springframewo
         return cmd
     }
 
+    @Override
+    boolean publishTests(BuildContext context) {
+        return hasTests && context.jdk != jdk17()
+    }
 }
