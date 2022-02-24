@@ -73,7 +73,7 @@ class ProjectBootCompatibilityBuildMaker extends CompatibilityTasks implements J
 					goals('--version')
 				}
 			}
-			steps project.hasTests ? defaultStepsWithTestsForBoot() : defaultStepsForBoot()
+			steps project.hasTests ? defaultStepsWithTestsForBoot(bootVersion) : defaultStepsForBoot(bootVersion)
 			configure {
 				SpringCloudNotification.cloudSlack(it as Node)
 			}

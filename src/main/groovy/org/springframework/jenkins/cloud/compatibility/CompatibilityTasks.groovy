@@ -20,9 +20,9 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 	protected static final String SPRING_CLOUD_BUILD_BRANCH = 'SPRING_CLOUD_BUILD_BRANCH'
 	protected static final String DEFAULT_BUILD_BRANCH = AllCloudConstants.SPRING_CLOUD_BUILD_BRANCH_FOR_COMPATIBILITY_BUILD
 
-	Closure defaultStepsForBoot() {
+	Closure defaultStepsForBoot(String bootVersion = SPRING_BOOT_MINOR) {
 		return buildStep {
-			shell compileProductionForBoot()
+			shell compileProductionForBoot(bootVersion)
 		}
 	}
 
@@ -33,16 +33,16 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 			"""
 	}
 
-	Closure defaultStepsWithTestsForBoot() {
+	Closure defaultStepsWithTestsForBoot(String bootVersion = SPRING_BOOT_MINOR) {
 		return buildStep {
-			shell runTestsForBoot()
+			shell runTestsForBoot(bootVersion)
 		}
 	}
 
-	protected String compileProductionForBoot() {
+	protected String compileProductionForBoot(String bootVersion) {
 		return """#!/bin/bash -x
 					set -o errexit
-					${fetchLatestBootSnapshotVersion(SPRING_BOOT_MINOR)}
+					${fetchLatestBootSnapshotVersion(bootVersion)}
 					${bumpBoot()}
 					echo -e "Checking if prod code compiles against latest boot"
 					${buildCommand()}
@@ -54,10 +54,10 @@ abstract class CompatibilityTasks implements Maven, SpringCloudJobs {
 		return "./mvnw clean package -U -fae -Dspring-boot.version=\$${SPRING_BOOT_VERSION_VAR} -DskipTests"
 	}
 
-	protected String runTestsForBoot() {
+	protected String runTestsForBoot(String bootVersion) {
 		return """#!/bin/bash -x
 					set -o errexit
-					${fetchLatestBootSnapshotVersion(SPRING_BOOT_MINOR)}
+					${fetchLatestBootSnapshotVersion(bootVersion)}
 					${bumpBoot()}
 					echo -e "Checking if the project can be built with Boot version [\$${SPRING_BOOT_VERSION_VAR}]"
 					./mvnw clean install -U -fae
