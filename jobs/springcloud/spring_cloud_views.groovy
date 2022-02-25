@@ -28,10 +28,19 @@ dsl.nestedView('Spring Cloud') {
 			columns defaultColumns()
 		}
 		// ALL Release Train CI Views
-		ReleaseTrains.ALL.each { train ->
+		ReleaseTrains.allActive().each { train ->
 			views.listView("CI.${train.codename}") {
 				jobs {
 					regex("spring-cloud.*-${train.codename}-.*-ci")
+				}
+				columns defaultColumns()
+			}
+		}
+		// ALL Release Train Releaser Views
+		ReleaseTrains.allActive().each { train ->
+			views.listView("Releaser.${train.codename}") {
+				jobs {
+					regex("spring-cloud.*-${train.codename}-.*-releaser")
 				}
 				columns defaultColumns()
 			}
