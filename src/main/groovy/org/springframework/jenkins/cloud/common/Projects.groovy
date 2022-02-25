@@ -53,7 +53,8 @@ class Projects {
 	)
 
 	public static final Project CORE_TESTS = new Project(
-			repo: "spring-cloud-core-tests"
+			repo: "spring-cloud-core-tests",
+			releaseType: ReleaseType.NONE
 	)
 
 	public static final Project GATEWAY = new Project(
