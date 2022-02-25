@@ -17,9 +17,11 @@ DslFactory dsl = this
 // RELEASER
 ReleaseTrains.allActive().each { train ->
 	// meta releaser per train, for jdk configuration
-	new SpringCloudMetaReleaseMaker(dsl)
-			.release("spring-cloud-${train.codename}-meta-releaser", train.jdkBaseline(),
-					SpringCloudReleaserOptions.springCloud())
+	if (train.metaRelease) {
+		new SpringCloudMetaReleaseMaker(dsl)
+				.release("spring-cloud-${train.codename}-meta-releaser", train.jdkBaseline(),
+						SpringCloudReleaserOptions.springCloud())
+	}
 
 	train.projects().each { project ->
 		// snapshot release, daily, no sagan

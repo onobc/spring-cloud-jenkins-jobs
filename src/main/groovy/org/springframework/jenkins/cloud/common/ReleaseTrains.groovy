@@ -149,6 +149,7 @@ class ReleaseTrains {
 	public static final ReleaseTrain EXPERIMENTAL = new ReleaseTrain(
 		version: "Experimental",
 		codename: "Experimental",
+		metaRelease: false,
 		jdks: [jdks.jdk8()],
 		bootVersions: ["2.6.x"],
 		projectsWithBranch: [
@@ -159,6 +160,7 @@ class ReleaseTrains {
 	public static final ReleaseTrain TOOLS = new ReleaseTrain(
 			version: "Tools",
 			codename: "Tools",
+			metaRelease: false,
 			jdks: [jdks.jdk17()],
 			bootVersions: ["2.6.x"],
 			projectsWithBranch: [

@@ -20,6 +20,8 @@ class ReleaseTrain {
 
 	boolean active = true
 
+	boolean metaRelease = true
+
 	// version (calver 2022.0)
 	// not just a string?
 	String version
