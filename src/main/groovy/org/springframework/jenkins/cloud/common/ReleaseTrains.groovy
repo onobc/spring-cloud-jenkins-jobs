@@ -161,7 +161,7 @@ class ReleaseTrains {
 			version: "Tools",
 			codename: "Tools",
 			metaRelease: false,
-			jdks: [jdks.jdk17()],
+			jdks: [jdks.jdk8(), jdks.jdk17()],
 			bootVersions: ["2.6.x"],
 			projectsWithBranch: [
 					(RELEASE_TOOLS): "main",
@@ -171,8 +171,6 @@ class ReleaseTrains {
 	public static final List<ReleaseTrain> ALL = [TOOLS, EXPERIMENTAL, HOXTON, ILFORD, JUBILEE, KILBURN]
 
 	public static final Map<String, ReleaseTrain> ALL_BY_CODENAME = ALL.collectEntries { [it.codename, it]}
-
-	public static final ReleaseTrain CURRENT_ACTIVE = KILBURN
 
 	static List<ReleaseTrain> allActive() {
 		ALL.findAll { it.active }
