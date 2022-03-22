@@ -14,7 +14,7 @@ class ReleaseTrainsSpec extends Specification implements JdkConfig {
 			ReleaseTrains.ALL_BY_CODENAME.size() == 6
 	}
 
-	def 'define a  train'() {
+	def 'define a train'() {
 		expect:
 			ReleaseTrains.JUBILEE.version == "2021.0"
 			ReleaseTrains.JUBILEE.codename == "Jubilee"
