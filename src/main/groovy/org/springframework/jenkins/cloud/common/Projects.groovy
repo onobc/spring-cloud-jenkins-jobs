@@ -82,18 +82,22 @@ class Projects {
 			hasTests: false
 	)
 
-	public static final Project TRAIN_DOCS = new TrainDocsProject(
-			repo: "spring-cloud-release",
-			name: "spring-cloud-release-train-docs",
-			checkJdkCompatibility: false
-	)
-
 	public static final Project SLEUTH = new Project(
 			repo: "spring-cloud-sleuth"
 	)
 
+	public static final Project STREAM = new Project(
+			repo: "spring-cloud-stream"
+	)
+
 	public static final Project TASK = new Project(
 			repo: "spring-cloud-task"
+	)
+
+	public static final Project TRAIN_DOCS = new TrainDocsProject(
+			repo: "spring-cloud-release",
+			name: "spring-cloud-release-train-docs",
+			checkJdkCompatibility: false
 	)
 
 	public static final VaultProject VAULT = new VaultProject(
@@ -123,8 +127,8 @@ class Projects {
 	)
 
 	public static final List<Project> ALL = [BUILD, BUS, CIRCUITBREAKER, CLI, CLOUDFOUNDRY, COMMONS, CONFIG,
-											 CONSUL, CONTRACT, CORE_TESTS, GATEWAY, KUBERNETES, NETFLIX, OPENFEIGN,
-											 RELEASE, TRAIN_DOCS, SLEUTH, TASK, VAULT, ZOOKEEPER, SQUARE,
+											 CONSUL, CONTRACT, CORE_TESTS, FUNCTION, GATEWAY, KUBERNETES, NETFLIX, OPENFEIGN,
+											 RELEASE, TRAIN_DOCS, SLEUTH, STREAM, TASK, VAULT, ZOOKEEPER, SQUARE,
 											 SLEUTH_OTEL, RELEASE_TOOLS]
 
 	public static final Map<String, Project> ALL_BY_NAME = ALL.collectEntries { [it.repo, it]}
