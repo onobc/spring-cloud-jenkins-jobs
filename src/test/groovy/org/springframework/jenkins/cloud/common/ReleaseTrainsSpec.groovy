@@ -21,7 +21,7 @@ class ReleaseTrainsSpec extends Specification implements JdkConfig {
 			ReleaseTrains.JUBILEE.bootVersions.containsAll(["2.6.x", "2.7.x"])
 			ReleaseTrains.JUBILEE.version == "2021.0"
 			ReleaseTrains.JUBILEE.jdks.containsAll([jdk8(), jdk11(), jdk17()])
-			ReleaseTrains.JUBILEE.projectsWithBranch.size() == 20
+			ReleaseTrains.JUBILEE.projectsWithBranch.size() == 21
 	}
 
 }

@@ -13,6 +13,7 @@ import static org.springframework.jenkins.cloud.common.Projects.CONFIG
 import static org.springframework.jenkins.cloud.common.Projects.CONSUL
 import static org.springframework.jenkins.cloud.common.Projects.CONTRACT
 import static org.springframework.jenkins.cloud.common.Projects.CORE_TESTS
+import static org.springframework.jenkins.cloud.common.Projects.FUNCTION
 import static org.springframework.jenkins.cloud.common.Projects.GATEWAY
 import static org.springframework.jenkins.cloud.common.Projects.KUBERNETES
 import static org.springframework.jenkins.cloud.common.Projects.NETFLIX
@@ -52,6 +53,7 @@ class ReleaseTrains {
 				(CONTRACT): "main",
 				(CORE_TESTS): "main",
 				(GATEWAY): "main",
+				(FUNCTION): "main",
 				(KUBERNETES): "main",
 				(NETFLIX): "main",
 				(OPENFEIGN): "main",
@@ -78,6 +80,7 @@ class ReleaseTrains {
 				(CONSUL): "3.1.x",
 				(CONTRACT): "3.1.x",
 				(CORE_TESTS): "2021.0.x",
+				(FUNCTION): "3.2.x",
 				(GATEWAY): "3.1.x",
 				(KUBERNETES): "2.1.x",
 				(NETFLIX): "3.1.x",
@@ -106,6 +109,7 @@ class ReleaseTrains {
 				(CONSUL): "3.0.x",
 				(CONTRACT): "3.0.x",
 				(CORE_TESTS): "2020.0.x",
+				(FUNCTION): "3.1.x",
 				(GATEWAY): "3.0.x",
 				(KUBERNETES): "2.0.x",
 				(NETFLIX): "3.0.x",

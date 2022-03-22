@@ -57,6 +57,10 @@ class Projects {
 			releaseType: ReleaseType.NONE
 	)
 
+	public static final Project FUNCTION = new Project(
+			repo: "spring-cloud-function"
+	)
+
 	public static final Project GATEWAY = new Project(
 			repo: "spring-cloud-gateway"
 	)
