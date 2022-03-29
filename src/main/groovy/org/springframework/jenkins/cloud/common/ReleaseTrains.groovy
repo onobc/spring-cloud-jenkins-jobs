@@ -23,6 +23,7 @@ import static org.springframework.jenkins.cloud.common.Projects.RELEASE_TOOLS
 import static org.springframework.jenkins.cloud.common.Projects.SLEUTH
 import static org.springframework.jenkins.cloud.common.Projects.SLEUTH_OTEL
 import static org.springframework.jenkins.cloud.common.Projects.SQUARE
+import static org.springframework.jenkins.cloud.common.Projects.STREAM
 import static org.springframework.jenkins.cloud.common.Projects.TASK
 import static org.springframework.jenkins.cloud.common.Projects.TRAIN_DOCS
 import static org.springframework.jenkins.cloud.common.Projects.VAULT
@@ -58,6 +59,7 @@ class ReleaseTrains {
 				(NETFLIX): "main",
 				(OPENFEIGN): "main",
 				(RELEASE): "main",
+				(STREAM): "main",
 				(TRAIN_DOCS): "main",
 				(TASK): "main",
 				(VAULT): "main",
@@ -88,6 +90,7 @@ class ReleaseTrains {
 				(RELEASE): "2021.0.x",
 				(TRAIN_DOCS): "2021.0.x",
 				(SLEUTH): "3.1.x",
+				(STREAM): "3.2.x",
 				(TASK): "2.3.x",
 				(VAULT): "3.1.x",
 				(ZOOKEEPER): "3.1.x",
