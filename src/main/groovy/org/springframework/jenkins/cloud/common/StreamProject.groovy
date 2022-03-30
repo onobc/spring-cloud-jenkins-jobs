@@ -25,6 +25,7 @@ class StreamProject extends Project implements JdkConfig, SpringCloudJobs {
                         cd ${scriptDir}
 						echo "Running script"
 						bash ${script}
+                        cd -
 					"""
     }
 
