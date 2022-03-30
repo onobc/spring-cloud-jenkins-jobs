@@ -13,8 +13,8 @@ class StreamProject extends Project implements JdkConfig, SpringCloudJobs {
         List<String> cmd = []
         cmd.add("""\
         ${scriptToExecute(scriptDir, startScript)}
-        trap "{ ${scriptToExecute(scriptDir, stopScript)} }" EXIT
         ${context.upload ? cleanDeployWithDocs() : cleanInstallWithoutDocs()}
+        ${scriptToExecute(scriptDir, stopScript)} 
         """ as String)
         return cmd
     }
