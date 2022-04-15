@@ -18,17 +18,11 @@
 	</parent>
 
 	<properties>
-		<jenkins-common.version>1.0.0-M11</jenkins-common.version>
 		<spock.version>1.3-groovy-2.4</spock.version>
 		<job-dsl-core.version>1.78.1</job-dsl-core.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.internal</groupId>
-			<artifactId>jenkins-common</artifactId>
-			<version>${jenkins-common.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
