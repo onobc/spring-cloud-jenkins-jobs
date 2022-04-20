@@ -31,7 +31,7 @@ class SpringCloudContractSamplesEndToEndBuilder extends SpringCloudSamplesEndToE
                     .withGradleTests(true)
         }.build(dsl)
 
-        builderBranchName = "2021.0.x"
+        builderBranchName = "3.1.x"
         new SpringCloudSamplesEndToEndBuilder().with {
             it.withRepoName("spring-cloud-contract-samples")
                     .withProjectName("spring-cloud-contract-samples-build-maven-only")
