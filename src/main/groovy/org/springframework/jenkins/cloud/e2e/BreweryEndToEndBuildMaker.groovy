@@ -26,12 +26,13 @@ class BreweryEndToEndBuildMaker extends EndToEndBuildMaker {
 	}
 
 	void build(String prefix, String releaseTrainName) {
-		buildWithSwitches(prefix, releaseTrainName, defaultSwitches(releaseTrainName))
+		buildWithSwitches(prefix, releaseTrainName)
 	}
 
-	protected void buildWithSwitches(String prefix, String releaseTrainName, String defaultSwitches) {
+	protected void buildWithSwitches(String prefix, String releaseTrainName) {
 		String branch = branchName(releaseTrainName)
 		setBranchName(branch)
+		String defaultSwitches = defaultSwitches(releaseTrainName)
 		if (releaseTrainName.startsWith("2020") || releaseTrainName.startsWith("2021")) {
 			super.build("$prefix-sleuth", repoName(), "runAcceptanceTests.sh -t SLEUTH $defaultSwitches", oncePerDay())
 		}
