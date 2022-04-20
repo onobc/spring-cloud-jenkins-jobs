@@ -2,12 +2,6 @@ package org.springframework.jenkins.cloud.e2e
 
 import javaposse.jobdsl.dsl.DslFactory
 
-import org.springframework.jenkins.cloud.common.SpringCloudJobs
-import org.springframework.jenkins.common.job.Cron
-import org.springframework.jenkins.common.job.JdkConfig
-import org.springframework.jenkins.common.job.Label
-import org.springframework.jenkins.common.job.TestPublisher
-
 class SpringCloudContractSamplesEndToEndBuilder extends SpringCloudSamplesEndToEndBuilder<SpringCloudContractSamplesEndToEndBuilder> {
 
     void buildAll(DslFactory dsl) {

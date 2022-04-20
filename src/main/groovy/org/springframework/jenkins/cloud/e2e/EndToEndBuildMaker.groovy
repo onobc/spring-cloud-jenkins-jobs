@@ -20,6 +20,8 @@ class EndToEndBuildMaker implements TestPublisher,
 	private final DslFactory dsl
 	private final String organization
 
+	String branchName = mainBranch()
+
 	EndToEndBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
 		this.organization = "spring-cloud"
@@ -46,8 +48,7 @@ class EndToEndBuildMaker implements TestPublisher,
 		build(projectName, projectName, scriptName, cronExpr, true, '', true)
 	}
 
-	protected void build(String projectName, String repoName, String scriptName, String cronExpr,
-						 boolean withTests = true, String postBuildScripts = "", boolean mavenTests = false) {
+	protected void build(String projectName, String repoName, String scriptName, String cronExpr, boolean withTests = true, String postBuildScripts = "", boolean mavenTests = false) {
 		String organization = this.organization
 		dsl.job("${prefixJob(projectName)}-e2e") {
 			triggers {
@@ -82,7 +83,7 @@ class EndToEndBuildMaker implements TestPublisher,
 				git {
 					remote {
 						url "https://github.com/${organization}/$repoName"
-						branch branchName()
+						branch branchName
 					}
 					extensions {
 						wipeOutWorkspace()
@@ -138,10 +139,6 @@ class EndToEndBuildMaker implements TestPublisher,
 
 	protected String jdkVersion() {
 		return jdk17()
-	}
-
-	protected String branchName() {
-		return "main"
 	}
 
 	protected void customConfiguration(String projectName, Node node) {
