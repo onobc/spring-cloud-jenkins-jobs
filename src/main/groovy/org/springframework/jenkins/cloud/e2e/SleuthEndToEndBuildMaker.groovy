@@ -8,6 +8,7 @@ import javaposse.jobdsl.dsl.DslFactory
 class SleuthEndToEndBuildMaker extends EndToEndBuildMaker {
 	SleuthEndToEndBuildMaker(DslFactory dsl) {
 		super(dsl)
+		setBranchName("3.1.x")
 	}
 
 	void buildSleuth(String cronExpr) {
