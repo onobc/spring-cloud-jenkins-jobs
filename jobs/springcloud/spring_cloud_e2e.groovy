@@ -5,7 +5,6 @@ import javaposse.jobdsl.dsl.DslFactory
 import org.springframework.jenkins.cloud.ci.SleuthBenchmarksBuildMaker
 import org.springframework.jenkins.cloud.e2e.BreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.EndToEndBuildMaker
-import org.springframework.jenkins.cloud.e2e.JdkBreweryEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.NetflixEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SleuthEndToEndBuildMaker
 import org.springframework.jenkins.cloud.e2e.SpringCloudContractSamplesEndToEndBuilder
@@ -40,8 +39,6 @@ new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 new NetflixEndToEndBuildMaker(dsl).with {
 	build(oncePerDay())
 }
-new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk11()).build() }
-new JdkBreweryEndToEndBuildMaker(dsl).with { withJdk(jdk17()).build() }
 
 // new LatestJdkBreweryEndToEndBuildMaker(dsl).build()
 ["2020.0", "2021.0", "2022.0"].each {
