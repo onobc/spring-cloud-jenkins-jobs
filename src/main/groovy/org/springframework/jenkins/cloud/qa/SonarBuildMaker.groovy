@@ -15,6 +15,8 @@ class SonarBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 
 	private final DslFactory dsl
 
+	String branchName = "main"
+
 	SonarBuildMaker(DslFactory dsl) {
 		this.dsl = dsl
 	}
@@ -35,7 +37,7 @@ class SonarBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 				git {
 					remote {
 						url "https://github.com/spring-cloud/$projectName"
-						branch "main"
+						branch branchName
 					}
 					extensions {
 						wipeOutWorkspace()

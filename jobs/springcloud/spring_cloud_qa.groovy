@@ -8,8 +8,14 @@ import org.springframework.jenkins.cloud.qa.SonarBuildMaker
 DslFactory dsl = this
 
 // QA
-Projects.ALL.findAll { it.hasTests }.each { project ->
+(Projects.ALL - Projects.SLEUTH).findAll { it.hasTests }.each { project ->
 	new SonarBuildMaker(dsl).buildSonar(project.repo)
+}
+
+Projects.SLEUTH.with {
+	SonarBuildMaker sonar = new SonarBuildMaker(dsl)
+	sonar.branchName = "3.1.x"
+	sonar.buildSonar(it.repo)
 }
 // new ConsulMutationBuildMaker(dsl).build()
 new KubernetesSonarBuildMaker(dsl).buildSonar()
