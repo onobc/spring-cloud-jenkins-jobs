@@ -43,7 +43,7 @@ class SonarBuildMaker implements JdkConfig, TestPublisher, SonarTrait, Cron {
 					}
 				}
 			}
-			jdk jdk8()
+			jdk jdk17()
 			steps defaultSteps()
 			publishers {
 				archiveArtifacts mavenJUnitResults()
