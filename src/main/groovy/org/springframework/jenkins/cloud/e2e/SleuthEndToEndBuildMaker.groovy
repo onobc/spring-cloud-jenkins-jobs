@@ -15,4 +15,8 @@ class SleuthEndToEndBuildMaker extends EndToEndBuildMaker {
 		super.build("spring-cloud-sleuth", cronExpr)
 	}
 
+	@Override
+	protected String jdkVersion() {
+		return jdk11()
+	}
 }
