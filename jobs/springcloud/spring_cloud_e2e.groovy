@@ -24,12 +24,7 @@ new SleuthEndToEndBuildMaker(dsl).with {
 }
 
 // CONTRACT
-new SpringCloudContractSamplesEndToEndBuilder().with {
-	it.withJdk(jdk11())
-}.buildAll(dsl)
-new SpringCloudContractSamplesEndToEndBuilder().with {
-	it.withJdk(jdk17())
-}.buildAll(dsl)
+new SpringCloudContractSamplesEndToEndBuilder().buildAll(dsl)
 
 new SpringCloudSamplesEndToEndBuildMaker(dsl).with {
 	buildWithMavenTests("the-legacy-app", mainBranch(), oncePerDay())
